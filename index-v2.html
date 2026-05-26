@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
-<title>AromaTool — Young Living</title>
+<title>AromaTool</title>
 <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Ccircle cx='16' cy='16' r='16' fill='%23F5F0FF'/%3E%3C!-- stem --%3E%3Crect x='15' y='14' width='2' height='10' rx='1' fill='%237B5EA7'/%3E%3C!-- leaves --%3E%3Cellipse cx='13' cy='19' rx='3' ry='1.5' fill='%239B80C4' transform='rotate(-30 13 19)'/%3E%3Cellipse cx='19' cy='19' rx='3' ry='1.5' fill='%239B80C4' transform='rotate(30 19 19)'/%3E%3C!-- flowers --%3E%3Ccircle cx='16' cy='10' r='2.5' fill='%237B5EA7'/%3E%3Ccircle cx='13' cy='13' r='2' fill='%239B80C4'/%3E%3Ccircle cx='19' cy='13' r='2' fill='%239B80C4'/%3E%3Ccircle cx='14' cy='8' r='1.8' fill='%23C4A8E8'/%3E%3Ccircle cx='18' cy='8' r='1.8' fill='%23C4A8E8'/%3E%3Ccircle cx='16' cy='6' r='1.8' fill='%234A3270'/%3E%3C/svg%3E">
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
 <style>
@@ -53,18 +53,20 @@
     .left-title{display:none;}
     .left-section{display:none;}
     .right-sec{display:none!important;}
+    .plant-deco{display:none!important;}
+    .hdr{height:auto;padding:12px 16px;}
+    .logo-text{font-size:17px;}
+    .rate-pill{font-size:10px;padding:3px 8px;}
+    .user-pill{font-size:11px;padding:3px 8px;}
   }
   @media(min-width:900px){
-    #tab-search,#tab-cart,#tab-contacts,#tab-offers,#tab-rapid{display:none!important;}
+    #tab-search,#tab-cart,#tab-contacts,#tab-rapid{display:none!important;}
     .mobile-tabs{display:none!important;}
   }
 
   /* ── HEADER ───────────────────────────────────────── */
   .hdr{background:var(--card);padding:0 20px;border-bottom:1px solid var(--border2);height:72px;display:flex;align-items:center;justify-content:space-between;}
   .logo{display:flex;align-items:center;gap:12px;}
-  .logo-icon{font-size:26px;}
-  .logo-wrap{}
-  .logo-text{font-family:'Playfair Display',serif;font-size:20px;color:var(--primary-dark);line-height:1.1;}
   .logo-sub{font-size:10px;color:var(--muted);font-weight:500;letter-spacing:.08em;text-transform:uppercase;}
   .hdr-right{display:flex;align-items:center;gap:10px;}
   .rate-pill{background:var(--bg2);border:1px solid var(--border2);border-radius:20px;padding:4px 12px;font-size:11px;color:var(--primary);font-weight:600;}
@@ -280,10 +282,14 @@
   <div class="login-box">
     <div class="login-plant-tl">🌿</div>
     <div class="login-plant-br">🌸</div>
-    <div class="login-icon">💜</div>
-    <div class="login-title">AromaTool</div>
-    <div class="login-name">Young Living</div>
-    <div class="login-sub">Calculator Oferte</div>
+    <svg width="200" height="72" viewBox="0 0 200 72" style="margin:0 auto 8px;display:block">
+      <text x="100" y="30" text-anchor="middle" font-family="Georgia,serif" font-size="26" fill="#4A3270">AromaTool</text>
+      <line x1="32" y1="38" x2="88" y2="38" stroke="#C4A8E8" stroke-width="1"/>
+      <circle cx="100" cy="38" r="3.5" fill="#7B5EA7"/>
+      <line x1="112" y1="38" x2="168" y2="38" stroke="#C4A8E8" stroke-width="1"/>
+      <text x="100" y="56" text-anchor="middle" font-family="Georgia,serif" font-size="9" font-style="italic" fill="#9B80C4" letter-spacing="1.5">crafted for your team</text>
+    </svg>
+    <div class="login-sub" style="margin-bottom:20px">Young Living</div>
     <div class="login-field">
       <input type="text" id="loginUser" placeholder="Utilizator" onkeydown="if(event.key==='Enter')document.getElementById('loginPass').focus()">
     </div>
@@ -334,11 +340,13 @@
   <!-- HEADER -->
   <div class="hdr">
     <div class="logo">
-      <span class="logo-icon">💜</span>
-      <div class="logo-wrap">
-        <div class="logo-text">AromaTool</div>
-        <div class="logo-sub">Young Living · Calculator Oferte</div>
-      </div>
+      <svg width="180" height="44" viewBox="0 0 180 44" style="display:block">
+        <text x="90" y="22" text-anchor="middle" font-family="Georgia,serif" font-size="20" fill="#4A3270">AromaTool</text>
+        <line x1="28" y1="28" x2="78" y2="28" stroke="#C4A8E8" stroke-width="1"/>
+        <circle cx="90" cy="28" r="3" fill="#7B5EA7"/>
+        <line x1="102" y1="28" x2="152" y2="28" stroke="#C4A8E8" stroke-width="1"/>
+        <text x="90" y="40" text-anchor="middle" font-family="Georgia,serif" font-size="8" font-style="italic" fill="#9B80C4" letter-spacing="1.5">crafted for your team</text>
+      </svg>
     </div>
     <div class="hdr-right">
       <div class="rate-pill" id="ratePill">Se încarcă...</div>
@@ -354,8 +362,7 @@
     <div class="tabs">
       <button class="tab active" onclick="switchTab('search')">🔍 Caută</button>
       <button class="tab" onclick="switchTab('cart')">🛒 Coș <span class="badge" id="cartBadge">0</span></button>
-      <button class="tab" onclick="switchTab('contacts')">👥 Contacte</button>
-      <button class="tab" onclick="switchTab('offers')">📋 Oferte</button>
+      <button class="tab" onclick="switchTab('contacts')">👥 Clienți</button>
       <button class="tab" onclick="switchTab('rapid')">📦 Rapid</button>
     </div>
   </div>
@@ -456,8 +463,7 @@
       <!-- Desktop right tabs -->
       <div class="right-tabs">
         <button class="right-tab active" onclick="switchRightTab('cart')">🛒 Coș <span class="badge" id="cartBadgeD">0</span></button>
-        <button class="right-tab" onclick="switchRightTab('contacts')">👥 Contacte</button>
-        <button class="right-tab" onclick="switchRightTab('offers')">📋 Oferte</button>
+        <button class="right-tab" onclick="switchRightTab('contacts')">👥 Clienți</button>
       </div>
 
       <!-- CART (desktop right) -->
@@ -476,6 +482,7 @@
           </div>
           <div class="email-section">
             <div class="card-title" style="margin-bottom:8px">📧 Trimite sumar clientului</div>
+            <input type="text" class="email-input" id="numeInputD" placeholder="Numele clientului" style="margin-bottom:8px">
             <div class="email-wrap">
               <input type="email" class="email-input" id="emailInputD" placeholder="email@client.com">
               <button class="send-btn" id="sendBtnD" onclick="sendOffer()">Trimite</button>
@@ -502,13 +509,7 @@
         <div id="contactsListD"></div>
       </div>
 
-      <!-- OFFERS (desktop right) -->
-      <div class="sec right-sec" id="rtab-offers">
-        <button class="export-btn" onclick="exportEmails()">⬇️ Exportă emailuri (CSV)</button>
-        <div id="offersListD">
-          <div class="offers-empty"><div style="font-size:32px;margin-bottom:8px">📋</div><div>Nu ai trimis oferte încă</div></div>
-        </div>
-      </div>
+
 
     </div>
   </div>
@@ -538,6 +539,7 @@
       </div>
       <div class="email-section">
         <div class="card-title" style="margin-bottom:8px">📧 Trimite sumar clientului</div>
+        <input type="text" class="email-input" id="numeInputM" placeholder="Numele clientului" style="margin-bottom:8px">
         <div class="email-wrap">
           <input type="email" class="email-input" id="emailInputM" placeholder="email@client.com">
           <button class="send-btn" id="sendBtnM" onclick="sendOffer()">Trimite</button>
@@ -563,12 +565,7 @@
     <div id="contactsListM"></div>
   </div>
 
-  <div class="sec" id="tab-offers">
-    <button class="export-btn" onclick="exportEmails()">⬇️ Exportă emailuri (CSV)</button>
-    <div id="offersListM">
-      <div class="offers-empty"><div style="font-size:32px;margin-bottom:8px">📋</div><div>Nu ai trimis oferte încă</div></div>
-    </div>
-  </div>
+
 
   <div class="sec" id="tab-rapid">
     <div class="card">
@@ -694,21 +691,21 @@ function finishLoad(){
 
 // ── TABS ───────────────────────────────────────────────────
 function switchTab(name){
-  ['search','cart','contacts','offers','rapid'].forEach((t,i)=>{
+  ['search','cart','contacts','rapid'].forEach((t,i)=>{
     document.getElementById('tab-'+t).classList.toggle('active',t===name);
     document.querySelectorAll('.tab')[i].classList.toggle('active',t===name);
   });
   if(name==='search')doSearch(document.getElementById('searchInputM').value,'M');
-  if((name==='offers'||name==='contacts')&&!offersLoaded)loadOffers();
+  if(name==='contacts'&&!offersLoaded)loadOffers();
   if(name==='contacts'&&offersLoaded)renderContacts('M');
 }
 
 function switchRightTab(name){
-  ['cart','contacts','offers'].forEach((t,i)=>{
+  ['cart','contacts'].forEach((t,i)=>{
     document.getElementById('rtab-'+t).classList.toggle('active',t===name);
     document.querySelectorAll('.right-tab')[i].classList.toggle('active',t===name);
   });
-  if((name==='offers'||name==='contacts')&&!offersLoaded)loadOffers();
+  if(name==='contacts'&&!offersLoaded)loadOffers();
   if(name==='contacts'&&offersLoaded)renderContacts('D');
 }
 
@@ -717,7 +714,7 @@ function doSearch(q,s){
   const sfx=s||'M';
   const clearBtn=document.getElementById('clearBtn'+sfx);
   if(clearBtn)clearBtn.style.display=q?'block':'none';
-  const matches=q.trim()?products.filter(p=>p.name.toLowerCase().includes(q.toLowerCase())).slice(0,20):products.slice(0,30);
+  const matches=q.trim()?products.filter(p=>p.name.toLowerCase().includes(q.toLowerCase())).slice(0,20):products.slice(0,7);
   const el=document.getElementById('searchResults'+sfx);
   if(!el)return;
   if(!matches.length){el.innerHTML='<div class="results"><div class="no-res">Niciun rezultat</div></div>';return;}
@@ -836,8 +833,10 @@ function renderGuide(){
 async function sendOffer(){
   const sfx=isDesktop()?'D':'M';
   const email=document.getElementById('emailInput'+sfx).value.trim();
+  const numeClient=document.getElementById('numeInput'+sfx).value.trim();
   const msgEl=document.getElementById('emailMsg'+sfx);
   const btn=document.getElementById('sendBtn'+sfx);
+  if(!numeClient){msgEl.className='msg-err';msgEl.textContent='⚠️ Introduceți numele clientului.';msgEl.style.display='block';return;}
   if(!email||!email.includes('@')){msgEl.className='msg-err';msgEl.textContent='⚠️ Email invalid.';msgEl.style.display='block';return;}
   if(!cart.length){msgEl.className='msg-err';msgEl.textContent='⚠️ Coșul e gol.';msgEl.style.display='block';return;}
   btn.disabled=true;btn.textContent='Se trimite...';msgEl.style.display='none';
@@ -851,12 +850,13 @@ async function sendOffer(){
   try{
     const res=await fetch(PROXY_URL,{method:'POST',headers:{'Content-Type':'text/plain'},
       body:JSON.stringify({action:'sendOffer',username:currentUser.username,nume:currentUser.nume,
-        email,cart,total,totalEur,curs:cursActive,includeGuide:guideCheck?guideCheck.checked:false,ghiduri})});
+        numeClient,email,cart,total,totalEur,curs:cursActive,includeGuide:guideCheck?guideCheck.checked:false,ghiduri})});
     const data=await res.json();
     if(data.status==='ok'){
       hideLoading();
       msgEl.className='msg-ok';msgEl.textContent='✓ Trimis la '+email;msgEl.style.display='block';
       document.getElementById('emailInput'+sfx).value='';
+      document.getElementById('numeInput'+sfx).value='';
       offersLoaded=false;allContacts=[];
     }else throw new Error(data.message);
   }catch(e){hideLoading();msgEl.className='msg-err';msgEl.textContent='⚠️ Eroare: '+e.message;msgEl.style.display='block';}
@@ -911,7 +911,13 @@ function renderContacts(s){
     const ic=c.status==='Prospect'?'🟡':c.status==='Client nou'?'🟢':'⭐';
     const meta=[c.dataPrimaOferta?`Prima ofertă: ${c.dataPrimaOferta}`:'',c.dataUltimaCumparatura?`Ultima cumpărătură: ${c.dataUltimaCumparatura}`:'',c.nrCumparaturi>0?`${c.nrCumparaturi} cumpărături`:''].filter(Boolean).join(' · ');
     return`<div class="contact-item">
-      <div class="contact-top"><div class="contact-email">${c.email}</div><span class="status-badge ${bc}">${ic} ${c.status}</span></div>
+      <div class="contact-top">
+        <div style="flex:1;min-width:0">
+          ${c.nume?`<div style="font-size:13px;font-weight:600;color:var(--primary-dark);margin-bottom:2px">${c.nume}</div>`:''}
+          <div class="contact-email" style="${c.nume?'font-size:11px;color:var(--muted)':''}">${c.email}</div>
+        </div>
+        <span class="status-badge ${bc}">${ic} ${c.status}</span>
+      </div>
       ${meta?`<div class="contact-meta">${meta}</div>`:''}
       <div class="status-btns">
         <button class="status-btn ${c.status==='Prospect'?'current':''}" onclick="setStatus('${esc(c.email)}','Prospect')">🟡 Prospect</button>
@@ -941,7 +947,7 @@ async function setStatus(email,newStatus){
 function exportByStatus(status){
   const filtered=status==='all'?allContacts:allContacts.filter(c=>c.status===status);
   if(!filtered.length){showToast('Niciun contact în această categorie');return;}
-  const csv='Email,Status\n'+filtered.map(c=>`${c.email},${c.status}`).join('\n');
+  const csv='Nume,Email,Status\n'+filtered.map(c=>`${c.nume||''},${c.email},${c.status}`).join('\n');
   const a=document.createElement('a');
   a.href='data:text/csv;charset=utf-8,'+encodeURIComponent(csv);
   a.download=status.replace(' ','_')+'_'+currentUser.username+'.csv';
