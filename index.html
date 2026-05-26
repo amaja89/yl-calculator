@@ -7,33 +7,19 @@
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
 <style>
   :root {
-    --bg:#F7F5FF;
-    --bg2:#F0EEFF;
-    --bg3:#EAE5FF;
-    --card:#FFFFFF;
-    --card2:#F7F5FF;
-    --border:rgba(155,143,232,0.25);
-    --border2:rgba(155,143,232,0.45);
-    --primary:#7B6CD0;
-    --primary-dark:#4A3880;
-    --primary-light:#C8BFFF;
-    --accent:#D4A8E8;
-    --green:#2E8A58;
-    --green-bg:#E8F8F0;
-    --green-border:rgba(46,138,88,0.25);
-    --red:#C94F6A;
-    --red-bg:#FFF0F4;
-    --text:#2D1F5E;
-    --text2:#6B5B9E;
-    --muted:#9B8DC4;
-    --white:#FFFFFF;
+    --bg:#F7F5FF;--bg2:#F0EEFF;--bg3:#EAE5FF;
+    --card:#FFFFFF;--card2:#F7F5FF;
+    --border:rgba(155,143,232,0.25);--border2:rgba(155,143,232,0.45);
+    --primary:#7B6CD0;--primary-dark:#4A3880;--primary-light:#C8BFFF;
+    --accent:#D4A8E8;--green:#2E8A58;--green-bg:#E8F8F0;--green-border:rgba(46,138,88,0.25);
+    --red:#C94F6A;--red-bg:#FFF0F4;
+    --text:#2D1F5E;--text2:#6B5B9E;--muted:#9B8DC4;--white:#FFFFFF;
     --r:16px;--rs:10px;
   }
   *{box-sizing:border-box;margin:0;padding:0;}
   body{background:var(--bg);color:var(--text);font-family:'DM Sans',sans-serif;min-height:100vh;overflow-x:hidden;}
   .app{max-width:480px;margin:0 auto;padding:0 0 80px;}
 
-  /* HEADER */
   .hdr{background:var(--card);padding:20px 16px 14px;position:sticky;top:0;z-index:100;border-bottom:1.5px solid var(--border2);}
   .hdr-top{display:flex;align-items:center;justify-content:space-between;margin-bottom:14px;}
   .logo{display:flex;align-items:center;gap:10px;}
@@ -41,18 +27,16 @@
   .logo-text{font-family:'Playfair Display',serif;font-size:18px;color:var(--primary-dark);line-height:1.1;}
   .logo-sub{font-size:10px;color:var(--muted);font-weight:500;letter-spacing:.07em;text-transform:uppercase;}
   .rate-pill{background:var(--bg2);border:1px solid var(--border2);border-radius:20px;padding:4px 12px;font-size:11px;color:var(--primary);font-weight:600;}
+  .user-pill{display:flex;align-items:center;gap:6px;background:var(--bg2);border:1px solid var(--border2);border-radius:20px;padding:4px 10px;font-size:12px;color:var(--primary-dark);font-weight:500;cursor:pointer;}
 
-  /* TABS */
   .tabs{display:flex;background:var(--bg2);border-radius:var(--r);padding:3px;border:1px solid var(--border);}
-  .tab{flex:1;padding:9px 6px;border:none;background:transparent;color:var(--muted);font-family:'DM Sans',sans-serif;font-size:13px;font-weight:500;border-radius:13px;cursor:pointer;transition:all .2s;display:flex;align-items:center;justify-content:center;gap:5px;}
+  .tab{flex:1;padding:9px 4px;border:none;background:transparent;color:var(--muted);font-family:'DM Sans',sans-serif;font-size:12px;font-weight:500;border-radius:13px;cursor:pointer;transition:all .2s;display:flex;align-items:center;justify-content:center;gap:4px;}
   .tab.active{background:var(--white);color:var(--primary-dark);box-shadow:0 1px 6px rgba(123,108,208,.15);}
   .badge{background:var(--primary);color:var(--white);font-size:10px;font-weight:700;border-radius:999px;padding:1px 6px;min-width:18px;text-align:center;}
 
-  /* SECTIONS */
   .sec{padding:16px;display:none;}
   .sec.active{display:block;}
 
-  /* SEARCH */
   .search-wrap{position:relative;margin-bottom:8px;}
   .search-wrap .ico{position:absolute;left:12px;top:50%;transform:translateY(-50%);font-size:16px;color:var(--muted);}
   .search-input{width:100%;background:var(--white);border:1.5px solid var(--border2);border-radius:var(--rs);padding:12px 40px 12px 38px;color:var(--text);font-family:'DM Sans',sans-serif;font-size:15px;outline:none;transition:border-color .2s;}
@@ -60,22 +44,20 @@
   .search-input::placeholder{color:var(--muted);}
   .clear-btn{position:absolute;right:10px;top:50%;transform:translateY(-50%);background:none;border:none;color:var(--muted);cursor:pointer;font-size:18px;display:none;padding:2px 4px;}
 
-  /* RESULTS */
   .results{border:1px solid var(--border2);border-radius:var(--r);overflow:hidden;margin-top:6px;}
-  .res-row{display:flex;align-items:center;gap:10px;padding:11px 13px;border-bottom:1px solid var(--border);background:var(--white);cursor:pointer;transition:background .12s;}
+  .res-row{display:flex;align-items:center;gap:10px;padding:11px 13px;border-bottom:1px solid var(--border);background:var(--white);transition:background .12s;}
   .res-row:last-child{border-bottom:none;}
   .res-row:active{background:var(--bg2);}
   .res-info{flex:1;min-width:0;}
   .res-name{font-size:13px;font-weight:500;color:var(--text);margin-bottom:3px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
   .res-meta{display:flex;gap:8px;flex-wrap:wrap;}
-  .res-meta span{font-size:11px;color:var(--muted);display:flex;align-items:center;gap:2px;}
+  .res-meta span{font-size:11px;color:var(--muted);}
   .res-price{font-size:13px;font-weight:600;color:var(--primary);white-space:nowrap;flex-shrink:0;}
   .add-btn{width:30px;height:30px;border-radius:50%;background:var(--bg2);border:1.5px solid var(--border2);cursor:pointer;display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:18px;color:var(--primary);transition:all .15s;}
   .add-btn:active{transform:scale(.9);}
   .add-btn.added{background:var(--primary);color:var(--white);border-color:var(--primary);font-size:14px;}
   .no-res{padding:20px;text-align:center;color:var(--muted);font-size:13px;}
 
-  /* CART */
   .cart-empty{text-align:center;padding:32px 16px;color:var(--muted);font-size:13px;border:1.5px dashed var(--border2);border-radius:var(--r);margin-bottom:12px;background:var(--white);}
   .cart-empty-icon{font-size:36px;margin-bottom:8px;}
   .cart-item{background:var(--white);border:1px solid var(--border2);border-radius:var(--r);padding:13px;margin-bottom:8px;animation:slideIn .18s ease;}
@@ -99,7 +81,6 @@
   .ci-total{font-size:14px;font-weight:600;color:var(--text);}
   .ci-total.disc{color:var(--primary);}
 
-  /* TOTALS */
   .totals{background:var(--white);border:1px solid var(--border2);border-radius:var(--r);padding:14px;margin-bottom:8px;}
   .t-row{display:flex;justify-content:space-between;align-items:center;padding:7px 0;border-bottom:1px solid var(--border);font-size:13px;}
   .t-row:last-child{border-bottom:none;padding-bottom:0;}
@@ -109,55 +90,6 @@
   .t-row.big .lbl{font-family:'Playfair Display',serif;font-size:15px;color:var(--primary-dark);}
   .t-row.big .val{font-family:'Playfair Display',serif;font-size:24px;color:var(--primary-dark);}
   .t-row .saved{color:var(--red);}
-  .reset-btn{width:100%;background:var(--red-bg);border:1px solid rgba(201,79,106,.2);border-radius:var(--rs);padding:11px;color:var(--red);font-family:'DM Sans',sans-serif;font-size:13px;font-weight:500;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:6px;margin-top:4px;}
-
-  /* RAPID */
-  .select-wrap{position:relative;margin-bottom:12px;}
-  select{width:100%;background:var(--white);border:1.5px solid var(--border2);border-radius:var(--rs);padding:12px 32px 12px 14px;color:var(--text);font-family:'DM Sans',sans-serif;font-size:14px;outline:none;appearance:none;cursor:pointer;}
-  select option{background:white;color:var(--text);}
-  .sel-arrow{position:absolute;right:12px;top:50%;transform:translateY(-50%);pointer-events:none;color:var(--muted);font-size:12px;}
-  .detail-card{background:var(--white);border:1px solid var(--border2);border-radius:var(--r);padding:14px;margin-bottom:10px;}
-  .d-row{display:flex;justify-content:space-between;align-items:center;padding:9px 0;border-bottom:1px solid var(--border);}
-  .d-row:last-child{border-bottom:none;padding-bottom:0;}
-  .d-lbl{font-size:12px;color:var(--muted);}
-  .d-val{font-size:14px;font-weight:600;color:var(--text);}
-  .d-val.purple{color:var(--primary);}
-  .add-full-btn{width:100%;background:var(--primary);border:none;border-radius:var(--rs);padding:12px;color:var(--white);font-family:'DM Sans',sans-serif;font-size:14px;font-weight:500;cursor:pointer;margin-top:12px;}
-  .add-full-btn:active{background:var(--primary-dark);}
-
-  /* CARD */
-  .card{background:var(--white);border:1px solid var(--border2);border-radius:var(--r);padding:14px;margin-bottom:10px;}
-  .card-title{font-size:10px;font-weight:600;color:var(--primary);text-transform:uppercase;letter-spacing:.08em;margin-bottom:12px;}
-  .curs-row{display:flex;gap:12px;align-items:flex-end;}
-  .curs-group{flex:1;}
-  .curs-lbl{font-size:11px;color:var(--muted);margin-bottom:5px;}
-  .curs-input{width:100%;background:var(--bg2);border:1.5px solid var(--border2);border-radius:var(--rs);padding:10px 12px;color:var(--text);font-family:'DM Sans',sans-serif;font-size:15px;font-weight:600;outline:none;}
-  .curs-input:focus{border-color:var(--primary);}
-  .curs-val{font-family:'Playfair Display',serif;font-size:20px;color:var(--primary-dark);padding:8px 0;}
-
-  /* LOADING / ERROR */
-  .loading{display:flex;flex-direction:column;align-items:center;justify-content:center;padding:70px 20px;gap:14px;}
-  .spinner{width:36px;height:36px;border:3px solid var(--border2);border-top-color:var(--primary);border-radius:50%;animation:spin .8s linear infinite;}
-  @keyframes spin{to{transform:rotate(360deg)}}
-  .err-card{background:var(--red-bg);border:1px solid rgba(201,79,106,.25);border-radius:var(--r);padding:20px;margin:20px;text-align:center;}
-  .err-card p{font-size:13px;color:var(--red);margin-bottom:12px;line-height:1.5;}
-  .retry-btn{background:var(--red);border:none;border-radius:var(--rs);padding:9px 20px;color:white;font-family:'DM Sans',sans-serif;font-size:14px;font-weight:500;cursor:pointer;}
-
-  /* TOAST */
-  .toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%) translateY(16px);background:var(--primary-dark);color:var(--white);font-size:13px;font-weight:500;padding:9px 20px;border-radius:999px;opacity:0;transition:all .22s;pointer-events:none;z-index:999;white-space:nowrap;}
-  .toast.show{opacity:1;transform:translateX(-50%) translateY(0);}
-
-  /* LOGIN */
-  .login-screen{position:fixed;inset:0;background:var(--bg);z-index:999;display:flex;align-items:center;justify-content:center;padding:20px;}
-  .login-box{background:var(--white);border:1.5px solid var(--border2);border-radius:24px;padding:36px 24px;width:100%;max-width:340px;text-align:center;}
-  .login-icon{font-size:42px;margin-bottom:12px;}
-  .login-title{font-family:'Playfair Display',serif;font-size:26px;color:var(--primary-dark);margin-bottom:4px;}
-  .login-sub{font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:.07em;margin-bottom:28px;}
-  .pass-input{width:100%;background:var(--bg2);border:1.5px solid var(--border2);border-radius:var(--rs);padding:13px 16px;color:var(--text);font-family:'DM Sans',sans-serif;font-size:15px;outline:none;text-align:center;margin-bottom:8px;}
-  .pass-input:focus{border-color:var(--primary);}
-  .pass-err{font-size:12px;color:var(--red);margin-bottom:8px;display:none;}
-  .pass-btn{width:100%;background:var(--primary);border:none;border-radius:var(--rs);padding:13px;color:var(--white);font-family:'DM Sans',sans-serif;font-size:15px;font-weight:500;cursor:pointer;}
-  .pass-btn:active{background:var(--primary-dark);}
 
   .email-section{background:var(--white);border:1px solid var(--border2);border-radius:var(--r);padding:14px;margin-bottom:8px;}
   .email-wrap{display:flex;gap:8px;}
@@ -169,6 +101,62 @@
   .send-btn:disabled{background:var(--muted);cursor:not-allowed;}
   .msg-ok{font-size:12px;color:var(--green);margin-top:8px;padding:8px 12px;background:var(--green-bg);border-radius:var(--rs);border:1px solid var(--green-border);}
   .msg-err{font-size:12px;color:var(--red);margin-top:8px;padding:8px 12px;background:var(--red-bg);border-radius:var(--rs);}
+
+  .reset-btn{width:100%;background:var(--red-bg);border:1px solid rgba(201,79,106,.2);border-radius:var(--rs);padding:11px;color:var(--red);font-family:'DM Sans',sans-serif;font-size:13px;font-weight:500;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:6px;margin-top:4px;}
+
+  .select-wrap{position:relative;margin-bottom:12px;}
+  select{width:100%;background:var(--white);border:1.5px solid var(--border2);border-radius:var(--rs);padding:12px 32px 12px 14px;color:var(--text);font-family:'DM Sans',sans-serif;font-size:14px;outline:none;appearance:none;cursor:pointer;}
+  .sel-arrow{position:absolute;right:12px;top:50%;transform:translateY(-50%);pointer-events:none;color:var(--muted);font-size:12px;}
+  .card{background:var(--white);border:1px solid var(--border2);border-radius:var(--r);padding:14px;margin-bottom:10px;}
+  .card-title{font-size:10px;font-weight:600;color:var(--primary);text-transform:uppercase;letter-spacing:.08em;margin-bottom:12px;}
+  .d-row{display:flex;justify-content:space-between;align-items:center;padding:9px 0;border-bottom:1px solid var(--border);}
+  .d-row:last-child{border-bottom:none;padding-bottom:0;}
+  .d-lbl{font-size:12px;color:var(--muted);}
+  .d-val{font-size:14px;font-weight:600;color:var(--text);}
+  .d-val.purple{color:var(--primary);}
+  .add-full-btn{width:100%;background:var(--primary);border:none;border-radius:var(--rs);padding:12px;color:var(--white);font-family:'DM Sans',sans-serif;font-size:14px;font-weight:500;cursor:pointer;margin-top:12px;}
+  .add-full-btn:active{background:var(--primary-dark);}
+  .curs-row{display:flex;gap:12px;align-items:flex-end;}
+  .curs-group{flex:1;}
+  .curs-lbl{font-size:11px;color:var(--muted);margin-bottom:5px;}
+  .curs-input{width:100%;background:var(--bg2);border:1.5px solid var(--border2);border-radius:var(--rs);padding:10px 12px;color:var(--text);font-family:'DM Sans',sans-serif;font-size:15px;font-weight:600;outline:none;}
+  .curs-input:focus{border-color:var(--primary);}
+  .curs-val{font-family:'Playfair Display',serif;font-size:20px;color:var(--primary-dark);padding:8px 0;}
+
+  /* OFERTE */
+  .offer-item{background:var(--white);border:1px solid var(--border2);border-radius:var(--r);padding:12px 14px;margin-bottom:8px;}
+  .offer-top{display:flex;justify-content:space-between;align-items:center;margin-bottom:6px;}
+  .offer-email{font-size:13px;font-weight:500;color:var(--primary-dark);}
+  .offer-total{font-size:14px;font-weight:700;color:var(--primary);}
+  .offer-date{font-size:11px;color:var(--muted);}
+  .offer-produse{font-size:11px;color:var(--text2);margin-top:4px;line-height:1.4;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+  .offers-empty{text-align:center;padding:32px 16px;color:var(--muted);font-size:13px;border:1.5px dashed var(--border2);border-radius:var(--r);background:var(--white);}
+  .export-btn{width:100%;background:var(--bg2);border:1px solid var(--border2);border-radius:var(--rs);padding:11px;color:var(--primary-dark);font-family:'DM Sans',sans-serif;font-size:13px;font-weight:500;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:6px;margin-bottom:12px;}
+
+  .loading{display:flex;flex-direction:column;align-items:center;justify-content:center;padding:70px 20px;gap:14px;}
+  .spinner{width:36px;height:36px;border:3px solid var(--border2);border-top-color:var(--primary);border-radius:50%;animation:spin .8s linear infinite;}
+  @keyframes spin{to{transform:rotate(360deg)}}
+  .err-card{background:var(--red-bg);border:1px solid rgba(201,79,106,.25);border-radius:var(--r);padding:20px;margin:20px;text-align:center;}
+  .err-card p{font-size:13px;color:var(--red);margin-bottom:12px;line-height:1.5;}
+  .retry-btn{background:var(--red);border:none;border-radius:var(--rs);padding:9px 20px;color:white;font-family:'DM Sans',sans-serif;font-size:14px;font-weight:500;cursor:pointer;}
+
+  .toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%) translateY(16px);background:var(--primary-dark);color:var(--white);font-size:13px;font-weight:500;padding:9px 20px;border-radius:999px;opacity:0;transition:all .22s;pointer-events:none;z-index:999;white-space:nowrap;}
+  .toast.show{opacity:1;transform:translateX(-50%) translateY(0);}
+
+  .login-screen{position:fixed;inset:0;background:var(--bg);z-index:999;display:flex;align-items:center;justify-content:center;padding:20px;}
+  .login-box{background:var(--white);border:1.5px solid var(--border2);border-radius:24px;padding:36px 24px;width:100%;max-width:340px;text-align:center;}
+  .login-icon{font-size:42px;margin-bottom:12px;}
+  .login-title{font-family:'Playfair Display',serif;font-size:26px;color:var(--primary-dark);margin-bottom:4px;}
+  .login-sub{font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:.07em;margin-bottom:28px;}
+  .login-field{margin-bottom:10px;}
+  .login-field input{width:100%;background:var(--bg2);border:1.5px solid var(--border2);border-radius:var(--rs);padding:13px 16px;color:var(--text);font-family:'DM Sans',sans-serif;font-size:15px;outline:none;text-align:center;}
+  .login-field input:focus{border-color:var(--primary);}
+  .login-field input::placeholder{color:var(--muted);}
+  .pass-err{font-size:12px;color:var(--red);margin-bottom:10px;display:none;padding:8px;background:var(--red-bg);border-radius:var(--rs);}
+  .pass-btn{width:100%;background:var(--primary);border:none;border-radius:var(--rs);padding:13px;color:var(--white);font-family:'DM Sans',sans-serif;font-size:15px;font-weight:500;cursor:pointer;}
+  .pass-btn:active{background:var(--primary-dark);}
+  .pass-btn:disabled{background:var(--muted);}
+
   input[type=number]::-webkit-inner-spin-button{-webkit-appearance:none;}
   ::-webkit-scrollbar{width:3px;}
   ::-webkit-scrollbar-thumb{background:var(--primary-light);border-radius:2px;}
@@ -181,16 +169,20 @@
     <div class="login-icon">🌿</div>
     <div class="login-title">Young Living</div>
     <div class="login-sub">Calculator Oferte</div>
-    <input type="password" class="pass-input" id="passInput" placeholder="Cod de acces" onkeydown="if(event.key==='Enter')checkPass()">
-    <div class="pass-err" id="passErr">Cod incorect. Încearcă din nou.</div>
-    <button class="pass-btn" onclick="checkPass()">Intră →</button>
+    <div class="login-field">
+      <input type="text" id="loginUser" placeholder="Utilizator" onkeydown="if(event.key==='Enter')document.getElementById('loginPass').focus()">
+    </div>
+    <div class="login-field">
+      <input type="password" id="loginPass" placeholder="Parolă" onkeydown="if(event.key==='Enter')doLogin()">
+    </div>
+    <div class="pass-err" id="passErr"></div>
+    <button class="pass-btn" id="loginBtn" onclick="doLogin()">Intră →</button>
   </div>
 </div>
 
 <div class="toast" id="toast"></div>
 
 <div class="app">
-
   <div class="hdr">
     <div class="hdr-top">
       <div class="logo">
@@ -200,22 +192,29 @@
           <div class="logo-sub">Calculator Oferte</div>
         </div>
       </div>
-      <div class="rate-pill" id="ratePill">Se încarcă...</div>
+      <div style="display:flex;gap:8px;align-items:center;">
+        <div class="rate-pill" id="ratePill">Se încarcă...</div>
+        <div class="user-pill" id="userPill" onclick="logout()" style="display:none">
+          <span id="userNume">—</span>
+          <span style="font-size:10px;color:var(--muted)">ieși</span>
+        </div>
+      </div>
     </div>
     <div class="tabs">
       <button class="tab active" onclick="switchTab('search')">🔍 Caută</button>
       <button class="tab" onclick="switchTab('cart')">🛒 Coș <span class="badge" id="cartBadge">0</span></button>
+      <button class="tab" onclick="switchTab('offers')">📋 Oferte</button>
       <button class="tab" onclick="switchTab('rapid')">📦 Rapid</button>
     </div>
   </div>
 
   <div class="loading" id="loadingState">
     <div class="spinner"></div>
-    <div style="color:var(--muted);font-size:14px">Se încarcă produsele...</div>
+    <div style="color:var(--muted);font-size:14px">Se încarcă...</div>
   </div>
 
   <div class="err-card" id="errorState" style="display:none">
-    <p>⚠️ Nu s-au putut încărca produsele.<br>Verifică conexiunea și încearcă din nou.</p>
+    <p>⚠️ Nu s-au putut încărca produsele.</p>
     <button class="retry-btn" onclick="loadProducts()">🔄 Încearcă din nou</button>
   </div>
 
@@ -235,14 +234,25 @@
     <div id="totalsWrap" style="display:none">
       <div class="totals" id="totalsCard"></div>
       <div class="email-section">
-        <div class="card-title" style="margin-bottom:8px">📧 Trimite sumar pe email</div>
+        <div class="card-title" style="margin-bottom:8px">📧 Trimite sumar clientului</div>
         <div class="email-wrap">
-          <input type="email" class="email-input" id="emailInput" placeholder="adresa@email.com">
-          <button class="send-btn" id="sendBtn" onclick="sendEmail()">Trimite</button>
+          <input type="email" class="email-input" id="emailInput" placeholder="email@client.com">
+          <button class="send-btn" id="sendBtn" onclick="sendOffer()">Trimite</button>
         </div>
         <div id="emailMsg" style="display:none"></div>
       </div>
       <button class="reset-btn" onclick="resetCart()">🗑️ Golește coșul</button>
+    </div>
+  </div>
+
+  <!-- OFERTE -->
+  <div class="sec" id="tab-offers">
+    <button class="export-btn" onclick="exportEmails()">⬇️ Exportă lista de emailuri (CSV)</button>
+    <div id="offersList">
+      <div class="offers-empty">
+        <div style="font-size:32px;margin-bottom:8px">📋</div>
+        <div>Nu ai trimis oferte încă</div>
+      </div>
     </div>
   </div>
 
@@ -278,29 +288,76 @@
       </div>
     </div>
   </div>
-
 </div>
 
 <script>
 const PROXY_URL = 'https://script.google.com/macros/s/AKfycbzB5wamxipAZjn4RdtRh0KNI_aPFpAGrr8oSsWftke_fvsVnLhq2vfr5By-_sHgqCpymA/exec';
 let products=[], cart=[], cursAuto=5.2444, cursActive=5.2444;
+let currentUser = null;
 
-function checkPass() {
-  const val = document.getElementById('passInput').value.trim().toLowerCase();
-  if (val==='abundance') {
-    document.getElementById('loginScreen').style.display='none';
-    sessionStorage.setItem('yl_auth','1');
-  } else {
-    document.getElementById('passErr').style.display='block';
-    document.getElementById('passInput').value='';
-    document.getElementById('passInput').focus();
+// ── LOGIN ─────────────────────────────────────────────────
+async function doLogin() {
+  const username = document.getElementById('loginUser').value.trim();
+  const parola = document.getElementById('loginPass').value.trim();
+  const btn = document.getElementById('loginBtn');
+  const errEl = document.getElementById('passErr');
+
+  if (!username || !parola) {
+    errEl.textContent = 'Completează utilizatorul și parola.';
+    errEl.style.display = 'block'; return;
   }
-}
-if (sessionStorage.getItem('yl_auth')==='1') document.getElementById('loginScreen').style.display='none';
 
+  btn.disabled = true; btn.textContent = 'Se verifică...';
+  errEl.style.display = 'none';
+
+  try {
+    const res = await fetch(PROXY_URL, {
+      method: 'POST',
+      headers: {'Content-Type':'text/plain'},
+      body: JSON.stringify({ action: 'login', username, parola })
+    });
+    const data = await res.json();
+    if (data.status === 'ok') {
+      currentUser = { username: data.username, nume: data.nume };
+      sessionStorage.setItem('yl_user', JSON.stringify(currentUser));
+      document.getElementById('loginScreen').style.display = 'none';
+      document.getElementById('userNume').textContent = data.nume;
+      document.getElementById('userPill').style.display = 'flex';
+      loadOffers();
+    } else {
+      errEl.textContent = data.message || 'Eroare la autentificare.';
+      errEl.style.display = 'block';
+    }
+  } catch(e) {
+    errEl.textContent = 'Eroare de conexiune. Încearcă din nou.';
+    errEl.style.display = 'block';
+  }
+  btn.disabled = false; btn.textContent = 'Intră →';
+}
+
+function logout() {
+  if (!confirm('Ieși din cont?')) return;
+  currentUser = null;
+  sessionStorage.removeItem('yl_user');
+  document.getElementById('loginScreen').style.display = 'flex';
+  document.getElementById('userPill').style.display = 'none';
+  document.getElementById('loginUser').value = '';
+  document.getElementById('loginPass').value = '';
+}
+
+// restore session
+const saved = sessionStorage.getItem('yl_user');
+if (saved) {
+  currentUser = JSON.parse(saved);
+  document.getElementById('userNume').textContent = currentUser.nume;
+  document.getElementById('userPill').style.display = 'flex';
+  document.getElementById('loginScreen').style.display = 'none';
+}
+
+// ── LOAD PRODUCTS ─────────────────────────────────────────
 async function loadProducts() {
-  document.getElementById('loadingState').style.display='flex';
-  document.getElementById('errorState').style.display='none';
+  document.getElementById('loadingState').style.display = 'flex';
+  document.getElementById('errorState').style.display = 'none';
   try {
     const res = await fetch(PROXY_URL);
     if (!res.ok) throw new Error('HTTP '+res.status);
@@ -308,93 +365,75 @@ async function loadProducts() {
     products = data.filter(p=>p.name&&p.eur>0);
     const s = products.find(p=>p.ron>0&&p.eur>0);
     if (s) { cursAuto=parseFloat((s.ron/s.eur).toFixed(4)); cursActive=cursAuto; }
-    finishLoad();
+    document.getElementById('loadingState').style.display = 'none';
+    document.getElementById('cursActiv').textContent = cursActive.toFixed(4)+' RON';
+    document.getElementById('ratePill').textContent = '1€ = '+cursActive.toFixed(4)+' RON';
+    populateRapidSelect();
+    renderCart();
+    switchTab('search');
+    doSearch('');
+    if (currentUser) loadOffers();
   } catch(e) {
-    document.getElementById('loadingState').style.display='none';
-    document.getElementById('errorState').style.display='block';
+    document.getElementById('loadingState').style.display = 'none';
+    document.getElementById('errorState').style.display = 'block';
   }
 }
 
-function finishLoad() {
-  document.getElementById('loadingState').style.display='none';
-  document.getElementById('cursActiv').textContent=cursActive.toFixed(4)+' RON';
-  document.getElementById('ratePill').textContent='1€ = '+cursActive.toFixed(4)+' RON';
-  populateRapidSelect();
-  renderCart();
-  switchTab('search');
-  doSearch('');
-}
-
+// ── TABS ──────────────────────────────────────────────────
 function switchTab(name) {
-  ['search','cart','rapid'].forEach((t,i)=>{
+  ['search','cart','offers','rapid'].forEach((t,i)=>{
     document.getElementById('tab-'+t).classList.toggle('active',t===name);
     document.querySelectorAll('.tab')[i].classList.toggle('active',t===name);
   });
+  if (name==='offers') loadOffers();
 }
 
+// ── SEARCH ────────────────────────────────────────────────
 function doSearch(q) {
   document.getElementById('clearBtn').style.display=q?'block':'none';
   const matches=q.trim()
     ?products.filter(p=>p.name.toLowerCase().includes(q.toLowerCase())).slice(0,20)
     :products.slice(0,30);
   const el=document.getElementById('searchResults');
-  if (!matches.length) { el.innerHTML='<div class="results"><div class="no-res">Niciun rezultat pentru "'+q+'"</div></div>'; return; }
+  if(!matches.length){el.innerHTML='<div class="results"><div class="no-res">Niciun rezultat</div></div>';return;}
   el.innerHTML='<div class="results">'+matches.map(p=>{
     const inCart=cart.some(i=>i.name===p.name);
     return `<div class="res-row">
       <div class="res-info">
         <div class="res-name">${p.name}</div>
-        <div class="res-meta">
-          <span>🏷 ${p.cod}</span>
-          <span>⭐ ${p.pct} pct</span>
-          <span>€ ${p.eur.toFixed(2)}</span>
-        </div>
+        <div class="res-meta"><span>🏷 ${p.cod}</span><span>⭐ ${p.pct} pct</span><span>€ ${p.eur.toFixed(2)}</span></div>
       </div>
       <div class="res-price">${fmt(ron(p.eur))} RON</div>
-      <button class="add-btn ${inCart?'added':''}" onclick="addToCart('${esc(p.name)}')" aria-label="Adaugă în coș">${inCart?'✓':'+'}</button>
+      <button class="add-btn ${inCart?'added':''}" onclick="addToCart('${esc(p.name)}')" aria-label="Adaugă">${inCart?'✓':'+'}</button>
     </div>`;
   }).join('')+'</div>';
 }
 
-function clearSearch() {
-  document.getElementById('searchInput').value='';
-  document.getElementById('clearBtn').style.display='none';
-  doSearch('');
-}
+function clearSearch(){document.getElementById('searchInput').value='';document.getElementById('clearBtn').style.display='none';doSearch('');}
 
-function addToCart(name) {
+// ── CART ──────────────────────────────────────────────────
+function addToCart(name){
   const ex=cart.find(i=>i.name===name);
-  if (ex) { ex.qty++; }
-  else { const p=products.find(p=>p.name===name); if(p) cart.push({...p,qty:1,disc:0}); }
-  renderCart(); updateCartBadge();
-  doSearch(document.getElementById('searchInput').value);
-  showToast('✓ Adăugat în coș');
+  if(ex){ex.qty++;}else{const p=products.find(p=>p.name===name);if(p)cart.push({...p,qty:1,disc:0});}
+  renderCart();updateCartBadge();doSearch(document.getElementById('searchInput').value);showToast('✓ Adăugat în coș');
 }
+function removeFromCart(idx){cart.splice(idx,1);renderCart();updateCartBadge();doSearch(document.getElementById('searchInput').value);}
+function changeQty(idx,d){cart[idx].qty=Math.max(1,cart[idx].qty+d);renderCart();}
+function updateDisc(idx,val){cart[idx].disc=Math.min(100,Math.max(0,parseFloat(val)||0));renderCart();}
+function resetCart(){cart=[];renderCart();updateCartBadge();doSearch(document.getElementById('searchInput').value);}
+function updateCartBadge(){document.getElementById('cartBadge').textContent=cart.reduce((s,i)=>s+i.qty,0);}
 
-function removeFromCart(idx) {
-  cart.splice(idx,1); renderCart(); updateCartBadge();
-  doSearch(document.getElementById('searchInput').value);
-}
-
-function changeQty(idx,d) { cart[idx].qty=Math.max(1,cart[idx].qty+d); renderCart(); }
-function updateDisc(idx,val) { cart[idx].disc=Math.min(100,Math.max(0,parseFloat(val)||0)); renderCart(); }
-function resetCart() { cart=[]; renderCart(); updateCartBadge(); doSearch(document.getElementById('searchInput').value); }
-function updateCartBadge() { document.getElementById('cartBadge').textContent=cart.reduce((s,i)=>s+i.qty,0); }
-
-function renderCart() {
+function renderCart(){
   const el=document.getElementById('cartItems');
   const tw=document.getElementById('totalsWrap');
-  if (!cart.length) {
+  if(!cart.length){
     el.innerHTML=`<div class="cart-empty"><div class="cart-empty-icon">🛒</div><div style="font-size:15px;font-family:'Playfair Display',serif;color:var(--primary-dark);margin-bottom:4px">Coșul e gol</div><div>Caută produse și adaugă-le</div></div>`;
-    tw.style.display='none'; return;
+    tw.style.display='none';return;
   }
   el.innerHTML=cart.map((item,idx)=>{
-    const b=ron(item.eur), lb=b*item.qty, ld=lb*(item.disc/100), lt=lb-ld, hd=item.disc>0;
+    const b=ron(item.eur),lb=b*item.qty,ld=lb*(item.disc/100),lt=lb-ld,hd=item.disc>0;
     return `<div class="cart-item">
-      <div class="ci-top">
-        <div class="ci-name">${item.name}</div>
-        <button class="ci-remove" onclick="removeFromCart(${idx})" aria-label="Șterge">✕</button>
-      </div>
+      <div class="ci-top"><div class="ci-name">${item.name}</div><button class="ci-remove" onclick="removeFromCart(${idx})" aria-label="Șterge">✕</button></div>
       <div class="ci-controls">
         <div class="qty-wrap">
           <button class="qty-btn" onclick="changeQty(${idx},-1)">−</button>
@@ -416,13 +455,10 @@ function renderCart() {
 
   const sub=cart.reduce((s,i)=>s+ron(i.eur)*i.qty,0);
   const disc=cart.reduce((s,i)=>s+ron(i.eur)*i.qty*(i.disc/100),0);
-  const total=sub-disc;
-  const eur=cart.reduce((s,i)=>s+i.eur*i.qty*(1-i.disc/100),0);
-  const pct=cart.reduce((s,i)=>s+(i.pct||0)*i.qty,0);
-  const cnt=cart.reduce((s,i)=>s+i.qty,0);
-
+  const total=sub-disc,eur=cart.reduce((s,i)=>s+i.eur*i.qty*(1-i.disc/100),0);
+  const pct=cart.reduce((s,i)=>s+(i.pct||0)*i.qty,0),cnt=cart.reduce((s,i)=>s+i.qty,0);
   let rows=`<div class="t-row"><span class="lbl">Subtotal</span><span class="val">${fmt(sub)} RON</span></div>`;
-  if(disc>0) rows+=`<div class="t-row"><span class="lbl">Reduceri</span><span class="val saved">−${fmt(disc)} RON</span></div>`;
+  if(disc>0)rows+=`<div class="t-row"><span class="lbl">Reduceri</span><span class="val saved">−${fmt(disc)} RON</span></div>`;
   rows+=`<div class="t-row"><span class="lbl">Total Euro</span><span class="val">${eur.toFixed(2)} €</span></div>`;
   rows+=`<div class="t-row"><span class="lbl">Puncte ER</span><span class="val">${Math.round(pct)} pct</span></div>`;
   rows+=`<div class="t-row"><span class="lbl">Produse</span><span class="val">${cnt}</span></div>`;
@@ -431,100 +467,103 @@ function renderCart() {
   tw.style.display='block';
 }
 
-function populateRapidSelect() {
-  const sel=document.getElementById('rapidSel');
-  products.forEach(p=>{ const o=document.createElement('option'); o.value=p.name; o.textContent=p.name; sel.appendChild(o); });
+// ── SEND OFFER ────────────────────────────────────────────
+async function sendOffer(){
+  const email=document.getElementById('emailInput').value.trim();
+  const msgEl=document.getElementById('emailMsg');
+  const btn=document.getElementById('sendBtn');
+  if(!email||!email.includes('@')){msgEl.className='msg-err';msgEl.textContent='⚠️ Email invalid.';msgEl.style.display='block';return;}
+  if(!cart.length){msgEl.className='msg-err';msgEl.textContent='⚠️ Coșul e gol.';msgEl.style.display='block';return;}
+  btn.disabled=true;btn.textContent='Se trimite...';msgEl.style.display='none';
+  const sub=cart.reduce((s,i)=>s+ron(i.eur)*i.qty,0);
+  const disc=cart.reduce((s,i)=>s+ron(i.eur)*i.qty*(i.disc/100),0);
+  const total=(sub-disc).toFixed(2);
+  const totalEur=cart.reduce((s,i)=>s+i.eur*i.qty*(1-i.disc/100),0).toFixed(2);
+  try {
+    const res=await fetch(PROXY_URL,{method:'POST',headers:{'Content-Type':'text/plain'},
+      body:JSON.stringify({action:'sendOffer',username:currentUser.username,nume:currentUser.nume,email,cart,total,totalEur,curs:cursActive})});
+    const data=await res.json();
+    if(data.status==='ok'){
+      msgEl.className='msg-ok';msgEl.textContent='✓ Trimis la '+email;msgEl.style.display='block';
+      document.getElementById('emailInput').value='';
+      loadOffers();
+    } else throw new Error(data.message);
+  } catch(e){msgEl.className='msg-err';msgEl.textContent='⚠️ Eroare: '+e.message;msgEl.style.display='block';}
+  btn.disabled=false;btn.textContent='Trimite';
 }
 
-function showRapid() {
+// ── OFERTE ────────────────────────────────────────────────
+async function loadOffers(){
+  if(!currentUser)return;
+  try {
+    const res=await fetch(PROXY_URL,{method:'POST',headers:{'Content-Type':'text/plain'},
+      body:JSON.stringify({action:'getOffers',username:currentUser.username})});
+    const data=await res.json();
+    renderOffers(data.offers||[]);
+  } catch(e){}
+}
+
+function renderOffers(offers){
+  const el=document.getElementById('offersList');
+  if(!offers.length){
+    el.innerHTML='<div class="offers-empty"><div style="font-size:32px;margin-bottom:8px">📋</div><div>Nu ai trimis oferte încă</div></div>';
+    return;
+  }
+  el.innerHTML=offers.map(o=>`
+    <div class="offer-item">
+      <div class="offer-top">
+        <div class="offer-email">📧 ${o.email}</div>
+        <div class="offer-total">${o.total} RON</div>
+      </div>
+      <div class="offer-date">${o.data}</div>
+      <div class="offer-produse">${o.produse}</div>
+    </div>`).join('');
+}
+
+function exportEmails(){
+  if(!currentUser)return;
+  fetch(PROXY_URL,{method:'POST',headers:{'Content-Type':'text/plain'},
+    body:JSON.stringify({action:'getOffers',username:currentUser.username})})
+  .then(r=>r.json()).then(data=>{
+    const offers=data.offers||[];
+    if(!offers.length){showToast('Nu există oferte de exportat');return;}
+    const emails=[...new Set(offers.map(o=>o.email))];
+    const csv='Email\n'+emails.join('\n');
+    const a=document.createElement('a');
+    a.href='data:text/csv;charset=utf-8,'+encodeURIComponent(csv);
+    a.download='emailuri_'+currentUser.username+'.csv';
+    a.click();
+    showToast('✓ Exportat '+emails.length+' emailuri');
+  });
+}
+
+// ── RAPID ─────────────────────────────────────────────────
+function populateRapidSelect(){const sel=document.getElementById('rapidSel');products.forEach(p=>{const o=document.createElement('option');o.value=p.name;o.textContent=p.name;sel.appendChild(o);});}
+function showRapid(){
   const name=document.getElementById('rapidSel').value;
   const det=document.getElementById('rapidDetails');
-  if (!name) { det.style.display='none'; return; }
-  const p=products.find(x=>x.name===name); if(!p) return;
+  if(!name){det.style.display='none';return;}
+  const p=products.find(x=>x.name===name);if(!p)return;
   document.getElementById('rCod').textContent=p.cod||'—';
   document.getElementById('rEur').textContent=p.eur.toFixed(2)+' €';
   document.getElementById('rRon').textContent=fmt(ron(p.eur))+' RON';
   document.getElementById('rPct').textContent=p.pct||'—';
   det.style.display='block';
 }
-
-function addRapidToCart() {
-  const name=document.getElementById('rapidSel').value;
-  if(name) { addToCart(name); switchTab('cart'); }
-}
-
-function updateCurs() {
+function addRapidToCart(){const name=document.getElementById('rapidSel').value;if(name){addToCart(name);switchTab('cart');}}
+function updateCurs(){
   const val=parseFloat(document.getElementById('cursManual').value);
   cursActive=val>0?val:cursAuto;
   document.getElementById('cursActiv').textContent=cursActive.toFixed(4)+' RON';
   document.getElementById('ratePill').textContent='1€ = '+cursActive.toFixed(4)+' RON';
-  renderCart(); showRapid();
-  doSearch(document.getElementById('searchInput').value);
+  renderCart();showRapid();doSearch(document.getElementById('searchInput').value);
 }
 
 let toastTimer;
-function showToast(msg) {
-  const t=document.getElementById('toast');
-  t.textContent=msg; t.classList.add('show');
-  clearTimeout(toastTimer);
-  toastTimer=setTimeout(()=>t.classList.remove('show'),1800);
-}
-
-function ron(eur) { return parseFloat((eur*cursActive).toFixed(2)); }
-function fmt(n) { return Number(n).toLocaleString('ro-RO',{minimumFractionDigits:2,maximumFractionDigits:2}); }
-function esc(s) { return s.replace(/'/g,"\\'"); }
-
-async function sendEmail() {
-  const email = document.getElementById('emailInput').value.trim();
-  const msgEl = document.getElementById('emailMsg');
-  const btn = document.getElementById('sendBtn');
-
-  if (!email || !email.includes('@')) {
-    msgEl.className = 'msg-err';
-    msgEl.textContent = '⚠️ Introdu o adresă de email validă.';
-    msgEl.style.display = 'block';
-    return;
-  }
-  if (!cart.length) {
-    msgEl.className = 'msg-err';
-    msgEl.textContent = '⚠️ Coșul e gol.';
-    msgEl.style.display = 'block';
-    return;
-  }
-
-  btn.disabled = true;
-  btn.textContent = 'Se trimite...';
-  msgEl.style.display = 'none';
-
-  const sub = cart.reduce((s,i)=>s+ron(i.eur)*i.qty,0);
-  const disc = cart.reduce((s,i)=>s+ron(i.eur)*i.qty*(i.disc/100),0);
-  const total = (sub-disc).toFixed(2);
-  const totalEur = cart.reduce((s,i)=>s+i.eur*i.qty*(1-i.disc/100),0).toFixed(2);
-
-  try {
-    const res = await fetch(PROXY_URL, {
-      method: 'POST',
-      headers: { 'Content-Type': 'text/plain' },
-      body: JSON.stringify({ email, cart, total, totalEur, curs: cursActive })
-    });
-    const data = await res.json();
-    if (data.status === 'ok') {
-      msgEl.className = 'msg-ok';
-      msgEl.textContent = '✓ Sumarul a fost trimis la ' + email;
-      msgEl.style.display = 'block';
-      document.getElementById('emailInput').value = '';
-    } else {
-      throw new Error(data.msg || 'Eroare necunoscută');
-    }
-  } catch(e) {
-    msgEl.className = 'msg-err';
-    msgEl.textContent = '⚠️ Nu s-a putut trimite. Încearcă din nou.';
-    msgEl.style.display = 'block';
-  }
-
-  btn.disabled = false;
-  btn.textContent = 'Trimite';
-}
+function showToast(msg){const t=document.getElementById('toast');t.textContent=msg;t.classList.add('show');clearTimeout(toastTimer);toastTimer=setTimeout(()=>t.classList.remove('show'),1800);}
+function ron(eur){return parseFloat((eur*cursActive).toFixed(2));}
+function fmt(n){return Number(n).toLocaleString('ro-RO',{minimumFractionDigits:2,maximumFractionDigits:2});}
+function esc(s){return s.replace(/'/g,"\\'");}
 
 loadProducts();
 </script>
