@@ -159,6 +159,16 @@
   .pass-btn{width:100%;background:var(--primary);border:none;border-radius:var(--rs);padding:13px;color:var(--white);font-family:'DM Sans',sans-serif;font-size:15px;font-weight:500;cursor:pointer;}
   .pass-btn:active{background:var(--primary-dark);}
 
+  .email-section{background:var(--white);border:1px solid var(--border2);border-radius:var(--r);padding:14px;margin-bottom:8px;}
+  .email-wrap{display:flex;gap:8px;}
+  .email-input{flex:1;background:var(--bg2);border:1.5px solid var(--border2);border-radius:var(--rs);padding:10px 14px;color:var(--text);font-family:'DM Sans',sans-serif;font-size:14px;outline:none;}
+  .email-input:focus{border-color:var(--primary);}
+  .email-input::placeholder{color:var(--muted);}
+  .send-btn{background:var(--primary);border:none;border-radius:var(--rs);padding:10px 16px;color:var(--white);font-family:'DM Sans',sans-serif;font-size:13px;font-weight:500;cursor:pointer;white-space:nowrap;flex-shrink:0;}
+  .send-btn:active{background:var(--primary-dark);}
+  .send-btn:disabled{background:var(--muted);cursor:not-allowed;}
+  .msg-ok{font-size:12px;color:var(--green);margin-top:8px;padding:8px 12px;background:var(--green-bg);border-radius:var(--rs);border:1px solid var(--green-border);}
+  .msg-err{font-size:12px;color:var(--red);margin-top:8px;padding:8px 12px;background:var(--red-bg);border-radius:var(--rs);}
   input[type=number]::-webkit-inner-spin-button{-webkit-appearance:none;}
   ::-webkit-scrollbar{width:3px;}
   ::-webkit-scrollbar-thumb{background:var(--primary-light);border-radius:2px;}
@@ -224,6 +234,14 @@
     <div id="cartItems"></div>
     <div id="totalsWrap" style="display:none">
       <div class="totals" id="totalsCard"></div>
+      <div class="email-section">
+        <div class="card-title" style="margin-bottom:8px">📧 Trimite sumar pe email</div>
+        <div class="email-wrap">
+          <input type="email" class="email-input" id="emailInput" placeholder="adresa@email.com">
+          <button class="send-btn" id="sendBtn" onclick="sendEmail()">Trimite</button>
+        </div>
+        <div id="emailMsg" style="display:none"></div>
+      </div>
       <button class="reset-btn" onclick="resetCart()">🗑️ Golește coșul</button>
     </div>
   </div>
@@ -455,6 +473,58 @@ function showToast(msg) {
 function ron(eur) { return parseFloat((eur*cursActive).toFixed(2)); }
 function fmt(n) { return Number(n).toLocaleString('ro-RO',{minimumFractionDigits:2,maximumFractionDigits:2}); }
 function esc(s) { return s.replace(/'/g,"\\'"); }
+
+async function sendEmail() {
+  const email = document.getElementById('emailInput').value.trim();
+  const msgEl = document.getElementById('emailMsg');
+  const btn = document.getElementById('sendBtn');
+
+  if (!email || !email.includes('@')) {
+    msgEl.className = 'msg-err';
+    msgEl.textContent = '⚠️ Introdu o adresă de email validă.';
+    msgEl.style.display = 'block';
+    return;
+  }
+  if (!cart.length) {
+    msgEl.className = 'msg-err';
+    msgEl.textContent = '⚠️ Coșul e gol.';
+    msgEl.style.display = 'block';
+    return;
+  }
+
+  btn.disabled = true;
+  btn.textContent = 'Se trimite...';
+  msgEl.style.display = 'none';
+
+  const sub = cart.reduce((s,i)=>s+ron(i.eur)*i.qty,0);
+  const disc = cart.reduce((s,i)=>s+ron(i.eur)*i.qty*(i.disc/100),0);
+  const total = (sub-disc).toFixed(2);
+  const totalEur = cart.reduce((s,i)=>s+i.eur*i.qty*(1-i.disc/100),0).toFixed(2);
+
+  try {
+    const res = await fetch(PROXY_URL, {
+      method: 'POST',
+      headers: { 'Content-Type': 'text/plain' },
+      body: JSON.stringify({ email, cart, total, totalEur, curs: cursActive })
+    });
+    const data = await res.json();
+    if (data.status === 'ok') {
+      msgEl.className = 'msg-ok';
+      msgEl.textContent = '✓ Sumarul a fost trimis la ' + email;
+      msgEl.style.display = 'block';
+      document.getElementById('emailInput').value = '';
+    } else {
+      throw new Error(data.msg || 'Eroare necunoscută');
+    }
+  } catch(e) {
+    msgEl.className = 'msg-err';
+    msgEl.textContent = '⚠️ Nu s-a putut trimite. Încearcă din nou.';
+    msgEl.style.display = 'block';
+  }
+
+  btn.disabled = false;
+  btn.textContent = 'Trimite';
+}
 
 loadProducts();
 </script>
