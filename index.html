@@ -348,6 +348,7 @@
 <script>
 const PROXY_URL = 'https://script.google.com/macros/s/AKfycbzB5wamxipAZjn4RdtRh0KNI_aPFpAGrr8oSsWftke_fvsVnLhq2vfr5By-_sHgqCpymA/exec';
 let products=[], cart=[], cursAuto=5.2444, cursActive=5.2444, ghiduri={};
+let offersLoaded=false, contactsLoaded=false;
 let currentUser = null;
 
 // ── LOGIN ─────────────────────────────────────────────────
@@ -433,7 +434,6 @@ async function loadProducts() {
     renderCart();
     switchTab('search');
     doSearch('');
-    if (currentUser) loadOffers();
   } catch(e) {
     document.getElementById('loadingState').style.display = 'none';
     document.getElementById('errorState').style.display = 'block';
@@ -446,8 +446,8 @@ function switchTab(name) {
     document.getElementById('tab-'+t).classList.toggle('active',t===name);
     document.querySelectorAll('.tab')[i].classList.toggle('active',t===name);
   });
-  if (name==='offers') loadOffers();
-  if (name==='contacts') loadContacts();
+  if (name==='offers' && !offersLoaded) loadOffers();
+  if (name==='contacts' && !contactsLoaded) loadContacts();
 }
 
 // ── SEARCH ────────────────────────────────────────────────
@@ -605,6 +605,7 @@ async function loadContacts() {
     const data = await res.json();
     allContacts = data.contacts || [];
     renderContacts();
+    contactsLoaded = true;
   } catch(e) {
     el.innerHTML = '<div style="text-align:center;padding:20px;color:var(--red);font-size:13px">Eroare la încărcare</div>';
   }
@@ -656,6 +657,7 @@ async function setStatus(email, newStatus) {
       method: 'POST', headers: {'Content-Type':'text/plain'},
       body: JSON.stringify({ action: 'updateStatus', username: currentUser.username, email, newStatus })
     });
+    contactsLoaded=false;
     await loadContacts();
     showToast('✓ Status actualizat');
   } catch(e) {
@@ -697,7 +699,7 @@ async function sendOffer(){
     if(data.status==='ok'){
       msgEl.className='msg-ok';msgEl.textContent='✓ Trimis la '+email;msgEl.style.display='block';
       document.getElementById('emailInput').value='';
-      loadOffers();
+      offersLoaded=false; contactsLoaded=false;
     } else throw new Error(data.message);
   } catch(e){msgEl.className='msg-err';msgEl.textContent='⚠️ Eroare: '+e.message;msgEl.style.display='block';}
   btn.disabled=false;btn.textContent='Trimite';
@@ -711,6 +713,7 @@ async function loadOffers(){
       body:JSON.stringify({action:'getOffers',username:currentUser.username})});
     const data=await res.json();
     renderOffers(data.offers||[]);
+  offersLoaded = true;
   } catch(e){}
 }
 
