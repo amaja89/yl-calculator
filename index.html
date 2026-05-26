@@ -367,10 +367,11 @@ async function doLogin() {
   errEl.style.display = 'none';
 
   try {
+    // Login + produse intr-un singur request
     const res = await fetch(PROXY_URL, {
       method: 'POST',
       headers: {'Content-Type':'text/plain'},
-      body: JSON.stringify({ action: 'login', username, parola })
+      body: JSON.stringify({ action: 'loginAndLoad', username, parola })
     });
     const data = await res.json();
     if (data.status === 'ok') {
@@ -379,7 +380,20 @@ async function doLogin() {
       document.getElementById('loginScreen').style.display = 'none';
       document.getElementById('userNume').textContent = data.nume;
       document.getElementById('userPill').style.display = 'flex';
-      loadOffers();
+      // Use products from login response
+      if (data.products) {
+        products = data.products.filter(p=>p.name&&p.eur>0);
+        ghiduri = data.ghiduri || {};
+        const s = products.find(p=>p.ron>0&&p.eur>0);
+        if (s) { cursAuto=parseFloat((s.ron/s.eur).toFixed(4)); cursActive=cursAuto; }
+        document.getElementById('loadingState').style.display='none';
+        document.getElementById('cursActiv').textContent=cursActive.toFixed(4)+' RON';
+        document.getElementById('ratePill').textContent='1€ = '+cursActive.toFixed(4)+' RON';
+        populateRapidSelect();
+        renderCart();
+        switchTab('search');
+        doSearch('');
+      }
     } else {
       errEl.textContent = data.message || 'Eroare la autentificare.';
       errEl.style.display = 'block';
@@ -779,7 +793,8 @@ function ron(eur){return parseFloat((eur*cursActive).toFixed(2));}
 function fmt(n){return Number(n).toLocaleString('ro-RO',{minimumFractionDigits:2,maximumFractionDigits:2});}
 function esc(s){return s.replace(/'/g,"\\'");}
 
-loadProducts();
+// Products loaded after login
+document.getElementById('loadingState').style.display='none';
 </script>
 </body>
 </html>
