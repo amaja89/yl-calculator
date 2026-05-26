@@ -266,6 +266,17 @@
 
   .loading-overlay{position:fixed;inset:0;background:rgba(253,250,255,0.88);z-index:500;display:none;flex-direction:column;align-items:center;justify-content:center;gap:14px;backdrop-filter:blur(2px);}
   .loading-overlay.show{display:flex;}
+  .custom-form{background:var(--white);border:1.5px dashed var(--border2);border-radius:var(--r);padding:14px;margin-bottom:8px;display:none;}
+  .custom-form.open{display:block;}
+  .custom-form-title{font-size:12px;font-weight:600;color:var(--primary);text-transform:uppercase;letter-spacing:.06em;margin-bottom:12px;}
+  .custom-row{display:flex;gap:8px;margin-bottom:8px;}
+  .custom-input{flex:1;background:var(--bg2);border:1.5px solid var(--border2);border-radius:var(--rs);padding:9px 12px;color:var(--text);font-family:'DM Sans',sans-serif;font-size:13px;outline:none;}
+  .custom-input:focus{border-color:var(--primary);}
+  .custom-input::placeholder{color:var(--muted);}
+  .custom-add-btn{background:var(--primary);border:none;border-radius:var(--rs);padding:9px 14px;color:var(--white);font-family:'DM Sans',sans-serif;font-size:13px;font-weight:500;cursor:pointer;white-space:nowrap;}
+  .custom-add-btn:active{background:var(--primary-dark);}
+  .custom-toggle-btn{width:100%;background:var(--bg2);border:1px solid var(--border2);border-radius:var(--rs);padding:10px;color:var(--text2);font-family:'DM Sans',sans-serif;font-size:13px;font-weight:500;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:6px;margin-bottom:8px;}
+  .custom-toggle-btn:active{background:var(--bg3);}
   input[type=number]::-webkit-inner-spin-button{-webkit-appearance:none;}
   ::-webkit-scrollbar{width:4px;}
   ::-webkit-scrollbar-thumb{background:var(--primary-light);border-radius:2px;}
@@ -471,6 +482,19 @@
         <div id="cartItemsD"></div>
         <div id="totalsWrapD" style="display:none">
           <div class="totals" id="totalsCardD"></div>
+          <button class="custom-toggle-btn" onclick="toggleCustomForm()">✨ Adaugă produs special</button>
+          <div class="custom-form" id="customForm">
+            <div class="custom-form-title">✨ Produs special / import</div>
+            <div class="custom-row">
+              <input type="text" class="custom-input" id="customName" placeholder="Numele produsului" style="flex:2">
+            </div>
+            <div class="custom-row">
+              <input type="number" class="custom-input" id="customPrice" placeholder="Preț RON" min="0" step="0.01">
+              <input type="number" class="custom-input" id="customQty" placeholder="Cant." min="1" value="1" style="width:70px;flex:none">
+              <input type="number" class="custom-input" id="customDisc" placeholder="Disc %" min="0" max="100" style="width:80px;flex:none">
+              <button class="custom-add-btn" onclick="addCustomProduct()">+ Adaugă</button>
+            </div>
+          </div>
           <button class="guide-btn" onclick="toggleGuide()">📖 Generează ghid produse</button>
           <div class="guide-preview" id="guidePreview">
             <div class="guide-preview-title">📖 Ghid produse din coș</div>
@@ -528,6 +552,7 @@
     <div id="cartItemsM"></div>
     <div id="totalsWrapM" style="display:none">
       <div class="totals" id="totalsCardM"></div>
+      <button class="custom-toggle-btn" onclick="toggleCustomForm()">✨ Adaugă produs special</button>
       <button class="guide-btn" onclick="toggleGuide()">📖 Generează ghid produse</button>
       <div class="guide-preview" id="guidePreviewM" style="display:none">
         <div class="guide-preview-title">📖 Ghid produse din coș</div>
@@ -759,7 +784,7 @@ function updateCartBadges(){
 
 function renderCart(){
   const cartHtml=cart.length?cart.map((item,idx)=>{
-    const b=ron(item.eur),lb=b*item.qty,ld=lb*(item.disc/100),lt=lb-ld,hd=item.disc>0;
+    const b=ronItem(item),lb=b*item.qty,ld=lb*(item.disc/100),lt=lb-ld,hd=item.disc>0;
     return`<div class="cart-item">
       <div class="ci-top"><div class="ci-name">${item.name}</div><button class="ci-remove" onclick="removeFromCart(${idx})">✕</button></div>
       <div class="ci-controls">
@@ -781,9 +806,9 @@ function renderCart(){
     </div>`;
   }).join(''):`<div class="cart-empty"><div class="cart-empty-icon">🛒</div><div style="font-size:15px;font-family:'Playfair Display',serif;color:var(--primary-dark);margin-bottom:4px">Coșul e gol</div><div>Caută produse și adaugă-le</div></div>`;
 
-  const sub=cart.reduce((s,i)=>s+ron(i.eur)*i.qty,0);
-  const disc=cart.reduce((s,i)=>s+ron(i.eur)*i.qty*(i.disc/100),0);
-  const total=sub-disc,eur=cart.reduce((s,i)=>s+i.eur*i.qty*(1-i.disc/100),0);
+  const sub=cart.reduce((s,i)=>s+ronItem(i)*i.qty,0);
+  const disc=cart.reduce((s,i)=>s+ronItem(i)*i.qty*(i.disc/100),0);
+  const total=sub-disc,eur=cart.reduce((s,i)=>s+(i.isCustom?0:i.eur)*i.qty*(1-i.disc/100),0);
   const pct=cart.reduce((s,i)=>s+(i.pct||0)*i.qty,0),cnt=cart.reduce((s,i)=>s+i.qty,0);
   let rows=`<div class="t-row"><span class="lbl">Subtotal</span><span class="val">${fmt(sub)} RON</span></div>`;
   if(disc>0)rows+=`<div class="t-row"><span class="lbl">Reduceri</span><span class="val saved">−${fmt(disc)} RON</span></div>`;
@@ -829,6 +854,47 @@ function renderGuide(){
   ['guideContent','guideContentM'].forEach(id=>{const el=document.getElementById(id);if(el)el.innerHTML=html;});
 }
 
+// ── CUSTOM PRODUCT ────────────────────────────────────────
+function toggleCustomForm() {
+  const form = document.getElementById('customForm');
+  if (form) form.classList.toggle('open');
+}
+
+function addCustomProduct() {
+  const name = document.getElementById('customName').value.trim();
+  const price = parseFloat(document.getElementById('customPrice').value);
+  const qty = parseInt(document.getElementById('customQty').value) || 1;
+  const disc = Math.min(100, Math.max(0, parseFloat(document.getElementById('customDisc').value) || 0));
+
+  if (!name) { showToast('⚠️ Introdu numele produsului'); return; }
+  if (!price || price <= 0) { showToast('⚠️ Introdu un preț valid'); return; }
+
+  // Custom products have eur=0, use ron directly
+  const customProduct = {
+    name: name + ' ✨',
+    cod: 'CUSTOM',
+    pct: 0,
+    eur: 0,
+    ron: price,
+    qty,
+    disc,
+    isCustom: true,
+    customRon: price
+  };
+
+  cart.push(customProduct);
+  renderCart();
+  updateCartBadges();
+
+  // Reset form
+  document.getElementById('customName').value = '';
+  document.getElementById('customPrice').value = '';
+  document.getElementById('customQty').value = '1';
+  document.getElementById('customDisc').value = '';
+  document.getElementById('customForm').classList.remove('open');
+  showToast('✓ Produs special adăugat');
+}
+
 // ── SEND OFFER ─────────────────────────────────────────────
 async function sendOffer(){
   const sfx=isDesktop()?'D':'M';
@@ -841,10 +907,10 @@ async function sendOffer(){
   if(!cart.length){msgEl.className='msg-err';msgEl.textContent='⚠️ Coșul e gol.';msgEl.style.display='block';return;}
   btn.disabled=true;btn.textContent='Se trimite...';msgEl.style.display='none';
   showLoading('Se trimite oferta');
-  const sub=cart.reduce((s,i)=>s+ron(i.eur)*i.qty,0);
-  const disc=cart.reduce((s,i)=>s+ron(i.eur)*i.qty*(i.disc/100),0);
+  const sub=cart.reduce((s,i)=>s+ronItem(i)*i.qty,0);
+  const disc=cart.reduce((s,i)=>s+ronItem(i)*i.qty*(i.disc/100),0);
   const total=(sub-disc).toFixed(2);
-  const totalEur=cart.reduce((s,i)=>s+i.eur*i.qty*(1-i.disc/100),0).toFixed(2);
+  const totalEur=cart.reduce((s,i)=>s+(i.isCustom?0:i.eur)*i.qty*(1-i.disc/100),0).toFixed(2);
   const guideCheckId=isDesktop()?'sendGuideCheck':'sendGuideCheckM';
   const guideCheck=document.getElementById(guideCheckId);
   try{
@@ -1034,6 +1100,7 @@ function hideLoading(){
 let toastTimer;
 function showToast(msg){const t=document.getElementById('toast');t.textContent=msg;t.classList.add('show');clearTimeout(toastTimer);toastTimer=setTimeout(()=>t.classList.remove('show'),1800);}
 function ron(eur){return parseFloat((eur*cursActive).toFixed(2));}
+function ronItem(item){return item.isCustom ? item.customRon : ron(item.eur);}
 function fmt(n){return Number(n).toLocaleString('ro-RO',{minimumFractionDigits:2,maximumFractionDigits:2});}
 function esc(s){return s.replace(/'/g,"\\'");}
 
