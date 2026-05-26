@@ -456,6 +456,7 @@ function switchTab(name) {
     document.getElementById('tab-'+t).classList.toggle('active',t===name);
     document.querySelectorAll('.tab')[i].classList.toggle('active',t===name);
   });
+  if (name==='search') doSearch(document.getElementById('searchInput').value);
   if ((name==='offers' || name==='contacts') && !offersLoaded) loadOffers();
   if (name==='contacts' && offersLoaded) renderContacts();
 }
