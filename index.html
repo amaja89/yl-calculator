@@ -4,36 +4,49 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
 <title>🌿 Young Living — Calculator</title>
-<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
 <style>
   :root {
-    --dark:#1a0e35;--mid:#3d2272;--soft:#7c4dbb;--accent:#c084fc;
-    --green:#10b981;--green-bg:rgba(16,185,129,0.12);
-    --red:#f43f5e;--red-bg:rgba(244,63,94,0.1);
-    --bg:#0f0a1e;--card:#1e1535;--card2:#251a40;
-    --border:rgba(124,77,187,0.22);--border2:rgba(124,77,187,0.38);
-    --text:#f1eeff;--muted:#9d8ec4;--white:#ffffff;
-    --r:14px;--rs:10px;
+    --bg:#F7F5FF;
+    --bg2:#F0EEFF;
+    --bg3:#EAE5FF;
+    --card:#FFFFFF;
+    --card2:#F7F5FF;
+    --border:rgba(155,143,232,0.25);
+    --border2:rgba(155,143,232,0.45);
+    --primary:#7B6CD0;
+    --primary-dark:#4A3880;
+    --primary-light:#C8BFFF;
+    --accent:#D4A8E8;
+    --green:#2E8A58;
+    --green-bg:#E8F8F0;
+    --green-border:rgba(46,138,88,0.25);
+    --red:#C94F6A;
+    --red-bg:#FFF0F4;
+    --text:#2D1F5E;
+    --text2:#6B5B9E;
+    --muted:#9B8DC4;
+    --white:#FFFFFF;
+    --r:16px;--rs:10px;
   }
   *{box-sizing:border-box;margin:0;padding:0;}
   body{background:var(--bg);color:var(--text);font-family:'DM Sans',sans-serif;min-height:100vh;overflow-x:hidden;}
-  body::before{content:'';position:fixed;top:-150px;left:-150px;width:500px;height:500px;background:radial-gradient(circle,rgba(124,77,187,0.13) 0%,transparent 70%);pointer-events:none;z-index:0;}
-  .app{position:relative;z-index:1;max-width:480px;margin:0 auto;padding:0 0 80px;}
+  .app{max-width:480px;margin:0 auto;padding:0 0 80px;}
 
   /* HEADER */
-  .hdr{background:linear-gradient(135deg,var(--dark) 0%,var(--mid) 100%);padding:20px 16px 14px;position:sticky;top:0;z-index:100;border-bottom:1px solid var(--border);}
+  .hdr{background:var(--card);padding:20px 16px 14px;position:sticky;top:0;z-index:100;border-bottom:1.5px solid var(--border2);}
   .hdr-top{display:flex;align-items:center;justify-content:space-between;margin-bottom:14px;}
   .logo{display:flex;align-items:center;gap:10px;}
-  .logo-icon{font-size:22px;}
-  .logo-text{font-family:'DM Serif Display',serif;font-size:17px;color:var(--white);line-height:1.1;}
-  .logo-sub{font-size:10px;color:var(--accent);font-weight:500;letter-spacing:.06em;text-transform:uppercase;}
-  .rate-pill{background:var(--green-bg);border:1px solid rgba(16,185,129,0.3);border-radius:20px;padding:4px 10px;font-size:11px;color:var(--green);font-weight:600;}
+  .logo-icon{font-size:24px;}
+  .logo-text{font-family:'Playfair Display',serif;font-size:18px;color:var(--primary-dark);line-height:1.1;}
+  .logo-sub{font-size:10px;color:var(--muted);font-weight:500;letter-spacing:.07em;text-transform:uppercase;}
+  .rate-pill{background:var(--bg2);border:1px solid var(--border2);border-radius:20px;padding:4px 12px;font-size:11px;color:var(--primary);font-weight:600;}
 
   /* TABS */
-  .tabs{display:flex;background:rgba(0,0,0,0.3);border-radius:var(--r);padding:3px;border:1px solid var(--border);}
-  .tab{flex:1;padding:9px 6px;border:none;background:transparent;color:var(--muted);font-family:'DM Sans',sans-serif;font-size:13px;font-weight:500;border-radius:11px;cursor:pointer;transition:all .2s;display:flex;align-items:center;justify-content:center;gap:5px;}
-  .tab.active{background:var(--mid);color:var(--white);box-shadow:0 2px 10px rgba(61,34,114,.5);}
-  .badge{background:var(--soft);color:var(--white);font-size:10px;font-weight:700;border-radius:999px;padding:1px 6px;min-width:18px;text-align:center;}
+  .tabs{display:flex;background:var(--bg2);border-radius:var(--r);padding:3px;border:1px solid var(--border);}
+  .tab{flex:1;padding:9px 6px;border:none;background:transparent;color:var(--muted);font-family:'DM Sans',sans-serif;font-size:13px;font-weight:500;border-radius:13px;cursor:pointer;transition:all .2s;display:flex;align-items:center;justify-content:center;gap:5px;}
+  .tab.active{background:var(--white);color:var(--primary-dark);box-shadow:0 1px 6px rgba(123,108,208,.15);}
+  .badge{background:var(--primary);color:var(--white);font-size:10px;font-weight:700;border-radius:999px;padding:1px 6px;min-width:18px;text-align:center;}
 
   /* SECTIONS */
   .sec{padding:16px;display:none;}
@@ -42,119 +55,117 @@
   /* SEARCH */
   .search-wrap{position:relative;margin-bottom:8px;}
   .search-wrap .ico{position:absolute;left:12px;top:50%;transform:translateY(-50%);font-size:16px;color:var(--muted);}
-  .search-input{width:100%;background:var(--card2);border:1.5px solid var(--border);border-radius:var(--rs);padding:12px 40px 12px 38px;color:var(--text);font-family:'DM Sans',sans-serif;font-size:15px;outline:none;transition:border-color .2s;}
-  .search-input:focus{border-color:var(--soft);}
+  .search-input{width:100%;background:var(--white);border:1.5px solid var(--border2);border-radius:var(--rs);padding:12px 40px 12px 38px;color:var(--text);font-family:'DM Sans',sans-serif;font-size:15px;outline:none;transition:border-color .2s;}
+  .search-input:focus{border-color:var(--primary);}
   .search-input::placeholder{color:var(--muted);}
   .clear-btn{position:absolute;right:10px;top:50%;transform:translateY(-50%);background:none;border:none;color:var(--muted);cursor:pointer;font-size:18px;display:none;padding:2px 4px;}
 
   /* RESULTS */
-  .results{border:1px solid var(--border);border-radius:var(--r);overflow:hidden;margin-top:6px;}
-  .res-row{display:flex;align-items:center;gap:8px;padding:10px 12px;border-bottom:1px solid var(--border);background:var(--card);cursor:pointer;transition:background .15s;}
+  .results{border:1px solid var(--border2);border-radius:var(--r);overflow:hidden;margin-top:6px;}
+  .res-row{display:flex;align-items:center;gap:10px;padding:11px 13px;border-bottom:1px solid var(--border);background:var(--white);cursor:pointer;transition:background .12s;}
   .res-row:last-child{border-bottom:none;}
-  .res-row:active{background:var(--card2);}
+  .res-row:active{background:var(--bg2);}
   .res-info{flex:1;min-width:0;}
   .res-name{font-size:13px;font-weight:500;color:var(--text);margin-bottom:3px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
   .res-meta{display:flex;gap:8px;flex-wrap:wrap;}
   .res-meta span{font-size:11px;color:var(--muted);display:flex;align-items:center;gap:2px;}
-  .res-price{font-size:13px;font-weight:600;color:var(--green);white-space:nowrap;flex-shrink:0;}
-  .add-btn{width:30px;height:30px;border-radius:50%;background:var(--green-bg);border:1px solid rgba(16,185,129,0.3);cursor:pointer;display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:20px;color:var(--green);transition:all .15s;}
-  .add-btn:active{background:rgba(16,185,129,0.25);transform:scale(.9);}
-  .add-btn.added{background:var(--green);color:var(--white);}
+  .res-price{font-size:13px;font-weight:600;color:var(--primary);white-space:nowrap;flex-shrink:0;}
+  .add-btn{width:30px;height:30px;border-radius:50%;background:var(--bg2);border:1.5px solid var(--border2);cursor:pointer;display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:18px;color:var(--primary);transition:all .15s;}
+  .add-btn:active{transform:scale(.9);}
+  .add-btn.added{background:var(--primary);color:var(--white);border-color:var(--primary);font-size:14px;}
   .no-res{padding:20px;text-align:center;color:var(--muted);font-size:13px;}
 
   /* CART */
-  .cart-empty{text-align:center;padding:28px 16px;color:var(--muted);font-size:13px;border:1px dashed var(--border);border-radius:var(--r);margin-bottom:12px;}
+  .cart-empty{text-align:center;padding:32px 16px;color:var(--muted);font-size:13px;border:1.5px dashed var(--border2);border-radius:var(--r);margin-bottom:12px;background:var(--white);}
   .cart-empty-icon{font-size:36px;margin-bottom:8px;}
-  .cart-item{background:var(--card);border:1px solid var(--border);border-radius:var(--r);padding:12px;margin-bottom:8px;animation:slideIn .18s ease;}
-  @keyframes slideIn{from{opacity:0;transform:translateY(-6px)}to{opacity:1;transform:translateY(0)}}
-  .ci-top{display:flex;align-items:flex-start;gap:8px;margin-bottom:8px;}
+  .cart-item{background:var(--white);border:1px solid var(--border2);border-radius:var(--r);padding:13px;margin-bottom:8px;animation:slideIn .18s ease;}
+  @keyframes slideIn{from{opacity:0;transform:translateY(-5px)}to{opacity:1;transform:translateY(0)}}
+  .ci-top{display:flex;align-items:flex-start;gap:8px;margin-bottom:9px;}
   .ci-name{flex:1;font-size:13px;font-weight:500;color:var(--text);line-height:1.3;}
   .ci-remove{background:none;border:none;cursor:pointer;color:var(--muted);font-size:18px;padding:0;line-height:1;flex-shrink:0;}
   .ci-remove:active{color:var(--red);}
   .ci-controls{display:flex;align-items:center;gap:8px;}
   .qty-wrap{display:flex;align-items:center;gap:6px;}
-  .qty-btn{width:28px;height:28px;background:var(--card2);border:1px solid var(--border);border-radius:8px;color:var(--text);font-size:16px;cursor:pointer;display:flex;align-items:center;justify-content:center;}
-  .qty-btn:active{background:var(--mid);}
+  .qty-btn{width:28px;height:28px;background:var(--bg2);border:1px solid var(--border2);border-radius:8px;color:var(--primary-dark);font-size:16px;cursor:pointer;display:flex;align-items:center;justify-content:center;}
+  .qty-btn:active{background:var(--primary-light);}
   .qty-num{font-size:14px;font-weight:700;color:var(--text);min-width:22px;text-align:center;}
   .disc-wrap{display:flex;align-items:center;gap:5px;margin-left:auto;}
   .disc-label{font-size:12px;color:var(--muted);}
-  .disc-input{width:54px;background:var(--card2);border:1px solid var(--border);border-radius:8px;padding:5px 8px;color:var(--text);font-family:'DM Sans',sans-serif;font-size:13px;font-weight:600;text-align:center;outline:none;}
-  .disc-input:focus{border-color:var(--soft);}
-  .disc-pct{font-size:13px;color:var(--accent);font-weight:600;}
-  .ci-footer{display:flex;justify-content:space-between;align-items:center;margin-top:8px;padding-top:8px;border-top:1px solid var(--border);}
+  .disc-input{width:52px;background:var(--bg2);border:1px solid var(--border2);border-radius:8px;padding:5px 8px;color:var(--primary-dark);font-family:'DM Sans',sans-serif;font-size:13px;font-weight:600;text-align:center;outline:none;}
+  .disc-input:focus{border-color:var(--primary);}
+  .disc-pct{font-size:13px;color:var(--primary);font-weight:600;}
+  .ci-footer{display:flex;justify-content:space-between;align-items:center;margin-top:9px;padding-top:9px;border-top:1px solid var(--border);}
   .ci-base{font-size:11px;color:var(--muted);}
   .ci-total{font-size:14px;font-weight:600;color:var(--text);}
-  .ci-total.disc{color:var(--green);}
+  .ci-total.disc{color:var(--primary);}
 
   /* TOTALS */
-  .totals{background:var(--card);border:1px solid var(--border);border-radius:var(--r);padding:14px;margin-bottom:8px;}
-  .t-row{display:flex;justify-content:space-between;align-items:center;padding:6px 0;border-bottom:1px solid var(--border);font-size:13px;}
+  .totals{background:var(--white);border:1px solid var(--border2);border-radius:var(--r);padding:14px;margin-bottom:8px;}
+  .t-row{display:flex;justify-content:space-between;align-items:center;padding:7px 0;border-bottom:1px solid var(--border);font-size:13px;}
   .t-row:last-child{border-bottom:none;padding-bottom:0;}
   .t-row .lbl{color:var(--muted);}
   .t-row .val{font-weight:600;color:var(--text);}
-  .t-row.big{padding-top:10px;margin-top:2px;border-top:1px solid var(--border2);}
-  .t-row.big .lbl{font-size:14px;font-weight:500;color:var(--text);}
-  .t-row.big .val{font-family:'DM Serif Display',serif;font-size:22px;color:var(--green);}
+  .t-row.big{padding-top:12px;margin-top:2px;border-top:1.5px solid var(--border2);}
+  .t-row.big .lbl{font-family:'Playfair Display',serif;font-size:15px;color:var(--primary-dark);}
+  .t-row.big .val{font-family:'Playfair Display',serif;font-size:24px;color:var(--primary-dark);}
   .t-row .saved{color:var(--red);}
-  .reset-btn{width:100%;background:var(--red-bg);border:1px solid rgba(244,63,94,.25);border-radius:var(--rs);padding:11px;color:var(--red);font-family:'DM Sans',sans-serif;font-size:13px;font-weight:500;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:6px;margin-top:4px;}
+  .reset-btn{width:100%;background:var(--red-bg);border:1px solid rgba(201,79,106,.2);border-radius:var(--rs);padding:11px;color:var(--red);font-family:'DM Sans',sans-serif;font-size:13px;font-weight:500;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:6px;margin-top:4px;}
 
   /* RAPID */
   .select-wrap{position:relative;margin-bottom:12px;}
-  select{width:100%;background:var(--card2);border:1.5px solid var(--border);border-radius:var(--rs);padding:12px 32px 12px 14px;color:var(--text);font-family:'DM Sans',sans-serif;font-size:14px;outline:none;appearance:none;cursor:pointer;}
-  select option{background:#1e1535;}
+  select{width:100%;background:var(--white);border:1.5px solid var(--border2);border-radius:var(--rs);padding:12px 32px 12px 14px;color:var(--text);font-family:'DM Sans',sans-serif;font-size:14px;outline:none;appearance:none;cursor:pointer;}
+  select option{background:white;color:var(--text);}
   .sel-arrow{position:absolute;right:12px;top:50%;transform:translateY(-50%);pointer-events:none;color:var(--muted);font-size:12px;}
-  .detail-card{background:var(--card);border:1px solid var(--border);border-radius:var(--r);padding:14px;margin-bottom:10px;}
-  .d-row{display:flex;justify-content:space-between;align-items:center;padding:8px 0;border-bottom:1px solid var(--border);}
+  .detail-card{background:var(--white);border:1px solid var(--border2);border-radius:var(--r);padding:14px;margin-bottom:10px;}
+  .d-row{display:flex;justify-content:space-between;align-items:center;padding:9px 0;border-bottom:1px solid var(--border);}
   .d-row:last-child{border-bottom:none;padding-bottom:0;}
   .d-lbl{font-size:12px;color:var(--muted);}
   .d-val{font-size:14px;font-weight:600;color:var(--text);}
-  .d-val.green{color:var(--green);}
-  .d-val.accent{color:var(--accent);}
-  .add-full-btn{width:100%;background:var(--mid);border:none;border-radius:var(--rs);padding:12px;color:var(--white);font-family:'DM Sans',sans-serif;font-size:14px;font-weight:600;cursor:pointer;margin-top:2px;}
-  .add-full-btn:active{background:var(--soft);}
+  .d-val.purple{color:var(--primary);}
+  .add-full-btn{width:100%;background:var(--primary);border:none;border-radius:var(--rs);padding:12px;color:var(--white);font-family:'DM Sans',sans-serif;font-size:14px;font-weight:500;cursor:pointer;margin-top:12px;}
+  .add-full-btn:active{background:var(--primary-dark);}
 
-  /* CURS */
-  .card{background:var(--card);border:1px solid var(--border);border-radius:var(--r);padding:14px;margin-bottom:10px;}
-  .card-title{font-size:10px;font-weight:600;color:var(--accent);text-transform:uppercase;letter-spacing:.07em;margin-bottom:12px;}
+  /* CARD */
+  .card{background:var(--white);border:1px solid var(--border2);border-radius:var(--r);padding:14px;margin-bottom:10px;}
+  .card-title{font-size:10px;font-weight:600;color:var(--primary);text-transform:uppercase;letter-spacing:.08em;margin-bottom:12px;}
   .curs-row{display:flex;gap:12px;align-items:flex-end;}
   .curs-group{flex:1;}
   .curs-lbl{font-size:11px;color:var(--muted);margin-bottom:5px;}
-  .curs-input{width:100%;background:var(--card2);border:1.5px solid var(--border);border-radius:var(--rs);padding:10px 12px;color:var(--text);font-family:'DM Sans',sans-serif;font-size:15px;font-weight:600;outline:none;}
-  .curs-input:focus{border-color:var(--soft);}
-  .curs-val{font-size:18px;font-weight:700;color:var(--green);padding:10px 0;}
+  .curs-input{width:100%;background:var(--bg2);border:1.5px solid var(--border2);border-radius:var(--rs);padding:10px 12px;color:var(--text);font-family:'DM Sans',sans-serif;font-size:15px;font-weight:600;outline:none;}
+  .curs-input:focus{border-color:var(--primary);}
+  .curs-val{font-family:'Playfair Display',serif;font-size:20px;color:var(--primary-dark);padding:8px 0;}
 
   /* LOADING / ERROR */
-  .loading{display:flex;flex-direction:column;align-items:center;justify-content:center;padding:60px 20px;gap:14px;}
-  .spinner{width:36px;height:36px;border:3px solid var(--border);border-top-color:var(--accent);border-radius:50%;animation:spin .8s linear infinite;}
+  .loading{display:flex;flex-direction:column;align-items:center;justify-content:center;padding:70px 20px;gap:14px;}
+  .spinner{width:36px;height:36px;border:3px solid var(--border2);border-top-color:var(--primary);border-radius:50%;animation:spin .8s linear infinite;}
   @keyframes spin{to{transform:rotate(360deg)}}
-  .err-card{background:var(--red-bg);border:1px solid rgba(244,63,94,.3);border-radius:var(--r);padding:20px;margin:20px;text-align:center;}
+  .err-card{background:var(--red-bg);border:1px solid rgba(201,79,106,.25);border-radius:var(--r);padding:20px;margin:20px;text-align:center;}
   .err-card p{font-size:13px;color:var(--red);margin-bottom:12px;line-height:1.5;}
-  .retry-btn{background:var(--red);border:none;border-radius:var(--rs);padding:9px 20px;color:white;font-family:'DM Sans',sans-serif;font-size:14px;font-weight:600;cursor:pointer;}
+  .retry-btn{background:var(--red);border:none;border-radius:var(--rs);padding:9px 20px;color:white;font-family:'DM Sans',sans-serif;font-size:14px;font-weight:500;cursor:pointer;}
 
   /* TOAST */
-  .toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%) translateY(20px);background:var(--green);color:var(--white);font-size:13px;font-weight:500;padding:8px 18px;border-radius:999px;opacity:0;transition:all .25s;pointer-events:none;z-index:999;white-space:nowrap;}
+  .toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%) translateY(16px);background:var(--primary-dark);color:var(--white);font-size:13px;font-weight:500;padding:9px 20px;border-radius:999px;opacity:0;transition:all .22s;pointer-events:none;z-index:999;white-space:nowrap;}
   .toast.show{opacity:1;transform:translateX(-50%) translateY(0);}
 
   /* LOGIN */
   .login-screen{position:fixed;inset:0;background:var(--bg);z-index:999;display:flex;align-items:center;justify-content:center;padding:20px;}
-  .login-box{background:var(--card);border:1px solid var(--border);border-radius:20px;padding:32px 24px;width:100%;max-width:340px;text-align:center;}
-  .login-icon{font-size:38px;margin-bottom:10px;}
-  .login-title{font-family:'DM Serif Display',serif;font-size:22px;color:var(--white);margin-bottom:4px;}
-  .login-sub{font-size:11px;color:var(--accent);text-transform:uppercase;letter-spacing:.06em;margin-bottom:24px;}
-  .pass-input{width:100%;background:var(--card2);border:1.5px solid var(--border);border-radius:var(--rs);padding:13px 16px;color:var(--text);font-family:'DM Sans',sans-serif;font-size:15px;outline:none;text-align:center;margin-bottom:8px;}
-  .pass-input:focus{border-color:var(--soft);}
+  .login-box{background:var(--white);border:1.5px solid var(--border2);border-radius:24px;padding:36px 24px;width:100%;max-width:340px;text-align:center;}
+  .login-icon{font-size:42px;margin-bottom:12px;}
+  .login-title{font-family:'Playfair Display',serif;font-size:26px;color:var(--primary-dark);margin-bottom:4px;}
+  .login-sub{font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:.07em;margin-bottom:28px;}
+  .pass-input{width:100%;background:var(--bg2);border:1.5px solid var(--border2);border-radius:var(--rs);padding:13px 16px;color:var(--text);font-family:'DM Sans',sans-serif;font-size:15px;outline:none;text-align:center;margin-bottom:8px;}
+  .pass-input:focus{border-color:var(--primary);}
   .pass-err{font-size:12px;color:var(--red);margin-bottom:8px;display:none;}
-  .pass-btn{width:100%;background:var(--mid);border:none;border-radius:var(--rs);padding:13px;color:var(--white);font-family:'DM Sans',sans-serif;font-size:15px;font-weight:600;cursor:pointer;}
-  .pass-btn:active{background:var(--soft);}
+  .pass-btn{width:100%;background:var(--primary);border:none;border-radius:var(--rs);padding:13px;color:var(--white);font-family:'DM Sans',sans-serif;font-size:15px;font-weight:500;cursor:pointer;}
+  .pass-btn:active{background:var(--primary-dark);}
 
   input[type=number]::-webkit-inner-spin-button{-webkit-appearance:none;}
   ::-webkit-scrollbar{width:3px;}
-  ::-webkit-scrollbar-thumb{background:var(--border);border-radius:2px;}
+  ::-webkit-scrollbar-thumb{background:var(--primary-light);border-radius:2px;}
 </style>
 </head>
 <body>
 
-<!-- LOGIN -->
 <div class="login-screen" id="loginScreen">
   <div class="login-box">
     <div class="login-icon">🌿</div>
@@ -170,7 +181,6 @@
 
 <div class="app">
 
-  <!-- HEADER -->
   <div class="hdr">
     <div class="hdr-top">
       <div class="logo">
@@ -189,19 +199,17 @@
     </div>
   </div>
 
-  <!-- LOADING -->
   <div class="loading" id="loadingState">
     <div class="spinner"></div>
     <div style="color:var(--muted);font-size:14px">Se încarcă produsele...</div>
   </div>
 
-  <!-- ERROR -->
   <div class="err-card" id="errorState" style="display:none">
     <p>⚠️ Nu s-au putut încărca produsele.<br>Verifică conexiunea și încearcă din nou.</p>
     <button class="retry-btn" onclick="loadProducts()">🔄 Încearcă din nou</button>
   </div>
 
-  <!-- SEARCH TAB -->
+  <!-- SEARCH -->
   <div class="sec" id="tab-search">
     <div class="search-wrap">
       <span class="ico">🔍</span>
@@ -211,7 +219,7 @@
     <div id="searchResults"></div>
   </div>
 
-  <!-- CART TAB -->
+  <!-- CART -->
   <div class="sec" id="tab-cart">
     <div id="cartItems"></div>
     <div id="totalsWrap" style="display:none">
@@ -220,7 +228,7 @@
     </div>
   </div>
 
-  <!-- RAPID TAB -->
+  <!-- RAPID -->
   <div class="sec" id="tab-rapid">
     <div class="card">
       <div class="card-title">📦 Detalii produs</div>
@@ -231,11 +239,11 @@
         <span class="sel-arrow">▼</span>
       </div>
       <div id="rapidDetails" style="display:none">
-        <div class="d-row"><span class="d-lbl">Cod produs</span><span class="d-val accent" id="rCod">—</span></div>
+        <div class="d-row"><span class="d-lbl">Cod produs</span><span class="d-val purple" id="rCod">—</span></div>
         <div class="d-row"><span class="d-lbl">Preț Euro</span><span class="d-val" id="rEur">—</span></div>
-        <div class="d-row"><span class="d-lbl">Preț RON</span><span class="d-val green" id="rRon">—</span></div>
+        <div class="d-row"><span class="d-lbl">Preț RON</span><span class="d-val purple" id="rRon">—</span></div>
         <div class="d-row"><span class="d-lbl">Puncte ER</span><span class="d-val" id="rPct">—</span></div>
-        <button class="add-full-btn" onclick="addRapidToCart()" style="margin-top:12px">+ Adaugă în coș</button>
+        <button class="add-full-btn" onclick="addRapidToCart()">+ Adaugă în coș</button>
       </div>
     </div>
     <div class="card">
@@ -257,82 +265,64 @@
 
 <script>
 const PROXY_URL = 'https://script.google.com/macros/s/AKfycbzB5wamxipAZjn4RdtRh0KNI_aPFpAGrr8oSsWftke_fvsVnLhq2vfr5By-_sHgqCpymA/exec';
+let products=[], cart=[], cursAuto=5.2444, cursActive=5.2444;
 
-let products = [];
-let cart = [];
-let cursAuto = 5.2444;
-let cursActive = 5.2444;
-
-// ── LOGIN ─────────────────────────────────────────────────
 function checkPass() {
   const val = document.getElementById('passInput').value.trim().toLowerCase();
-  if (val === 'abundance') {
-    document.getElementById('loginScreen').style.display = 'none';
+  if (val==='abundance') {
+    document.getElementById('loginScreen').style.display='none';
     sessionStorage.setItem('yl_auth','1');
   } else {
-    document.getElementById('passErr').style.display = 'block';
-    document.getElementById('passInput').value = '';
+    document.getElementById('passErr').style.display='block';
+    document.getElementById('passInput').value='';
     document.getElementById('passInput').focus();
   }
 }
-if (sessionStorage.getItem('yl_auth') === '1') {
-  document.getElementById('loginScreen').style.display = 'none';
-}
+if (sessionStorage.getItem('yl_auth')==='1') document.getElementById('loginScreen').style.display='none';
 
-// ── LOAD ──────────────────────────────────────────────────
 async function loadProducts() {
-  document.getElementById('loadingState').style.display = 'flex';
-  document.getElementById('errorState').style.display = 'none';
+  document.getElementById('loadingState').style.display='flex';
+  document.getElementById('errorState').style.display='none';
   try {
     const res = await fetch(PROXY_URL);
-    if (!res.ok) throw new Error('HTTP ' + res.status);
+    if (!res.ok) throw new Error('HTTP '+res.status);
     const data = await res.json();
-    products = data.filter(p => p.name && p.eur > 0);
-    const sample = products.find(p => p.ron > 0 && p.eur > 0);
-    if (sample) {
-      cursAuto = parseFloat((sample.ron / sample.eur).toFixed(4));
-      cursActive = cursAuto;
-    }
+    products = data.filter(p=>p.name&&p.eur>0);
+    const s = products.find(p=>p.ron>0&&p.eur>0);
+    if (s) { cursAuto=parseFloat((s.ron/s.eur).toFixed(4)); cursActive=cursAuto; }
     finishLoad();
   } catch(e) {
-    console.error('Load failed:', e);
-    document.getElementById('loadingState').style.display = 'none';
-    document.getElementById('errorState').style.display = 'block';
+    document.getElementById('loadingState').style.display='none';
+    document.getElementById('errorState').style.display='block';
   }
 }
 
 function finishLoad() {
-  document.getElementById('loadingState').style.display = 'none';
-  document.getElementById('cursActiv').textContent = cursActive.toFixed(4) + ' RON';
-  document.getElementById('ratePill').textContent = '1€ = ' + cursActive.toFixed(4) + ' RON';
+  document.getElementById('loadingState').style.display='none';
+  document.getElementById('cursActiv').textContent=cursActive.toFixed(4)+' RON';
+  document.getElementById('ratePill').textContent='1€ = '+cursActive.toFixed(4)+' RON';
   populateRapidSelect();
   renderCart();
   switchTab('search');
   doSearch('');
 }
 
-// ── TABS ──────────────────────────────────────────────────
 function switchTab(name) {
-  ['search','cart','rapid'].forEach((t,i) => {
-    document.getElementById('tab-'+t).classList.toggle('active', t===name);
-    document.querySelectorAll('.tab')[i].classList.toggle('active', t===name);
+  ['search','cart','rapid'].forEach((t,i)=>{
+    document.getElementById('tab-'+t).classList.toggle('active',t===name);
+    document.querySelectorAll('.tab')[i].classList.toggle('active',t===name);
   });
 }
 
-// ── SEARCH ────────────────────────────────────────────────
 function doSearch(q) {
-  const clearBtn = document.getElementById('clearBtn');
-  clearBtn.style.display = q ? 'block' : 'none';
-  const matches = q.trim()
-    ? products.filter(p => p.name.toLowerCase().includes(q.toLowerCase())).slice(0, 20)
-    : products.slice(0, 30);
-  const el = document.getElementById('searchResults');
-  if (!matches.length) {
-    el.innerHTML = '<div class="results"><div class="no-res">Niciun rezultat pentru "' + q + '"</div></div>';
-    return;
-  }
-  el.innerHTML = '<div class="results">' + matches.map(p => {
-    const inCart = cart.some(i => i.name === p.name);
+  document.getElementById('clearBtn').style.display=q?'block':'none';
+  const matches=q.trim()
+    ?products.filter(p=>p.name.toLowerCase().includes(q.toLowerCase())).slice(0,20)
+    :products.slice(0,30);
+  const el=document.getElementById('searchResults');
+  if (!matches.length) { el.innerHTML='<div class="results"><div class="no-res">Niciun rezultat pentru "'+q+'"</div></div>'; return; }
+  el.innerHTML='<div class="results">'+matches.map(p=>{
+    const inCart=cart.some(i=>i.name===p.name);
     return `<div class="res-row">
       <div class="res-info">
         <div class="res-name">${p.name}</div>
@@ -343,83 +333,45 @@ function doSearch(q) {
         </div>
       </div>
       <div class="res-price">${fmt(ron(p.eur))} RON</div>
-      <button class="add-btn ${inCart?'added':''}" onclick="addToCart('${esc(p.name)}')" aria-label="Adaugă în coș">
-        ${inCart ? '✓' : '+'}
-      </button>
+      <button class="add-btn ${inCart?'added':''}" onclick="addToCart('${esc(p.name)}')" aria-label="Adaugă în coș">${inCart?'✓':'+'}</button>
     </div>`;
-  }).join('') + '</div>';
+  }).join('')+'</div>';
 }
 
 function clearSearch() {
-  document.getElementById('searchInput').value = '';
-  document.getElementById('clearBtn').style.display = 'none';
+  document.getElementById('searchInput').value='';
+  document.getElementById('clearBtn').style.display='none';
   doSearch('');
 }
 
-// ── CART ──────────────────────────────────────────────────
 function addToCart(name) {
-  const existing = cart.find(i => i.name === name);
-  if (existing) { existing.qty++; }
-  else {
-    const p = products.find(p => p.name === name);
-    if (p) cart.push({...p, qty:1, disc:0});
-  }
-  renderCart();
-  updateCartBadge();
-  // refresh search to update added state
+  const ex=cart.find(i=>i.name===name);
+  if (ex) { ex.qty++; }
+  else { const p=products.find(p=>p.name===name); if(p) cart.push({...p,qty:1,disc:0}); }
+  renderCart(); updateCartBadge();
   doSearch(document.getElementById('searchInput').value);
   showToast('✓ Adăugat în coș');
 }
 
 function removeFromCart(idx) {
-  cart.splice(idx, 1);
-  renderCart();
-  updateCartBadge();
+  cart.splice(idx,1); renderCart(); updateCartBadge();
   doSearch(document.getElementById('searchInput').value);
 }
 
-function changeQty(idx, d) {
-  cart[idx].qty = Math.max(1, cart[idx].qty + d);
-  renderCart();
-}
-
-function updateDisc(idx, val) {
-  cart[idx].disc = Math.min(100, Math.max(0, parseFloat(val) || 0));
-  renderCart();
-}
-
-function resetCart() {
-  cart = [];
-  renderCart();
-  updateCartBadge();
-  doSearch(document.getElementById('searchInput').value);
-}
-
-function updateCartBadge() {
-  const total = cart.reduce((s,i) => s+i.qty, 0);
-  document.getElementById('cartBadge').textContent = total;
-}
+function changeQty(idx,d) { cart[idx].qty=Math.max(1,cart[idx].qty+d); renderCart(); }
+function updateDisc(idx,val) { cart[idx].disc=Math.min(100,Math.max(0,parseFloat(val)||0)); renderCart(); }
+function resetCart() { cart=[]; renderCart(); updateCartBadge(); doSearch(document.getElementById('searchInput').value); }
+function updateCartBadge() { document.getElementById('cartBadge').textContent=cart.reduce((s,i)=>s+i.qty,0); }
 
 function renderCart() {
-  const el = document.getElementById('cartItems');
-  const totWrap = document.getElementById('totalsWrap');
-
+  const el=document.getElementById('cartItems');
+  const tw=document.getElementById('totalsWrap');
   if (!cart.length) {
-    el.innerHTML = `<div class="cart-empty">
-      <div class="cart-empty-icon">🛒</div>
-      <div>Coșul e gol</div>
-      <div style="font-size:12px;margin-top:4px;color:var(--muted)">Caută produse și adaugă-le</div>
-    </div>`;
-    totWrap.style.display = 'none';
-    return;
+    el.innerHTML=`<div class="cart-empty"><div class="cart-empty-icon">🛒</div><div style="font-size:15px;font-family:'Playfair Display',serif;color:var(--primary-dark);margin-bottom:4px">Coșul e gol</div><div>Caută produse și adaugă-le</div></div>`;
+    tw.style.display='none'; return;
   }
-
-  el.innerHTML = cart.map((item, idx) => {
-    const baseRon = ron(item.eur);
-    const lineBase = baseRon * item.qty;
-    const lineDisc = lineBase * (item.disc / 100);
-    const lineTotal = lineBase - lineDisc;
-    const hasDisc = item.disc > 0;
+  el.innerHTML=cart.map((item,idx)=>{
+    const b=ron(item.eur), lb=b*item.qty, ld=lb*(item.disc/100), lt=lb-ld, hd=item.disc>0;
     return `<div class="cart-item">
       <div class="ci-top">
         <div class="ci-name">${item.name}</div>
@@ -438,82 +390,70 @@ function renderCart() {
         </div>
       </div>
       <div class="ci-footer">
-        <div class="ci-base">${fmt(baseRon)} RON/buc${hasDisc ? ` · −${item.disc}%` : ''}</div>
-        <div class="ci-total ${hasDisc?'disc':''}">${fmt(lineTotal)} RON</div>
+        <div class="ci-base">${fmt(b)} RON/buc${hd?` · −${item.disc}%`:''}</div>
+        <div class="ci-total ${hd?'disc':''}">${fmt(lt)} RON</div>
       </div>
     </div>`;
   }).join('');
 
-  const subtotal = cart.reduce((s,i) => s + ron(i.eur)*i.qty, 0);
-  const totalDisc = cart.reduce((s,i) => s + ron(i.eur)*i.qty*(i.disc/100), 0);
-  const total = subtotal - totalDisc;
-  const totalEur = cart.reduce((s,i) => s + i.eur*i.qty*(1-i.disc/100), 0);
-  const totalPct = cart.reduce((s,i) => s + (i.pct||0)*i.qty, 0);
-  const count = cart.reduce((s,i) => s+i.qty, 0);
+  const sub=cart.reduce((s,i)=>s+ron(i.eur)*i.qty,0);
+  const disc=cart.reduce((s,i)=>s+ron(i.eur)*i.qty*(i.disc/100),0);
+  const total=sub-disc;
+  const eur=cart.reduce((s,i)=>s+i.eur*i.qty*(1-i.disc/100),0);
+  const pct=cart.reduce((s,i)=>s+(i.pct||0)*i.qty,0);
+  const cnt=cart.reduce((s,i)=>s+i.qty,0);
 
-  let rows = `<div class="t-row"><span class="lbl">Subtotal</span><span class="val">${fmt(subtotal)} RON</span></div>`;
-  if (totalDisc > 0) rows += `<div class="t-row"><span class="lbl">Reduceri totale</span><span class="val saved">−${fmt(totalDisc)} RON</span></div>`;
-  rows += `<div class="t-row"><span class="lbl">Total Euro</span><span class="val">${totalEur.toFixed(2)} €</span></div>`;
-  rows += `<div class="t-row"><span class="lbl">Puncte ER</span><span class="val">${Math.round(totalPct)} pct</span></div>`;
-  rows += `<div class="t-row"><span class="lbl">Produse</span><span class="val">${count}</span></div>`;
-  rows += `<div class="t-row big"><span class="lbl">Total de plată</span><span class="val">${fmt(total)} RON</span></div>`;
-
-  document.getElementById('totalsCard').innerHTML = rows;
-  totWrap.style.display = 'block';
+  let rows=`<div class="t-row"><span class="lbl">Subtotal</span><span class="val">${fmt(sub)} RON</span></div>`;
+  if(disc>0) rows+=`<div class="t-row"><span class="lbl">Reduceri</span><span class="val saved">−${fmt(disc)} RON</span></div>`;
+  rows+=`<div class="t-row"><span class="lbl">Total Euro</span><span class="val">${eur.toFixed(2)} €</span></div>`;
+  rows+=`<div class="t-row"><span class="lbl">Puncte ER</span><span class="val">${Math.round(pct)} pct</span></div>`;
+  rows+=`<div class="t-row"><span class="lbl">Produse</span><span class="val">${cnt}</span></div>`;
+  rows+=`<div class="t-row big"><span class="lbl">Total de plată</span><span class="val">${fmt(total)} RON</span></div>`;
+  document.getElementById('totalsCard').innerHTML=rows;
+  tw.style.display='block';
 }
 
-// ── RAPID ─────────────────────────────────────────────────
 function populateRapidSelect() {
-  const sel = document.getElementById('rapidSel');
-  products.forEach(p => {
-    const opt = document.createElement('option');
-    opt.value = p.name; opt.textContent = p.name;
-    sel.appendChild(opt);
-  });
+  const sel=document.getElementById('rapidSel');
+  products.forEach(p=>{ const o=document.createElement('option'); o.value=p.name; o.textContent=p.name; sel.appendChild(o); });
 }
 
 function showRapid() {
-  const name = document.getElementById('rapidSel').value;
-  const det = document.getElementById('rapidDetails');
-  if (!name) { det.style.display = 'none'; return; }
-  const p = products.find(x => x.name === name);
-  if (!p) return;
-  document.getElementById('rCod').textContent = p.cod || '—';
-  document.getElementById('rEur').textContent = p.eur.toFixed(2) + ' €';
-  document.getElementById('rRon').textContent = fmt(ron(p.eur)) + ' RON';
-  document.getElementById('rPct').textContent = p.pct || '—';
-  det.style.display = 'block';
+  const name=document.getElementById('rapidSel').value;
+  const det=document.getElementById('rapidDetails');
+  if (!name) { det.style.display='none'; return; }
+  const p=products.find(x=>x.name===name); if(!p) return;
+  document.getElementById('rCod').textContent=p.cod||'—';
+  document.getElementById('rEur').textContent=p.eur.toFixed(2)+' €';
+  document.getElementById('rRon').textContent=fmt(ron(p.eur))+' RON';
+  document.getElementById('rPct').textContent=p.pct||'—';
+  det.style.display='block';
 }
 
 function addRapidToCart() {
-  const name = document.getElementById('rapidSel').value;
-  if (name) { addToCart(name); switchTab('cart'); }
+  const name=document.getElementById('rapidSel').value;
+  if(name) { addToCart(name); switchTab('cart'); }
 }
 
-// ── CURS ──────────────────────────────────────────────────
 function updateCurs() {
-  const val = parseFloat(document.getElementById('cursManual').value);
-  cursActive = val > 0 ? val : cursAuto;
-  document.getElementById('cursActiv').textContent = cursActive.toFixed(4) + ' RON';
-  document.getElementById('ratePill').textContent = '1€ = ' + cursActive.toFixed(4) + ' RON';
-  renderCart();
-  showRapid();
+  const val=parseFloat(document.getElementById('cursManual').value);
+  cursActive=val>0?val:cursAuto;
+  document.getElementById('cursActiv').textContent=cursActive.toFixed(4)+' RON';
+  document.getElementById('ratePill').textContent='1€ = '+cursActive.toFixed(4)+' RON';
+  renderCart(); showRapid();
   doSearch(document.getElementById('searchInput').value);
 }
 
-// ── TOAST ─────────────────────────────────────────────────
 let toastTimer;
 function showToast(msg) {
-  const t = document.getElementById('toast');
-  t.textContent = msg;
-  t.classList.add('show');
+  const t=document.getElementById('toast');
+  t.textContent=msg; t.classList.add('show');
   clearTimeout(toastTimer);
-  toastTimer = setTimeout(() => t.classList.remove('show'), 1800);
+  toastTimer=setTimeout(()=>t.classList.remove('show'),1800);
 }
 
-// ── HELPERS ───────────────────────────────────────────────
-function ron(eur) { return parseFloat((eur * cursActive).toFixed(2)); }
-function fmt(n) { return Number(n).toLocaleString('ro-RO', {minimumFractionDigits:2, maximumFractionDigits:2}); }
+function ron(eur) { return parseFloat((eur*cursActive).toFixed(2)); }
+function fmt(n) { return Number(n).toLocaleString('ro-RO',{minimumFractionDigits:2,maximumFractionDigits:2}); }
 function esc(s) { return s.replace(/'/g,"\\'"); }
 
 loadProducts();
