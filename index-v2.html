@@ -261,6 +261,8 @@
   .pass-btn:active{background:var(--primary-dark);}
   .pass-btn:disabled{background:var(--muted);}
 
+  .loading-overlay{position:fixed;inset:0;background:rgba(253,250,255,0.88);z-index:500;display:none;flex-direction:column;align-items:center;justify-content:center;gap:14px;backdrop-filter:blur(2px);}
+  .loading-overlay.show{display:flex;}
   input[type=number]::-webkit-inner-spin-button{-webkit-appearance:none;}
   ::-webkit-scrollbar{width:4px;}
   ::-webkit-scrollbar-thumb{background:var(--primary-light);border-radius:2px;}
@@ -293,6 +295,38 @@
 </div>
 
 <div class="toast" id="toast"></div>
+
+<div class="loading-overlay" id="loadingOverlay">
+  <svg width="150" height="130" viewBox="0 0 150 130" style="overflow:visible">
+    <g transform="translate(68,30)">
+      <ellipse class="p1" cx="0" cy="0" rx="8" ry="6" fill="#D4C0F0"/>
+      <ellipse class="p2" cx="0" cy="0" rx="7" ry="5" fill="#C4A8E8"/>
+      <ellipse class="p3" cx="0" cy="0" rx="6" ry="5" fill="#E0D4F8"/>
+      <ellipse class="p4" cx="0" cy="0" rx="7" ry="4" fill="#CEB8F0"/>
+      <ellipse class="p5" cx="0" cy="0" rx="5" ry="4" fill="#E8E0FC"/>
+    </g>
+    <ellipse cx="62" cy="112" rx="34" ry="6" fill="#00000018"/>
+    <path d="M20 85 Q16 98 22 106 Q32 114 62 114 Q92 114 102 106 Q108 98 104 85 Z" fill="#C4956A"/>
+    <path d="M20 85 Q22 80 62 78 Q102 80 104 85 Q102 90 62 91 Q22 90 20 85 Z" fill="#D4A574"/>
+    <path d="M27 95 Q62 93 97 95" stroke="#B8845A" stroke-width="0.7" fill="none" opacity="0.5"/>
+    <path d="M24 101 Q62 99 100 101" stroke="#B8845A" stroke-width="0.6" fill="none" opacity="0.4"/>
+    <circle cx="24" cy="96" r="3" fill="#B8845A"/>
+    <circle cx="24" cy="96" r="1.5" fill="#A0724A"/>
+    <ellipse class="dome-fill" cx="62" cy="80" rx="38" ry="10" fill="#D4C0F0" opacity="0.3"/>
+    <path d="M24 83 Q24 44 62 38 Q100 44 100 83 Q100 87 62 88 Q24 87 24 83 Z" fill="#F5F0FF" opacity="0.6"/>
+    <ellipse cx="62" cy="83" rx="38" ry="5.5" fill="#E8E0F8" opacity="0.7"/>
+    <path d="M24 83 Q24 44 62 38 Q100 44 100 83" fill="none" stroke="#C8B4F0" stroke-width="1.2" opacity="0.8"/>
+    <path d="M31 75 Q32 56 42 47" fill="none" stroke="#ffffff" stroke-width="2.5" stroke-linecap="round" opacity="0.55"/>
+    <ellipse class="dome-fill" cx="62" cy="68" rx="22" ry="18" fill="#B89FD8" opacity="0.12"/>
+    <rect x="64" y="30" width="9" height="12" rx="3" fill="#E0D8F8" opacity="0.9" transform="rotate(15,68,36)"/>
+    <rect x="65" y="28" width="6" height="5" rx="2" fill="#D0C0F0" opacity="0.85" transform="rotate(15,68,30)"/>
+    <ellipse cx="68" cy="27" rx="4" ry="2" fill="#C8B4F0" opacity="0.9" transform="rotate(15,68,27)"/>
+    <ellipse cx="68" cy="26" rx="2.5" ry="1.2" fill="#7B5EA7" opacity="0.7"/>
+  </svg>
+  <div style="color:var(--muted);font-size:13px;letter-spacing:.04em" id="loadingMsg">
+    Se încarcă<span class="d1">.</span><span class="d2">.</span><span class="d3">.</span>
+  </div>
+</div>
 
 <div class="app">
 
@@ -584,6 +618,7 @@ async function doLogin(){
   const errEl=document.getElementById('passErr');
   if(!username||!parola){errEl.textContent='Completează utilizatorul și parola.';errEl.style.display='block';return;}
   btn.disabled=true;btn.textContent='Se verifică...';errEl.style.display='none';
+  showLoading('Se verifică');
   try{
     const res=await fetch(PROXY_URL,{method:'POST',headers:{'Content-Type':'text/plain'},
       body:JSON.stringify({action:'loginAndLoad',username,parola})});
@@ -599,10 +634,11 @@ async function doLogin(){
         ghiduri=data.ghiduri||{};
         const s=products.find(p=>p.ron>0&&p.eur>0);
         if(s){cursAuto=parseFloat((s.ron/s.eur).toFixed(4));cursActive=cursAuto;}
+        hideLoading();
         finishLoad();
       }
-    }else{errEl.textContent=data.message||'Eroare la autentificare.';errEl.style.display='block';}
-  }catch(e){errEl.textContent='Eroare de conexiune.';errEl.style.display='block';}
+    }else{hideLoading();errEl.textContent=data.message||'Eroare la autentificare.';errEl.style.display='block';}
+  }catch(e){hideLoading();errEl.textContent='Eroare de conexiune.';errEl.style.display='block';}
   btn.disabled=false;btn.textContent='Intră →';
 }
 
@@ -626,7 +662,8 @@ if(saved){
 
 // ── LOAD PRODUCTS ──────────────────────────────────────────
 async function loadProducts(){
-  document.getElementById('loadingState').style.display='flex';
+  showLoading('Se încarcă produsele');
+  document.getElementById('loadingState').style.display='none';
   document.getElementById('errorState').style.display='none';
   document.getElementById('mainLayout').style.display='none';
   try{
@@ -645,6 +682,7 @@ async function loadProducts(){
 }
 
 function finishLoad(){
+  hideLoading();
   document.getElementById('loadingState').style.display='none';
   document.getElementById('mainLayout').style.display='';
   updateCursDisplay();
@@ -802,6 +840,7 @@ async function sendOffer(){
   if(!email||!email.includes('@')){msgEl.className='msg-err';msgEl.textContent='⚠️ Email invalid.';msgEl.style.display='block';return;}
   if(!cart.length){msgEl.className='msg-err';msgEl.textContent='⚠️ Coșul e gol.';msgEl.style.display='block';return;}
   btn.disabled=true;btn.textContent='Se trimite...';msgEl.style.display='none';
+  showLoading('Se trimite oferta');
   const sub=cart.reduce((s,i)=>s+ron(i.eur)*i.qty,0);
   const disc=cart.reduce((s,i)=>s+ron(i.eur)*i.qty*(i.disc/100),0);
   const total=(sub-disc).toFixed(2);
@@ -814,26 +853,29 @@ async function sendOffer(){
         email,cart,total,totalEur,curs:cursActive,includeGuide:guideCheck?guideCheck.checked:false,ghiduri})});
     const data=await res.json();
     if(data.status==='ok'){
+      hideLoading();
       msgEl.className='msg-ok';msgEl.textContent='✓ Trimis la '+email;msgEl.style.display='block';
       document.getElementById('emailInput'+sfx).value='';
       offersLoaded=false;allContacts=[];
     }else throw new Error(data.message);
-  }catch(e){msgEl.className='msg-err';msgEl.textContent='⚠️ Eroare: '+e.message;msgEl.style.display='block';}
+  }catch(e){hideLoading();msgEl.className='msg-err';msgEl.textContent='⚠️ Eroare: '+e.message;msgEl.style.display='block';}
   btn.disabled=false;btn.textContent='Trimite';
 }
 
 // ── OFFERS + CONTACTS ──────────────────────────────────────
 async function loadOffers(){
   if(!currentUser)return;
+  showLoading('Se încarcă');
   try{
     const res=await fetch(PROXY_URL,{method:'POST',headers:{'Content-Type':'text/plain'},
       body:JSON.stringify({action:'getOffersAndContacts',username:currentUser.username})});
     const data=await res.json();
     allContacts=data.contacts||[];
     offersLoaded=true;
+    hideLoading();
     renderOffers(data.offers||[]);
     renderContacts(isDesktop()?'D':'M');
-  }catch(e){}
+  }catch(e){hideLoading();}
 }
 
 function renderOffers(offers){
@@ -972,6 +1014,16 @@ function updateCursDisplay(){
 }
 
 // ── HELPERS ────────────────────────────────────────────────
+function showLoading(msg){
+  const el=document.getElementById('loadingOverlay');
+  const msgEl=document.getElementById('loadingMsg');
+  if(msg)msgEl.innerHTML=msg+'<span class="d1">.</span><span class="d2">.</span><span class="d3">.</span>';
+  el.classList.add('show');
+}
+function hideLoading(){
+  document.getElementById('loadingOverlay').classList.remove('show');
+}
+
 let toastTimer;
 function showToast(msg){const t=document.getElementById('toast');t.textContent=msg;t.classList.add('show');clearTimeout(toastTimer);toastTimer=setTimeout(()=>t.classList.remove('show'),1800);}
 function ron(eur){return parseFloat((eur*cursActive).toFixed(2));}
