@@ -103,6 +103,20 @@
   .msg-err{font-size:12px;color:var(--red);margin-top:8px;padding:8px 12px;background:var(--red-bg);border-radius:var(--rs);}
 
   .reset-btn{width:100%;background:var(--red-bg);border:1px solid rgba(201,79,106,.2);border-radius:var(--rs);padding:11px;color:var(--red);font-family:'DM Sans',sans-serif;font-size:13px;font-weight:500;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:6px;margin-top:4px;}
+  .guide-btn{width:100%;background:var(--bg2);border:1px solid var(--border2);border-radius:var(--rs);padding:11px;color:var(--primary-dark);font-family:'DM Sans',sans-serif;font-size:13px;font-weight:500;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:6px;margin-bottom:8px;}
+  .guide-btn:active{background:var(--bg3);}
+  .guide-preview{background:var(--white);border:1px solid var(--border2);border-radius:var(--r);padding:14px;margin-bottom:8px;display:none;}
+  .guide-preview-title{font-family:'Playfair Display',serif;font-size:15px;color:var(--primary-dark);margin-bottom:12px;}
+  .guide-product{margin-bottom:14px;padding-bottom:14px;border-bottom:1px solid var(--border);}
+  .guide-product:last-child{border-bottom:none;margin-bottom:0;padding-bottom:0;}
+  .guide-product-name{font-size:13px;font-weight:600;color:var(--primary-dark);margin-bottom:8px;}
+  .guide-section{margin-bottom:6px;}
+  .guide-section-label{font-size:10px;font-weight:600;color:var(--primary);text-transform:uppercase;letter-spacing:.06em;margin-bottom:3px;}
+  .guide-section-val{font-size:12px;color:var(--text2);line-height:1.5;}
+  .guide-tag{display:inline-block;background:var(--bg2);border:1px solid var(--border);border-radius:999px;padding:2px 8px;font-size:11px;color:var(--text2);margin:2px 3px 2px 0;}
+  .guide-no-info{font-size:12px;color:var(--muted);font-style:italic;}
+  .send-guide-wrap{display:flex;align-items:center;gap:8px;margin-top:10px;padding-top:10px;border-top:1px solid var(--border);}
+  .send-guide-wrap label{font-size:13px;color:var(--text2);flex:1;}
 
   .select-wrap{position:relative;margin-bottom:12px;}
   select{width:100%;background:var(--white);border:1.5px solid var(--border2);border-radius:var(--rs);padding:12px 32px 12px 14px;color:var(--text);font-family:'DM Sans',sans-serif;font-size:14px;outline:none;appearance:none;cursor:pointer;}
@@ -233,6 +247,15 @@
     <div id="cartItems"></div>
     <div id="totalsWrap" style="display:none">
       <div class="totals" id="totalsCard"></div>
+      <button class="guide-btn" onclick="toggleGuide()">📖 Generează ghid produse</button>
+      <div class="guide-preview" id="guidePreview">
+        <div class="guide-preview-title">📖 Ghid produse din coș</div>
+        <div id="guideContent"></div>
+        <div class="send-guide-wrap">
+          <label>Trimite ghidul odată cu oferta</label>
+          <input type="checkbox" id="sendGuideCheck" checked style="width:18px;height:18px;accent-color:var(--primary);cursor:pointer;">
+        </div>
+      </div>
       <div class="email-section">
         <div class="card-title" style="margin-bottom:8px">📧 Trimite sumar clientului</div>
         <div class="email-wrap">
@@ -292,7 +315,7 @@
 
 <script>
 const PROXY_URL = 'https://script.google.com/macros/s/AKfycbzB5wamxipAZjn4RdtRh0KNI_aPFpAGrr8oSsWftke_fvsVnLhq2vfr5By-_sHgqCpymA/exec';
-let products=[], cart=[], cursAuto=5.2444, cursActive=5.2444;
+let products=[], cart=[], cursAuto=5.2444, cursActive=5.2444, ghiduri={};
 let currentUser = null;
 
 // ── LOGIN ─────────────────────────────────────────────────
@@ -362,7 +385,13 @@ async function loadProducts() {
     const res = await fetch(PROXY_URL);
     if (!res.ok) throw new Error('HTTP '+res.status);
     const data = await res.json();
-    products = data.filter(p=>p.name&&p.eur>0);
+    // handle both old format (array) and new format {products, ghiduri}
+    if (Array.isArray(data)) {
+      products = data.filter(p=>p.name&&p.eur>0);
+    } else {
+      products = (data.products||[]).filter(p=>p.name&&p.eur>0);
+      ghiduri = data.ghiduri||{};
+    }
     const s = products.find(p=>p.ron>0&&p.eur>0);
     if (s) { cursAuto=parseFloat((s.ron/s.eur).toFixed(4)); cursActive=cursAuto; }
     document.getElementById('loadingState').style.display = 'none';
@@ -468,6 +497,64 @@ function renderCart(){
 }
 
 // ── SEND OFFER ────────────────────────────────────────────
+function toggleGuide() {
+  const preview = document.getElementById('guidePreview');
+  const isVisible = preview.style.display === 'block';
+  if (!isVisible) {
+    renderGuide();
+    preview.style.display = 'block';
+  } else {
+    preview.style.display = 'none';
+  }
+}
+
+function renderGuide() {
+  const el = document.getElementById('guideContent');
+  if (!cart.length) { el.innerHTML = '<div class="guide-no-info">Adaugă produse în coș mai întâi.</div>'; return; }
+  
+  el.innerHTML = cart.map(item => {
+    const g = ghiduri[String(item.cod)];
+    if (!g || (!g.beneficii && !g.folosire && !g.precautii)) {
+      return `<div class="guide-product">
+        <div class="guide-product-name">🌿 ${item.name}</div>
+        <div class="guide-no-info">Ghid indisponibil pentru acest produs momentan.</div>
+      </div>`;
+    }
+    const beneficii = g.beneficii ? g.beneficii.split('|').map(b=>`<span class="guide-tag">${b.trim()}</span>`).join('') : '';
+    const folosire = g.folosire ? g.folosire.split('|').map(f=>`<span class="guide-tag">✓ ${f.trim()}</span>`).join('') : '';
+    const precautii = g.precautii ? g.precautii.split('|').map(p=>`<span class="guide-tag">⚠️ ${p.trim()}</span>`).join('') : '';
+    return `<div class="guide-product">
+      <div class="guide-product-name">🌿 ${item.name}</div>
+      ${beneficii ? `<div class="guide-section"><div class="guide-section-label">Beneficii</div><div class="guide-section-val">${beneficii}</div></div>` : ''}
+      ${folosire ? `<div class="guide-section"><div class="guide-section-label">Mod de folosire</div><div class="guide-section-val">${folosire}</div></div>` : ''}
+      ${precautii ? `<div class="guide-section"><div class="guide-section-label">Precauții</div><div class="guide-section-val">${precautii}</div></div>` : ''}
+    </div>`;
+  }).join('');
+}
+
+function buildGuideHtml() {
+  if (!cart.length) return '';
+  const items = cart.map(item => {
+    const g = ghiduri[String(item.cod)];
+    if (!g || (!g.beneficii && !g.folosire && !g.precautii)) return '';
+    const beneficii = g.beneficii ? g.beneficii.split('|').map(b=>`<li style="margin-bottom:3px">${b.trim()}</li>`).join('') : '';
+    const folosire = g.folosire ? g.folosire.split('|').map(f=>`<li style="margin-bottom:3px">${f.trim()}</li>`).join('') : '';
+    const precautii = g.precautii ? g.precautii.split('|').map(p=>`<li style="margin-bottom:3px;color:#C94F6A">${p.trim()}</li>`).join('') : '';
+    return `<div style="margin-bottom:20px;padding-bottom:20px;border-bottom:1px solid #EAE5FF;">
+      <div style="font-family:Georgia,serif;font-size:15px;color:#4A3880;margin-bottom:10px">🌿 ${item.name}</div>
+      ${beneficii ? `<div style="margin-bottom:8px"><div style="font-size:10px;font-weight:600;color:#9B8DC4;text-transform:uppercase;letter-spacing:.06em;margin-bottom:4px">Beneficii</div><ul style="margin:0;padding-left:16px;font-size:12px;color:#6B5B9E">${beneficii}</ul></div>` : ''}
+      ${folosire ? `<div style="margin-bottom:8px"><div style="font-size:10px;font-weight:600;color:#9B8DC4;text-transform:uppercase;letter-spacing:.06em;margin-bottom:4px">Mod de folosire</div><ul style="margin:0;padding-left:16px;font-size:12px;color:#6B5B9E">${folosire}</ul></div>` : ''}
+      ${precautii ? `<div><div style="font-size:10px;font-weight:600;color:#9B8DC4;text-transform:uppercase;letter-spacing:.06em;margin-bottom:4px">Precauții</div><ul style="margin:0;padding-left:16px;font-size:12px">${precautii}</ul></div>` : ''}
+    </div>`;
+  }).filter(Boolean).join('');
+  
+  if (!items) return '';
+  return `<div style="margin-top:24px;padding:20px;background:#F7F5FF;border-radius:12px;border:1px solid #C8BFFF;">
+    <div style="font-family:Georgia,serif;font-size:18px;color:#4A3880;margin-bottom:16px;text-align:center">📖 Ghid de utilizare</div>
+    ${items}
+  </div>`;
+}
+
 async function sendOffer(){
   const email=document.getElementById('emailInput').value.trim();
   const msgEl=document.getElementById('emailMsg');
@@ -481,7 +568,9 @@ async function sendOffer(){
   const totalEur=cart.reduce((s,i)=>s+i.eur*i.qty*(1-i.disc/100),0).toFixed(2);
   try {
     const res=await fetch(PROXY_URL,{method:'POST',headers:{'Content-Type':'text/plain'},
-      body:JSON.stringify({action:'sendOffer',username:currentUser.username,nume:currentUser.nume,email,cart,total,totalEur,curs:cursActive})});
+      body:JSON.stringify({action:'sendOffer',username:currentUser.username,nume:currentUser.nume,email,cart,total,totalEur,curs:cursActive,
+        includeGuide: document.getElementById('sendGuideCheck').checked,
+        ghiduri: ghiduri})});
     const data=await res.json();
     if(data.status==='ok'){
       msgEl.className='msg-ok';msgEl.textContent='✓ Trimis la '+email;msgEl.style.display='block';
