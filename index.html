@@ -138,7 +138,6 @@
   .curs-input:focus{border-color:var(--primary);}
   .curs-val{font-family:'Playfair Display',serif;font-size:20px;color:var(--primary-dark);padding:8px 0;}
 
-  /* OFERTE */
   .offer-item{background:var(--white);border:1px solid var(--border2);border-radius:var(--r);padding:12px 14px;margin-bottom:8px;}
   .offer-top{display:flex;justify-content:space-between;align-items:center;margin-bottom:6px;}
   .offer-email{font-size:13px;font-weight:500;color:var(--primary-dark);}
@@ -147,20 +146,6 @@
   .offer-produse{font-size:11px;color:var(--text2);margin-top:4px;line-height:1.4;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
   .offers-empty{text-align:center;padding:32px 16px;color:var(--muted);font-size:13px;border:1.5px dashed var(--border2);border-radius:var(--r);background:var(--white);}
   .export-btn{width:100%;background:var(--bg2);border:1px solid var(--border2);border-radius:var(--rs);padding:11px;color:var(--primary-dark);font-family:'DM Sans',sans-serif;font-size:13px;font-weight:500;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:6px;margin-bottom:12px;}
-  .filter-btn{flex:1;background:var(--white);border:1px solid var(--border2);border-radius:var(--rs);padding:7px 6px;color:var(--muted);font-family:'DM Sans',sans-serif;font-size:11px;font-weight:500;cursor:pointer;transition:all .15s;}
-  .filter-btn.active{background:var(--primary);color:var(--white);border-color:var(--primary);}
-  .contact-item{background:var(--white);border:1px solid var(--border2);border-radius:var(--r);padding:12px 14px;margin-bottom:8px;}
-  .contact-top{display:flex;align-items:center;justify-content:space-between;margin-bottom:8px;}
-  .contact-email{font-size:13px;font-weight:500;color:var(--text);flex:1;min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
-  .status-badge{font-size:10px;font-weight:600;padding:3px 8px;border-radius:999px;white-space:nowrap;flex-shrink:0;margin-left:8px;}
-  .status-prospect{background:#FFF8E7;color:#B8860B;border:1px solid #F0D080;}
-  .status-nou{background:var(--green-bg);color:var(--green);border:1px solid var(--green-border);}
-  .status-fidel{background:var(--bg2);color:var(--primary);border:1px solid var(--border2);}
-  .contact-meta{font-size:11px;color:var(--muted);margin-bottom:8px;}
-  .status-btns{display:flex;gap:6px;}
-  .status-btn{flex:1;font-size:11px;padding:6px 4px;border-radius:8px;border:1px solid var(--border2);background:var(--bg2);color:var(--text2);font-family:'DM Sans',sans-serif;cursor:pointer;transition:all .15s;}
-  .status-btn:active{background:var(--primary);color:var(--white);border-color:var(--primary);}
-  .status-btn.current{background:var(--primary);color:var(--white);border-color:var(--primary);}
 
   .loading{display:flex;flex-direction:column;align-items:center;justify-content:center;padding:70px 20px;gap:14px;}
   .spinner{width:36px;height:36px;border:3px solid var(--border2);border-top-color:var(--primary);border-radius:50%;animation:spin .8s linear infinite;}
@@ -186,6 +171,20 @@
   .pass-btn:active{background:var(--primary-dark);}
   .pass-btn:disabled{background:var(--muted);}
 
+  .filter-btns{display:flex;gap:6px;margin-bottom:12px;}
+  .filter-btn{flex:1;background:var(--white);border:1px solid var(--border2);border-radius:var(--rs);padding:7px 4px;color:var(--muted);font-family:'DM Sans',sans-serif;font-size:11px;font-weight:500;cursor:pointer;transition:all .15s;}
+  .filter-btn.active{background:var(--primary);color:var(--white);border-color:var(--primary);}
+  .contact-item{background:var(--white);border:1px solid var(--border2);border-radius:var(--r);padding:12px 14px;margin-bottom:8px;}
+  .contact-top{display:flex;align-items:center;justify-content:space-between;margin-bottom:6px;}
+  .contact-email{font-size:13px;font-weight:500;color:var(--text);flex:1;min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+  .contact-meta{font-size:11px;color:var(--muted);margin-bottom:8px;}
+  .status-badge{font-size:10px;font-weight:600;padding:3px 8px;border-radius:999px;white-space:nowrap;flex-shrink:0;margin-left:8px;}
+  .status-prospect{background:#FFF8E7;color:#B8860B;border:1px solid #F0D080;}
+  .status-nou{background:var(--green-bg);color:var(--green);border:1px solid var(--green-border);}
+  .status-fidel{background:var(--bg2);color:var(--primary);border:1px solid var(--border2);}
+  .status-btns{display:flex;gap:6px;}
+  .status-btn{flex:1;font-size:11px;padding:6px 4px;border-radius:8px;border:1px solid var(--border2);background:var(--bg2);color:var(--text2);font-family:'DM Sans',sans-serif;cursor:pointer;}
+  .status-btn.current{background:var(--primary);color:var(--white);border-color:var(--primary);}
   input[type=number]::-webkit-inner-spin-button{-webkit-appearance:none;}
   ::-webkit-scrollbar{width:3px;}
   ::-webkit-scrollbar-thumb{background:var(--primary-light);border-radius:2px;}
@@ -289,20 +288,20 @@
     <div style="display:flex;gap:8px;margin-bottom:12px;flex-wrap:wrap;">
       <button class="export-btn" style="flex:1" onclick="exportByStatus('Prospect')">⬇️ Prospecți</button>
       <button class="export-btn" style="flex:1" onclick="exportByStatus('Client nou')">⬇️ Clienți noi</button>
-      <button class="export-btn" style="flex:1" onclick="exportByStatus('Client fidel')">⬇️ Clienți fideli</button>
+      <button class="export-btn" style="flex:1" onclick="exportByStatus('Client fidel')">⬇️ Fideli</button>
     </div>
-    <div style="display:flex;gap:6px;margin-bottom:12px;">
-      <button class="filter-btn active" onclick="filterContacts('all', this)">Toți</button>
-      <button class="filter-btn" onclick="filterContacts('Prospect', this)">🟡 Prospecți</button>
-      <button class="filter-btn" onclick="filterContacts('Client nou', this)">🟢 Clienți noi</button>
-      <button class="filter-btn" onclick="filterContacts('Client fidel', this)">⭐ Fideli</button>
+    <div class="filter-btns">
+      <button class="filter-btn active" onclick="filterContacts('all',this)">Toți</button>
+      <button class="filter-btn" onclick="filterContacts('Prospect',this)">🟡 Prospecți</button>
+      <button class="filter-btn" onclick="filterContacts('Client nou',this)">🟢 Noi</button>
+      <button class="filter-btn" onclick="filterContacts('Client fidel',this)">⭐ Fideli</button>
     </div>
-    <div id="contactsList"></div>
+    <div id="contactsList"><div class="cart-empty"><div class="cart-empty-icon">👥</div><div>Deschide tab-ul Oferte mai întâi</div></div></div>
   </div>
 
   <!-- OFERTE -->
   <div class="sec" id="tab-offers">
-    <button class="export-btn" onclick="exportEmails()">⬇️ Exportă lista de emailuri (CSV)</button>
+    <button class="export-btn" onclick="exportEmails()">⬇️ Exportă emailuri (CSV)</button>
     <div id="offersList">
       <div class="offers-empty">
         <div style="font-size:32px;margin-bottom:8px">📋</div>
@@ -348,7 +347,7 @@
 <script>
 const PROXY_URL = 'https://script.google.com/macros/s/AKfycbzB5wamxipAZjn4RdtRh0KNI_aPFpAGrr8oSsWftke_fvsVnLhq2vfr5By-_sHgqCpymA/exec';
 let products=[], cart=[], cursAuto=5.2444, cursActive=5.2444, ghiduri={};
-let offersLoaded=false, contactsLoaded=false;
+let offersLoaded=false;
 let currentUser = null;
 
 // ── LOGIN ─────────────────────────────────────────────────
@@ -380,7 +379,6 @@ async function doLogin() {
       document.getElementById('loginScreen').style.display = 'none';
       document.getElementById('userNume').textContent = data.nume;
       document.getElementById('userPill').style.display = 'flex';
-      // Use products from login response
       if (data.products) {
         products = data.products.filter(p=>p.name&&p.eur>0);
         ghiduri = data.ghiduri || {};
@@ -415,7 +413,6 @@ function logout() {
   document.getElementById('loginPass').value = '';
 }
 
-// restore session
 const saved = sessionStorage.getItem('yl_user');
 if (saved) {
   currentUser = JSON.parse(saved);
@@ -432,7 +429,6 @@ async function loadProducts() {
     const res = await fetch(PROXY_URL);
     if (!res.ok) throw new Error('HTTP '+res.status);
     const data = await res.json();
-    // handle both old format (array) and new format {products, ghiduri}
     if (Array.isArray(data)) {
       products = data.filter(p=>p.name&&p.eur>0);
     } else {
@@ -441,16 +437,16 @@ async function loadProducts() {
     }
     const s = products.find(p=>p.ron>0&&p.eur>0);
     if (s) { cursAuto=parseFloat((s.ron/s.eur).toFixed(4)); cursActive=cursAuto; }
-    document.getElementById('loadingState').style.display = 'none';
-    document.getElementById('cursActiv').textContent = cursActive.toFixed(4)+' RON';
-    document.getElementById('ratePill').textContent = '1€ = '+cursActive.toFixed(4)+' RON';
+    document.getElementById('loadingState').style.display='none';
+    document.getElementById('cursActiv').textContent=cursActive.toFixed(4)+' RON';
+    document.getElementById('ratePill').textContent='1€ = '+cursActive.toFixed(4)+' RON';
     populateRapidSelect();
     renderCart();
     switchTab('search');
     doSearch('');
   } catch(e) {
-    document.getElementById('loadingState').style.display = 'none';
-    document.getElementById('errorState').style.display = 'block';
+    document.getElementById('loadingState').style.display='none';
+    document.getElementById('errorState').style.display='block';
   }
 }
 
@@ -460,8 +456,8 @@ function switchTab(name) {
     document.getElementById('tab-'+t).classList.toggle('active',t===name);
     document.querySelectorAll('.tab')[i].classList.toggle('active',t===name);
   });
-  if (name==='offers' && !offersLoaded) loadOffers();
-  if (name==='contacts' && !contactsLoaded) loadContacts();
+  if ((name==='offers' || name==='contacts') && !offersLoaded) loadOffers();
+  if (name==='contacts' && offersLoaded) renderContacts();
 }
 
 // ── SEARCH ────────────────────────────────────────────────
@@ -474,10 +470,10 @@ function doSearch(q) {
   if(!matches.length){el.innerHTML='<div class="results"><div class="no-res">Niciun rezultat</div></div>';return;}
   el.innerHTML='<div class="results">'+matches.map(p=>{
     const inCart=cart.some(i=>i.name===p.name);
-    const hasGuide = ghiduri[String(p.cod)] && (ghiduri[String(p.cod)].beneficii || ghiduri[String(p.cod)].folosire);
+    const hasGuide=ghiduri[String(p.cod)]&&(ghiduri[String(p.cod)].beneficii||ghiduri[String(p.cod)].folosire);
     return `<div class="res-row">
       <div class="res-info">
-        <div class="res-name">${p.name} ${hasGuide ? '<span class="guide-dot" title="Are ghid de utilizare">📖</span>' : ''}</div>
+        <div class="res-name">${p.name}${hasGuide?'<span class="guide-dot" title="Are ghid">📖</span>':''}</div>
         <div class="res-meta"><span>🏷 ${p.cod}</span><span>⭐ ${p.pct} pct</span><span>€ ${p.eur.toFixed(2)}</span></div>
       </div>
       <div class="res-price">${fmt(ron(p.eur))} RON</div>
@@ -485,7 +481,6 @@ function doSearch(q) {
     </div>`;
   }).join('')+'</div>';
 }
-
 function clearSearch(){document.getElementById('searchInput').value='';document.getElementById('clearBtn').style.display='none';doSearch('');}
 
 // ── CART ──────────────────────────────────────────────────
@@ -544,86 +539,32 @@ function renderCart(){
   tw.style.display='block';
 }
 
-// ── SEND OFFER ────────────────────────────────────────────
-function toggleGuide() {
-  const preview = document.getElementById('guidePreview');
-  const isVisible = preview.style.display === 'block';
-  if (!isVisible) {
-    renderGuide();
-    preview.style.display = 'block';
-  } else {
-    preview.style.display = 'none';
-  }
+// ── GUIDE ─────────────────────────────────────────────────
+function toggleGuide(){
+  const p=document.getElementById('guidePreview');
+  if(p.style.display==='block'){p.style.display='none';}else{renderGuide();p.style.display='block';}
 }
-
-function renderGuide() {
-  const el = document.getElementById('guideContent');
-  if (!cart.length) { el.innerHTML = '<div class="guide-no-info">Adaugă produse în coș mai întâi.</div>'; return; }
-  
-  el.innerHTML = cart.map(item => {
-    const g = ghiduri[String(item.cod)];
-    if (!g || (!g.beneficii && !g.folosire && !g.precautii)) {
-      return `<div class="guide-product">
-        <div class="guide-product-name">🌿 ${item.name}</div>
-        <div class="guide-no-info">Ghid indisponibil pentru acest produs momentan.</div>
-      </div>`;
-    }
-    const beneficii = g.beneficii ? g.beneficii.split('|').map(b=>`<span class="guide-tag">${b.trim()}</span>`).join('') : '';
-    const folosire = g.folosire ? g.folosire.split('|').map(f=>`<span class="guide-tag">✓ ${f.trim()}</span>`).join('') : '';
-    const precautii = g.precautii ? g.precautii.split('|').map(p=>`<span class="guide-tag">⚠️ ${p.trim()}</span>`).join('') : '';
-    return `<div class="guide-product">
+function renderGuide(){
+  const el=document.getElementById('guideContent');
+  if(!cart.length){el.innerHTML='<div class="guide-no-info">Adaugă produse în coș mai întâi.</div>';return;}
+  el.innerHTML=cart.map(item=>{
+    const g=ghiduri[String(item.cod)];
+    if(!g||(!g.beneficii&&!g.folosire&&!g.precautii))return`<div class="guide-product"><div class="guide-product-name">🌿 ${item.name}</div><div class="guide-no-info">Ghid indisponibil momentan.</div></div>`;
+    const beneficii=g.beneficii?g.beneficii.split('|').map(b=>`<span class="guide-tag">${b.trim()}</span>`).join(''):'';
+    const folosire=g.folosire?g.folosire.split('|').map(f=>`<span class="guide-tag">✓ ${f.trim()}</span>`).join(''):'';
+    const precautii=g.precautii?g.precautii.split('|').map(p=>`<span class="guide-tag">⚠️ ${p.trim()}</span>`).join(''):'';
+    return`<div class="guide-product">
       <div class="guide-product-name">🌿 ${item.name}</div>
-      ${beneficii ? `<div class="guide-section"><div class="guide-section-label">Beneficii</div><div class="guide-section-val">${beneficii}</div></div>` : ''}
-      ${folosire ? `<div class="guide-section"><div class="guide-section-label">Mod de folosire</div><div class="guide-section-val">${folosire}</div></div>` : ''}
-      ${precautii ? `<div class="guide-section"><div class="guide-section-label">Precauții</div><div class="guide-section-val">${precautii}</div></div>` : ''}
+      ${beneficii?`<div class="guide-section"><div class="guide-section-label">Beneficii</div><div class="guide-section-val">${beneficii}</div></div>`:''}
+      ${folosire?`<div class="guide-section"><div class="guide-section-label">Mod de folosire</div><div class="guide-section-val">${folosire}</div></div>`:''}
+      ${precautii?`<div class="guide-section"><div class="guide-section-label">Precauții</div><div class="guide-section-val">${precautii}</div></div>`:''}
     </div>`;
   }).join('');
-}
-
-function buildGuideHtml() {
-  if (!cart.length) return '';
-  const items = cart.map(item => {
-    const g = ghiduri[String(item.cod)];
-    if (!g || (!g.beneficii && !g.folosire && !g.precautii)) return '';
-    const beneficii = g.beneficii ? g.beneficii.split('|').map(b=>`<li style="margin-bottom:3px">${b.trim()}</li>`).join('') : '';
-    const folosire = g.folosire ? g.folosire.split('|').map(f=>`<li style="margin-bottom:3px">${f.trim()}</li>`).join('') : '';
-    const precautii = g.precautii ? g.precautii.split('|').map(p=>`<li style="margin-bottom:3px;color:#C94F6A">${p.trim()}</li>`).join('') : '';
-    return `<div style="margin-bottom:20px;padding-bottom:20px;border-bottom:1px solid #EAE5FF;">
-      <div style="font-family:Georgia,serif;font-size:15px;color:#4A3880;margin-bottom:10px">🌿 ${item.name}</div>
-      ${beneficii ? `<div style="margin-bottom:8px"><div style="font-size:10px;font-weight:600;color:#9B8DC4;text-transform:uppercase;letter-spacing:.06em;margin-bottom:4px">Beneficii</div><ul style="margin:0;padding-left:16px;font-size:12px;color:#6B5B9E">${beneficii}</ul></div>` : ''}
-      ${folosire ? `<div style="margin-bottom:8px"><div style="font-size:10px;font-weight:600;color:#9B8DC4;text-transform:uppercase;letter-spacing:.06em;margin-bottom:4px">Mod de folosire</div><ul style="margin:0;padding-left:16px;font-size:12px;color:#6B5B9E">${folosire}</ul></div>` : ''}
-      ${precautii ? `<div><div style="font-size:10px;font-weight:600;color:#9B8DC4;text-transform:uppercase;letter-spacing:.06em;margin-bottom:4px">Precauții</div><ul style="margin:0;padding-left:16px;font-size:12px">${precautii}</ul></div>` : ''}
-    </div>`;
-  }).filter(Boolean).join('');
-  
-  if (!items) return '';
-  return `<div style="margin-top:24px;padding:20px;background:#F7F5FF;border-radius:12px;border:1px solid #C8BFFF;">
-    <div style="font-family:Georgia,serif;font-size:18px;color:#4A3880;margin-bottom:16px;text-align:center">📖 Ghid de utilizare</div>
-    ${items}
-  </div>`;
 }
 
 // ── CONTACTS ─────────────────────────────────────────────
 let allContacts = [];
 let contactFilter = 'all';
-
-async function loadContacts() {
-  if (!currentUser) return;
-  const el = document.getElementById('contactsList');
-  el.innerHTML = '<div style="text-align:center;padding:20px;color:var(--muted);font-size:13px">Se încarcă...</div>';
-  try {
-    const res = await fetch(PROXY_URL, {
-      method: 'POST', headers: {'Content-Type':'text/plain'},
-      body: JSON.stringify({ action: 'getContacts', username: currentUser.username })
-    });
-    const data = await res.json();
-    allContacts = data.contacts || [];
-    renderContacts();
-    contactsLoaded = true;
-  } catch(e) {
-    el.innerHTML = '<div style="text-align:center;padding:20px;color:var(--red);font-size:13px">Eroare la încărcare</div>';
-  }
-}
 
 function filterContacts(status, btn) {
   contactFilter = status;
@@ -634,28 +575,25 @@ function filterContacts(status, btn) {
 
 function renderContacts() {
   const el = document.getElementById('contactsList');
-  const filtered = contactFilter === 'all' ? allContacts : allContacts.filter(c => c.status === contactFilter);
-  
+  const filtered = contactFilter==='all' ? allContacts : allContacts.filter(c=>c.status===contactFilter);
   if (!filtered.length) {
-    el.innerHTML = `<div class="cart-empty"><div class="cart-empty-icon">👥</div><div>${contactFilter === 'all' ? 'Nu ai contacte încă' : 'Niciun contact în această categorie'}</div></div>`;
+    el.innerHTML=`<div class="cart-empty"><div class="cart-empty-icon">👥</div><div>${offersLoaded?'Niciun contact în această categorie':'Deschide tab-ul Oferte mai întâi'}</div></div>`;
     return;
   }
-
-  el.innerHTML = filtered.map(c => {
-    const badgeClass = c.status === 'Prospect' ? 'status-prospect' : c.status === 'Client nou' ? 'status-nou' : 'status-fidel';
-    const icon = c.status === 'Prospect' ? '🟡' : c.status === 'Client nou' ? '🟢' : '⭐';
-    const meta = [
-      c.dataPrimaOferta ? `Prima ofertă: ${c.dataPrimaOferta}` : '',
-      c.dataUltimaCumparatura ? `Ultima cumpărătură: ${c.dataUltimaCumparatura}` : '',
-      c.nrCumparaturi > 0 ? `${c.nrCumparaturi} cumpărături` : ''
+  el.innerHTML=filtered.map(c=>{
+    const bc=c.status==='Prospect'?'status-prospect':c.status==='Client nou'?'status-nou':'status-fidel';
+    const ic=c.status==='Prospect'?'🟡':c.status==='Client nou'?'🟢':'⭐';
+    const meta=[
+      c.dataPrimaOferta?`Prima ofertă: ${c.dataPrimaOferta}`:'',
+      c.dataUltimaCumparatura?`Ultima cumpărătură: ${c.dataUltimaCumparatura}`:'',
+      c.nrCumparaturi>0?`${c.nrCumparaturi} cumpărături`:''
     ].filter(Boolean).join(' · ');
-
     return `<div class="contact-item">
       <div class="contact-top">
         <div class="contact-email">${c.email}</div>
-        <span class="status-badge ${badgeClass}">${icon} ${c.status}</span>
+        <span class="status-badge ${bc}">${ic} ${c.status}</span>
       </div>
-      ${meta ? `<div class="contact-meta">${meta}</div>` : ''}
+      ${meta?`<div class="contact-meta">${meta}</div>`:''}
       <div class="status-btns">
         <button class="status-btn ${c.status==='Prospect'?'current':''}" onclick="setStatus('${esc(c.email)}','Prospect')">🟡 Prospect</button>
         <button class="status-btn ${c.status==='Client nou'?'current':''}" onclick="setStatus('${esc(c.email)}','Client nou')">🟢 Client nou</button>
@@ -667,32 +605,35 @@ function renderContacts() {
 
 async function setStatus(email, newStatus) {
   try {
-    await fetch(PROXY_URL, {
-      method: 'POST', headers: {'Content-Type':'text/plain'},
-      body: JSON.stringify({ action: 'updateStatus', username: currentUser.username, email, newStatus })
-    });
-    contactsLoaded=false;
-    await loadContacts();
+    await fetch(PROXY_URL,{method:'POST',headers:{'Content-Type':'text/plain'},
+      body:JSON.stringify({action:'updateStatus',username:currentUser.username,email,newStatus})});
+    // update locally - no extra request
+    const c = allContacts.find(c=>c.email===email);
+    if (c) {
+      const nr = (newStatus!=='Prospect') ? (parseInt(c.nrCumparaturi)||0)+1 : (parseInt(c.nrCumparaturi)||0);
+      c.status = nr>=2 ? 'Client fidel' : newStatus;
+      c.nrCumparaturi = nr;
+      if (newStatus!=='Prospect') c.dataUltimaCumparatura = new Date().toLocaleDateString('ro-RO');
+    }
+    renderContacts();
     showToast('✓ Status actualizat');
-  } catch(e) {
-    showToast('⚠️ Eroare la actualizare');
-  }
+  } catch(e){ showToast('⚠️ Eroare'); }
 }
 
 function exportByStatus(status) {
-  const filtered = status === 'all' ? allContacts : allContacts.filter(c => c.status === status);
-  if (!filtered.length) { showToast('Nu există contacte în această categorie'); return; }
-  const emails = filtered.map(c => c.email);
+  const filtered = status==='all' ? allContacts : allContacts.filter(c=>c.status===status);
+  if (!filtered.length) { showToast('Niciun contact în această categorie'); return; }
   const csv = 'Email,Status
-' + filtered.map(c => `${c.email},${c.status}`).join('
+' + filtered.map(c=>`${c.email},${c.status}`).join('
 ');
   const a = document.createElement('a');
   a.href = 'data:text/csv;charset=utf-8,' + encodeURIComponent(csv);
-  a.download = status.replace(' ','_') + '_' + currentUser.username + '.csv';
+  a.download = status.replace(' ','_')+'_'+currentUser.username+'.csv';
   a.click();
-  showToast(`✓ Exportat ${emails.length} emailuri`);
+  showToast(`✓ Exportat ${filtered.length} contacte`);
 }
 
+// ── SEND OFFER ────────────────────────────────────────────
 async function sendOffer(){
   const email=document.getElementById('emailInput').value.trim();
   const msgEl=document.getElementById('emailMsg');
@@ -707,13 +648,12 @@ async function sendOffer(){
   try {
     const res=await fetch(PROXY_URL,{method:'POST',headers:{'Content-Type':'text/plain'},
       body:JSON.stringify({action:'sendOffer',username:currentUser.username,nume:currentUser.nume,email,cart,total,totalEur,curs:cursActive,
-        includeGuide: document.getElementById('sendGuideCheck').checked,
-        ghiduri: ghiduri})});
+        includeGuide:document.getElementById('sendGuideCheck').checked,ghiduri})});
     const data=await res.json();
     if(data.status==='ok'){
       msgEl.className='msg-ok';msgEl.textContent='✓ Trimis la '+email;msgEl.style.display='block';
       document.getElementById('emailInput').value='';
-      offersLoaded=false; contactsLoaded=false;
+      offersLoaded=false; allContacts=[];
     } else throw new Error(data.message);
   } catch(e){msgEl.className='msg-err';msgEl.textContent='⚠️ Eroare: '+e.message;msgEl.style.display='block';}
   btn.disabled=false;btn.textContent='Trimite';
@@ -724,30 +664,24 @@ async function loadOffers(){
   if(!currentUser)return;
   try {
     const res=await fetch(PROXY_URL,{method:'POST',headers:{'Content-Type':'text/plain'},
-      body:JSON.stringify({action:'getOffers',username:currentUser.username})});
+      body:JSON.stringify({action:'getOffersAndContacts',username:currentUser.username})});
     const data=await res.json();
     renderOffers(data.offers||[]);
-  offersLoaded = true;
+    allContacts = data.contacts||[];
+    offersLoaded=true;
+    renderContacts();
   } catch(e){}
 }
-
 function renderOffers(offers){
   const el=document.getElementById('offersList');
-  if(!offers.length){
-    el.innerHTML='<div class="offers-empty"><div style="font-size:32px;margin-bottom:8px">📋</div><div>Nu ai trimis oferte încă</div></div>';
-    return;
-  }
+  if(!offers.length){el.innerHTML='<div class="offers-empty"><div style="font-size:32px;margin-bottom:8px">📋</div><div>Nu ai trimis oferte încă</div></div>';return;}
   el.innerHTML=offers.map(o=>`
     <div class="offer-item">
-      <div class="offer-top">
-        <div class="offer-email">📧 ${o.email}</div>
-        <div class="offer-total">${o.total} RON</div>
-      </div>
+      <div class="offer-top"><div class="offer-email">📧 ${o.email}</div><div class="offer-total">${o.total} RON</div></div>
       <div class="offer-date">${o.data}</div>
       <div class="offer-produse">${o.produse}</div>
     </div>`).join('');
 }
-
 function exportEmails(){
   if(!currentUser)return;
   fetch(PROXY_URL,{method:'POST',headers:{'Content-Type':'text/plain'},
