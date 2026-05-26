@@ -147,6 +147,20 @@
   .offer-produse{font-size:11px;color:var(--text2);margin-top:4px;line-height:1.4;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
   .offers-empty{text-align:center;padding:32px 16px;color:var(--muted);font-size:13px;border:1.5px dashed var(--border2);border-radius:var(--r);background:var(--white);}
   .export-btn{width:100%;background:var(--bg2);border:1px solid var(--border2);border-radius:var(--rs);padding:11px;color:var(--primary-dark);font-family:'DM Sans',sans-serif;font-size:13px;font-weight:500;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:6px;margin-bottom:12px;}
+  .filter-btn{flex:1;background:var(--white);border:1px solid var(--border2);border-radius:var(--rs);padding:7px 6px;color:var(--muted);font-family:'DM Sans',sans-serif;font-size:11px;font-weight:500;cursor:pointer;transition:all .15s;}
+  .filter-btn.active{background:var(--primary);color:var(--white);border-color:var(--primary);}
+  .contact-item{background:var(--white);border:1px solid var(--border2);border-radius:var(--r);padding:12px 14px;margin-bottom:8px;}
+  .contact-top{display:flex;align-items:center;justify-content:space-between;margin-bottom:8px;}
+  .contact-email{font-size:13px;font-weight:500;color:var(--text);flex:1;min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+  .status-badge{font-size:10px;font-weight:600;padding:3px 8px;border-radius:999px;white-space:nowrap;flex-shrink:0;margin-left:8px;}
+  .status-prospect{background:#FFF8E7;color:#B8860B;border:1px solid #F0D080;}
+  .status-nou{background:var(--green-bg);color:var(--green);border:1px solid var(--green-border);}
+  .status-fidel{background:var(--bg2);color:var(--primary);border:1px solid var(--border2);}
+  .contact-meta{font-size:11px;color:var(--muted);margin-bottom:8px;}
+  .status-btns{display:flex;gap:6px;}
+  .status-btn{flex:1;font-size:11px;padding:6px 4px;border-radius:8px;border:1px solid var(--border2);background:var(--bg2);color:var(--text2);font-family:'DM Sans',sans-serif;cursor:pointer;transition:all .15s;}
+  .status-btn:active{background:var(--primary);color:var(--white);border-color:var(--primary);}
+  .status-btn.current{background:var(--primary);color:var(--white);border-color:var(--primary);}
 
   .loading{display:flex;flex-direction:column;align-items:center;justify-content:center;padding:70px 20px;gap:14px;}
   .spinner{width:36px;height:36px;border:3px solid var(--border2);border-top-color:var(--primary);border-radius:50%;animation:spin .8s linear infinite;}
@@ -218,6 +232,7 @@
     <div class="tabs">
       <button class="tab active" onclick="switchTab('search')">🔍 Caută</button>
       <button class="tab" onclick="switchTab('cart')">🛒 Coș <span class="badge" id="cartBadge">0</span></button>
+      <button class="tab" onclick="switchTab('contacts')">👥 Contacte</button>
       <button class="tab" onclick="switchTab('offers')">📋 Oferte</button>
       <button class="tab" onclick="switchTab('rapid')">📦 Rapid</button>
     </div>
@@ -267,6 +282,22 @@
       </div>
       <button class="reset-btn" onclick="resetCart()">🗑️ Golește coșul</button>
     </div>
+  </div>
+
+  <!-- CONTACTE -->
+  <div class="sec" id="tab-contacts">
+    <div style="display:flex;gap:8px;margin-bottom:12px;flex-wrap:wrap;">
+      <button class="export-btn" style="flex:1" onclick="exportByStatus('Prospect')">⬇️ Prospecți</button>
+      <button class="export-btn" style="flex:1" onclick="exportByStatus('Client nou')">⬇️ Clienți noi</button>
+      <button class="export-btn" style="flex:1" onclick="exportByStatus('Client fidel')">⬇️ Clienți fideli</button>
+    </div>
+    <div style="display:flex;gap:6px;margin-bottom:12px;">
+      <button class="filter-btn active" onclick="filterContacts('all', this)">Toți</button>
+      <button class="filter-btn" onclick="filterContacts('Prospect', this)">🟡 Prospecți</button>
+      <button class="filter-btn" onclick="filterContacts('Client nou', this)">🟢 Clienți noi</button>
+      <button class="filter-btn" onclick="filterContacts('Client fidel', this)">⭐ Fideli</button>
+    </div>
+    <div id="contactsList"></div>
   </div>
 
   <!-- OFERTE -->
@@ -411,11 +442,12 @@ async function loadProducts() {
 
 // ── TABS ──────────────────────────────────────────────────
 function switchTab(name) {
-  ['search','cart','offers','rapid'].forEach((t,i)=>{
+  ['search','cart','contacts','offers','rapid'].forEach((t,i)=>{
     document.getElementById('tab-'+t).classList.toggle('active',t===name);
     document.querySelectorAll('.tab')[i].classList.toggle('active',t===name);
   });
   if (name==='offers') loadOffers();
+  if (name==='contacts') loadContacts();
 }
 
 // ── SEARCH ────────────────────────────────────────────────
@@ -555,6 +587,94 @@ function buildGuideHtml() {
     <div style="font-family:Georgia,serif;font-size:18px;color:#4A3880;margin-bottom:16px;text-align:center">📖 Ghid de utilizare</div>
     ${items}
   </div>`;
+}
+
+// ── CONTACTS ─────────────────────────────────────────────
+let allContacts = [];
+let contactFilter = 'all';
+
+async function loadContacts() {
+  if (!currentUser) return;
+  const el = document.getElementById('contactsList');
+  el.innerHTML = '<div style="text-align:center;padding:20px;color:var(--muted);font-size:13px">Se încarcă...</div>';
+  try {
+    const res = await fetch(PROXY_URL, {
+      method: 'POST', headers: {'Content-Type':'text/plain'},
+      body: JSON.stringify({ action: 'getContacts', username: currentUser.username })
+    });
+    const data = await res.json();
+    allContacts = data.contacts || [];
+    renderContacts();
+  } catch(e) {
+    el.innerHTML = '<div style="text-align:center;padding:20px;color:var(--red);font-size:13px">Eroare la încărcare</div>';
+  }
+}
+
+function filterContacts(status, btn) {
+  contactFilter = status;
+  document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  renderContacts();
+}
+
+function renderContacts() {
+  const el = document.getElementById('contactsList');
+  const filtered = contactFilter === 'all' ? allContacts : allContacts.filter(c => c.status === contactFilter);
+  
+  if (!filtered.length) {
+    el.innerHTML = `<div class="cart-empty"><div class="cart-empty-icon">👥</div><div>${contactFilter === 'all' ? 'Nu ai contacte încă' : 'Niciun contact în această categorie'}</div></div>`;
+    return;
+  }
+
+  el.innerHTML = filtered.map(c => {
+    const badgeClass = c.status === 'Prospect' ? 'status-prospect' : c.status === 'Client nou' ? 'status-nou' : 'status-fidel';
+    const icon = c.status === 'Prospect' ? '🟡' : c.status === 'Client nou' ? '🟢' : '⭐';
+    const meta = [
+      c.dataPrimaOferta ? `Prima ofertă: ${c.dataPrimaOferta}` : '',
+      c.dataUltimaCumparatura ? `Ultima cumpărătură: ${c.dataUltimaCumparatura}` : '',
+      c.nrCumparaturi > 0 ? `${c.nrCumparaturi} cumpărături` : ''
+    ].filter(Boolean).join(' · ');
+
+    return `<div class="contact-item">
+      <div class="contact-top">
+        <div class="contact-email">${c.email}</div>
+        <span class="status-badge ${badgeClass}">${icon} ${c.status}</span>
+      </div>
+      ${meta ? `<div class="contact-meta">${meta}</div>` : ''}
+      <div class="status-btns">
+        <button class="status-btn ${c.status==='Prospect'?'current':''}" onclick="setStatus('${esc(c.email)}','Prospect')">🟡 Prospect</button>
+        <button class="status-btn ${c.status==='Client nou'?'current':''}" onclick="setStatus('${esc(c.email)}','Client nou')">🟢 Client nou</button>
+        <button class="status-btn ${c.status==='Client fidel'?'current':''}" onclick="setStatus('${esc(c.email)}','Client fidel')">⭐ Fidel</button>
+      </div>
+    </div>`;
+  }).join('');
+}
+
+async function setStatus(email, newStatus) {
+  try {
+    await fetch(PROXY_URL, {
+      method: 'POST', headers: {'Content-Type':'text/plain'},
+      body: JSON.stringify({ action: 'updateStatus', username: currentUser.username, email, newStatus })
+    });
+    await loadContacts();
+    showToast('✓ Status actualizat');
+  } catch(e) {
+    showToast('⚠️ Eroare la actualizare');
+  }
+}
+
+function exportByStatus(status) {
+  const filtered = status === 'all' ? allContacts : allContacts.filter(c => c.status === status);
+  if (!filtered.length) { showToast('Nu există contacte în această categorie'); return; }
+  const emails = filtered.map(c => c.email);
+  const csv = 'Email,Status
+' + filtered.map(c => `${c.email},${c.status}`).join('
+');
+  const a = document.createElement('a');
+  a.href = 'data:text/csv;charset=utf-8,' + encodeURIComponent(csv);
+  a.download = status.replace(' ','_') + '_' + currentUser.username + '.csv';
+  a.click();
+  showToast(`✓ Exportat ${emails.length} emailuri`);
 }
 
 async function sendOffer(){
