@@ -419,6 +419,8 @@ if (saved) {
   document.getElementById('userNume').textContent = currentUser.nume;
   document.getElementById('userPill').style.display = 'flex';
   document.getElementById('loginScreen').style.display = 'none';
+  // reload products on refresh
+  loadProducts();
 }
 
 // ── LOAD PRODUCTS ─────────────────────────────────────────
