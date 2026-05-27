@@ -647,7 +647,7 @@ async function doLogin(){
       body:JSON.stringify({action:'loginAndLoad',username,parola})});
     const data=await res.json();
     if(data.status==='ok'){
-      currentUser={username:data.username,nume:data.nume};
+      currentUser={username:data.username,nume:data.nume,telefon:data.telefon||'',emailContact:data.emailContact||''};
       sessionStorage.setItem('yl_user',JSON.stringify(currentUser));
       sessionStorage.setItem('yl_last_active', Date.now().toString());
       document.getElementById('loginScreen').style.display='none';
@@ -829,7 +829,7 @@ function renderCart(){
         </div>
         <div class="disc-wrap">
           <span class="disc-label">Disc.</span>
-          <input type="number" class="disc-input" min="0" max="100" value="${item.disc}" oninput="updateDisc(${idx},this.value)">
+          <input type="number" class="disc-input" min="0" max="100" value="${item.disc}" onchange="updateDisc(${idx},this.value)" onblur="updateDisc(${idx},this.value)">
           <span class="disc-pct">%</span>
         </div>
       </div>
@@ -975,7 +975,9 @@ async function sendOffer(){
   try{
     const res=await fetch(PROXY_URL,{method:'POST',headers:{'Content-Type':'text/plain'},
       body:JSON.stringify({action:'sendOffer',username:currentUser.username,nume:currentUser.nume,
-        numeClient,email,cart,total,totalEur,curs:cursActive,includeGuide:guideCheck?guideCheck.checked:false,ghiduri})});
+        numeClient,email,cart,total,totalEur,curs:cursActive,includeGuide:guideCheck?guideCheck.checked:false,
+        ghiduri,cartGuideSelected:cart.map(i=>i.guideSelected!==false),
+        telefonContact:currentUser.telefon||'',emailContact:currentUser.emailContact||''})});
     const data=await res.json();
     if(data.status==='ok'){
       hideLoading();
