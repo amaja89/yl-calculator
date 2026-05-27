@@ -649,6 +649,7 @@ async function doLogin(){
     if(data.status==='ok'){
       currentUser={username:data.username,nume:data.nume};
       sessionStorage.setItem('yl_user',JSON.stringify(currentUser));
+      sessionStorage.setItem('yl_last_active', Date.now().toString());
       document.getElementById('loginScreen').style.display='none';
       document.getElementById('userNume').textContent=data.nume;
       document.getElementById('userPill').style.display='flex';
@@ -676,12 +677,27 @@ function logout(){
 
 const saved=sessionStorage.getItem('yl_user');
 if(saved){
-  currentUser=JSON.parse(saved);
-  document.getElementById('userNume').textContent=currentUser.nume;
-  document.getElementById('userPill').style.display='flex';
-  document.getElementById('loginScreen').style.display='none';
-  loadProducts();
+  const lastActive=parseInt(sessionStorage.getItem('yl_last_active')||'0');
+  const FIVE_HOURS=5*60*60*1000;
+  if(lastActive && Date.now()-lastActive > FIVE_HOURS){
+    sessionStorage.removeItem('yl_user');
+    sessionStorage.removeItem('yl_last_active');
+  } else {
+    currentUser=JSON.parse(saved);
+    document.getElementById('userNume').textContent=currentUser.nume;
+    document.getElementById('userPill').style.display='flex';
+    document.getElementById('loginScreen').style.display='none';
+    sessionStorage.setItem('yl_last_active', Date.now().toString());
+    loadProducts();
+  }
 }
+
+// Reset inactivity timer on any user interaction
+['click','keydown','touchstart'].forEach(ev=>{
+  document.addEventListener(ev, ()=>{
+    if(currentUser) sessionStorage.setItem('yl_last_active', Date.now().toString());
+  }, {passive:true});
+});
 
 // ── LOAD PRODUCTS ──────────────────────────────────────────
 async function loadProducts(){
