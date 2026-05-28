@@ -58,6 +58,11 @@
     .logo-text{font-size:17px;}
     .rate-pill{font-size:10px;padding:3px 8px;}
     .user-pill{font-size:11px;padding:3px 8px;}
+    .email-section{padding:16px;}
+    .email-input{font-size:16px;padding:13px 14px;}
+    .send-btn{padding:13px 18px;font-size:14px;}
+    .custom-form{padding:16px;}
+    .custom-input{font-size:15px;padding:11px 12px;}
   }
   @media(min-width:900px){
     #tab-search,#tab-cart,#tab-contacts,#tab-rapid{display:none!important;}
@@ -506,8 +511,8 @@
           </div>
           <div class="email-section">
             <div class="card-title" style="margin-bottom:8px">📧 Trimite sumar clientului</div>
-            <input type="text" class="email-input" id="numeInputD" placeholder="Numele clientului" style="margin-bottom:8px">
-            <textarea class="email-input" id="notiteInputD" placeholder="Notițe personalizate (opțional) — ghid custom, protocol, mesaj personal..." style="margin-bottom:8px;resize:vertical;min-height:70px;line-height:1.5"></textarea>
+            <input type="text" class="email-input" id="numeInputD" placeholder="Numele clientului" style="width:100%;display:block;margin-bottom:8px">
+            <textarea class="email-input" id="notiteInputD" placeholder="Notițe personalizate (opțional) — ghid custom, protocol, mesaj personal..." style="width:100%;display:block;margin-bottom:8px;resize:vertical;min-height:80px;line-height:1.6"></textarea>
             <div class="email-wrap">
               <input type="email" class="email-input" id="emailInputD" placeholder="email@client.com">
               <button class="send-btn" id="sendBtnD" onclick="sendOffer()">Trimite</button>
@@ -559,11 +564,13 @@
         <div class="custom-row">
           <input type="text" class="custom-input" id="customNameM" placeholder="Numele produsului" style="flex:2">
         </div>
-        <div class="custom-row">
-          <input type="number" class="custom-input" id="customPriceM" placeholder="Preț RON" min="0" step="0.01">
-          <input type="number" class="custom-input" id="customQtyM" placeholder="Cant." min="1" value="1" style="width:70px;flex:none">
-          <input type="number" class="custom-input" id="customDiscM" placeholder="Disc %" min="0" max="100" style="width:80px;flex:none">
-          <button class="custom-add-btn" onclick="addCustomProduct()">+ Adaugă</button>
+        <div class="custom-row" style="flex-wrap:wrap;gap:8px;">
+          <input type="number" class="custom-input" id="customPriceM" placeholder="Preț RON" min="0" step="0.01" style="flex:1;min-width:100px">
+          <input type="number" class="custom-input" id="customQtyM" placeholder="Cant." min="1" value="1" style="width:64px;flex:none">
+          <input type="number" class="custom-input" id="customDiscM" placeholder="Disc %" min="0" max="100" style="width:72px;flex:none">
+        </div>
+        <div style="margin-top:6px">
+          <button class="custom-add-btn" onclick="addCustomProduct()" style="width:100%">+ Adaugă în coș</button>
         </div>
       </div>
       <button class="guide-btn" onclick="toggleGuide()">📖 Generează ghid produse</button>
@@ -577,8 +584,8 @@
       </div>
       <div class="email-section">
         <div class="card-title" style="margin-bottom:8px">📧 Trimite sumar clientului</div>
-        <input type="text" class="email-input" id="numeInputM" placeholder="Numele clientului" style="margin-bottom:8px">
-        <textarea class="email-input" id="notiteInputM" placeholder="Notițe personalizate (opțional) — ghid custom, protocol, mesaj personal..." style="margin-bottom:8px;resize:vertical;min-height:70px;line-height:1.5"></textarea>
+        <input type="text" class="email-input" id="numeInputM" placeholder="Numele clientului" style="width:100%;display:block;margin-bottom:8px">
+        <textarea class="email-input" id="notiteInputM" placeholder="Notițe personalizate (opțional) — ghid custom, protocol, mesaj personal..." style="width:100%;display:block;margin-bottom:8px;resize:vertical;min-height:80px;line-height:1.6"></textarea>
         <div class="email-wrap">
           <input type="email" class="email-input" id="emailInputM" placeholder="email@client.com">
           <button class="send-btn" id="sendBtnM" onclick="sendOffer()">Trimite</button>
