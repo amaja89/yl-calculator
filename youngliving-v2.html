@@ -527,7 +527,10 @@
           </div>
           <div class="email-section">
             <div class="card-title" style="margin-bottom:8px">📧 Trimite sumar clientului</div>
-            <input type="text" class="email-input" id="numeInputD" placeholder="Numele clientului" style="width:100%;display:block;margin-bottom:8px" oninput="saveFormData()">
+            <div style="display:flex;gap:8px;margin-bottom:8px">
+              <input type="text" class="email-input" id="numeInputD" placeholder="Numele clientului" style="flex:1" oninput="saveFormData()">
+              <input type="tel" class="email-input" id="telefonClientD" placeholder="Telefon client" style="flex:1" oninput="saveFormData()">
+            </div>
             <textarea class="email-input" id="notiteInputD" placeholder="Notițe personalizate (opțional) — ghid custom, protocol, mesaj personal..." style="width:100%;display:block;margin-bottom:8px;resize:vertical;min-height:80px;line-height:1.6" oninput="saveFormData()"></textarea>
             <div class="email-wrap">
               <input type="email" class="email-input" id="emailInputD" placeholder="email@client.com">
@@ -612,6 +615,7 @@
       <div class="email-section">
         <div class="card-title" style="margin-bottom:8px">📧 Trimite sumar clientului</div>
         <input type="text" class="email-input" id="numeInputM" placeholder="Numele clientului" style="width:100%;display:block;margin-bottom:8px" oninput="saveFormData()">
+        <input type="tel" class="email-input" id="telefonClientM" placeholder="Telefon client (pentru WhatsApp)" style="width:100%;display:block;margin-bottom:8px" oninput="saveFormData()">
         <textarea class="email-input" id="notiteInputM" placeholder="Notițe personalizate (opțional) — ghid custom, protocol, mesaj personal..." style="width:100%;display:block;margin-bottom:8px;resize:vertical;min-height:80px;line-height:1.6" oninput="saveFormData()"></textarea>
         <div class="email-wrap">
           <input type="email" class="email-input" id="emailInputM" placeholder="email@client.com">
@@ -905,7 +909,8 @@ function saveFormData(){
     const sfx=isDesktop()?'D':'M';
     const nume=document.getElementById('numeInput'+sfx)?.value||'';
     const notite=document.getElementById('notiteInput'+sfx)?.value||'';
-    sessionStorage.setItem('yl_form',JSON.stringify({nume,notite}));
+    const telefonClient=document.getElementById('telefonClient'+sfx)?.value||'';
+    sessionStorage.setItem('yl_form',JSON.stringify({nume,notite,telefonClient}));
   }catch(e){}
 }
 
@@ -917,8 +922,10 @@ function loadFormData(){
       ['D','M'].forEach(sfx=>{
         const numeEl=document.getElementById('numeInput'+sfx);
         const notiteEl=document.getElementById('notiteInput'+sfx);
+        const telEl=document.getElementById('telefonClient'+sfx);
         if(numeEl&&data.nume)numeEl.value=data.nume;
         if(notiteEl&&data.notite)notiteEl.value=data.notite;
+        if(telEl&&data.telefonClient)telEl.value=data.telefonClient;
       });
     }
   }catch(e){}
@@ -1109,9 +1116,10 @@ ${'─'.repeat(25)}
 
 Pentru întrebări, scrie-mi oricând! 😊`;
 
-  // Get phone from currentUser
-  const telefon=currentUser?.telefon||'';
-  const waNum=telefon.replace(/[^0-9]/g,'').replace(/^0/,'40');
+  // Get client phone first, fallback to no number
+  const sfxWa=isDesktop()?'D':'M';
+  const telefonClient=document.getElementById('telefonClient'+sfxWa)?.value||'';
+  const waNum=telefonClient.replace(/[^0-9]/g,'').replace(/^0/,'40');
 
   // Open WhatsApp
   const encoded=encodeURIComponent(msg);
@@ -1158,6 +1166,7 @@ async function sendOffer(){
       document.getElementById('emailInput'+sfx).value='';
       document.getElementById('numeInput'+sfx).value='';
       document.getElementById('notiteInput'+sfx).value='';
+      document.getElementById('telefonClient'+sfx).value='';
       offersLoaded=false;allContacts=[];
       localStorage.removeItem('yl_cart');
       sessionStorage.removeItem('yl_form');
