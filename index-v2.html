@@ -205,12 +205,12 @@
   .status-nou{background:var(--green-bg);color:var(--green);border:1px solid var(--green-border);}
   .status-fidel{background:var(--bg2);color:var(--primary);border:1px solid var(--border2);}
   .status-btns{display:flex;gap:6px;}
-  .status-btn{flex:1;font-size:11px;padding:7px 4px;border-radius:8px;border:1px solid var(--border2);background:var(--bg2);color:var(--text2);font-family:'DM Sans',sans-serif;cursor:pointer;transition:color .1s,background .15s;position:relative;height:30px;overflow:hidden;}
+  .status-btn{flex:1;font-size:11px;padding:0;border-radius:8px;border:1px solid var(--border2);background:var(--bg2);color:var(--text2);font-family:'DM Sans',sans-serif;cursor:pointer;transition:color .1s,background .15s;position:relative;height:32px!important;min-height:32px!important;max-height:32px!important;line-height:32px;overflow:hidden;white-space:nowrap;}
   .status-btn:hover:not(:disabled){background:var(--bg3);border-color:var(--primary);}
   .status-btn.current{background:var(--primary);color:var(--white);border-color:var(--primary);}
   .status-btn:disabled{cursor:not-allowed;}
   .status-btn.loading{color:transparent!important;}
-  .status-btn.loading::after{content:'';position:absolute;top:50%;left:50%;width:11px;height:11px;margin:-5.5px 0 0 -5.5px;border:2px solid rgba(123,94,167,0.25);border-top-color:var(--primary);border-radius:50%;animation:spin .7s linear infinite;}
+  .status-btn.loading::after{content:'';position:absolute;top:50%;left:50%;width:10px;height:10px;margin:-5px 0 0 -5px;border:2px solid rgba(123,94,167,0.2);border-top-color:var(--primary);border-radius:50%;animation:spin .7s linear infinite;}
 
   /* ── OFFERS ───────────────────────────────────────── */
   .offer-item{background:var(--white);border:1px solid var(--border2);border-radius:var(--r);padding:12px 14px;margin-bottom:8px;}
@@ -286,6 +286,10 @@
   .custom-add-btn:active{background:var(--primary-dark);}
   .custom-toggle-btn{width:100%;background:var(--bg2);border:1px solid var(--border2);border-radius:var(--rs);padding:10px;color:var(--text2);font-family:'DM Sans',sans-serif;font-size:13px;font-weight:500;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:6px;margin-bottom:8px;}
   .custom-toggle-btn:active{background:var(--bg3);}
+  .transport-wrap{display:flex;align-items:center;gap:8px;background:var(--white);border:1px solid var(--border2);border-radius:var(--rs);padding:10px 14px;margin-bottom:8px;}
+  .transport-label{font-size:13px;color:var(--muted);flex:1;}
+  .transport-input{width:90px;background:var(--bg2);border:1px solid var(--border2);border-radius:var(--rs);padding:6px 10px;color:var(--text);font-family:'DM Sans',sans-serif;font-size:13px;font-weight:600;text-align:right;outline:none;}
+  .transport-input:focus{border-color:var(--primary);}
   input[type=number]::-webkit-inner-spin-button{-webkit-appearance:none;}
   ::-webkit-scrollbar{width:4px;}
   ::-webkit-scrollbar-thumb{background:var(--primary-light);border-radius:2px;}
@@ -491,6 +495,11 @@
         <div id="cartItemsD"></div>
         <div id="totalsWrapD" style="display:none">
           <div class="totals" id="totalsCardD"></div>
+          <div class="transport-wrap">
+            <span class="transport-label">🚚 Cost transport</span>
+            <input type="number" class="transport-input" id="transportD" min="0" step="0.5" placeholder="0 RON" onchange="updateTransport()" onblur="updateTransport()">
+            <span style="font-size:12px;color:var(--muted)">RON</span>
+          </div>
           <button class="custom-toggle-btn" onclick="toggleCustomForm()">✨ Adaugă produs special</button>
           <div class="custom-form" id="customForm">
             <div class="custom-form-title">✨ Produs special / import</div>
@@ -515,8 +524,8 @@
           </div>
           <div class="email-section">
             <div class="card-title" style="margin-bottom:8px">📧 Trimite sumar clientului</div>
-            <input type="text" class="email-input" id="numeInputD" placeholder="Numele clientului" style="width:100%;display:block;margin-bottom:8px">
-            <textarea class="email-input" id="notiteInputD" placeholder="Notițe personalizate (opțional) — ghid custom, protocol, mesaj personal..." style="width:100%;display:block;margin-bottom:8px;resize:vertical;min-height:80px;line-height:1.6"></textarea>
+            <input type="text" class="email-input" id="numeInputD" placeholder="Numele clientului" style="width:100%;display:block;margin-bottom:8px" oninput="saveFormData()">
+            <textarea class="email-input" id="notiteInputD" placeholder="Notițe personalizate (opțional) — ghid custom, protocol, mesaj personal..." style="width:100%;display:block;margin-bottom:8px;resize:vertical;min-height:80px;line-height:1.6" oninput="saveFormData()"></textarea>
             <div class="email-wrap">
               <input type="email" class="email-input" id="emailInputD" placeholder="email@client.com">
               <button class="send-btn" id="sendBtnD" onclick="sendOffer()">Trimite</button>
@@ -562,6 +571,11 @@
     <div id="cartItemsM"></div>
     <div id="totalsWrapM" style="display:none">
       <div class="totals" id="totalsCardM"></div>
+      <div class="transport-wrap">
+        <span class="transport-label">🚚 Cost transport</span>
+        <input type="number" class="transport-input" id="transportM" min="0" step="0.5" placeholder="0 RON" onchange="updateTransport()" onblur="updateTransport()">
+        <span style="font-size:12px;color:var(--muted)">RON</span>
+      </div>
       <button class="custom-toggle-btn" onclick="toggleCustomForm()">✨ Adaugă produs special</button>
       <div class="custom-form" id="customFormM">
         <div class="custom-form-title">✨ Produs special / import</div>
@@ -588,8 +602,8 @@
       </div>
       <div class="email-section">
         <div class="card-title" style="margin-bottom:8px">📧 Trimite sumar clientului</div>
-        <input type="text" class="email-input" id="numeInputM" placeholder="Numele clientului" style="width:100%;display:block;margin-bottom:8px">
-        <textarea class="email-input" id="notiteInputM" placeholder="Notițe personalizate (opțional) — ghid custom, protocol, mesaj personal..." style="width:100%;display:block;margin-bottom:8px;resize:vertical;min-height:80px;line-height:1.6"></textarea>
+        <input type="text" class="email-input" id="numeInputM" placeholder="Numele clientului" style="width:100%;display:block;margin-bottom:8px" oninput="saveFormData()">
+        <textarea class="email-input" id="notiteInputM" placeholder="Notițe personalizate (opțional) — ghid custom, protocol, mesaj personal..." style="width:100%;display:block;margin-bottom:8px;resize:vertical;min-height:80px;line-height:1.6" oninput="saveFormData()"></textarea>
         <div class="email-wrap">
           <input type="email" class="email-input" id="emailInputM" placeholder="email@client.com">
           <button class="send-btn" id="sendBtnM" onclick="sendOffer()">Trimite</button>
@@ -652,8 +666,9 @@
 </div>
 
 <script>
-const PROXY_URL='https://script.google.com/macros/s/AKfycbxHiBUS4mWDO8ccfxwyd24FSD3sEpS6wI5HzzlbJa_t0ggiJ3R00XVvfgHgAGaeuaOe0A/exec';
+const PROXY_URL='https://script.google.com/macros/s/AKfycbzB5wamxipAZjn4RdtRh0KNI_aPFpAGrr8oSsWftke_fvsVnLhq2vfr5By-_sHgqCpymA/exec';
 let products=[],cart=[],cursAuto=5.2444,cursActive=5.2444,ghiduri={};
+let transport=0;
 let offersLoaded=false,allContacts=[];
 let currentUser=null;
 const isDesktop=()=>window.innerWidth>=900;
@@ -752,6 +767,7 @@ function finishLoad(){
   updateCursDisplay();
   populateRapidSelects();
   loadCart();
+  loadFormData();
   if(isDesktop()){doSearch('','D');}else{doSearch('','M');}
 }
 
@@ -826,7 +842,7 @@ function clearSearch(s){
 function addToCart(name){
   const ex=cart.find(i=>i.name===name);
   if(ex){ex.qty++;}else{const p=products.find(p=>p.name===name);if(p)cart.push({...p,qty:1,disc:0});}
-  renderCart();updateCartBadges();
+  renderCart();updateCartBadges();saveCart();
   doSearch(document.getElementById(isDesktop()?'searchInputD':'searchInputM').value,isDesktop()?'D':'M');
   showToast('✓ Adăugat în coș');
 }
@@ -839,6 +855,18 @@ function updateCartBadges(){
   document.getElementById('cartBadge').textContent=n;
   const bd=document.getElementById('cartBadgeD');
   if(bd)bd.textContent=n;
+}
+
+function updateTransport(){
+  const sfx=isDesktop()?'D':'M';
+  const val=parseFloat(document.getElementById('transport'+sfx)?.value)||0;
+  transport=val;
+  // sync both fields
+  ['D','M'].forEach(s=>{
+    const el=document.getElementById('transport'+s);
+    if(el&&parseFloat(el.value)!==val)el.value=val||'';
+  });
+  renderCart();
 }
 
 function saveCart(){
@@ -855,6 +883,30 @@ function loadCart(){
         renderCart();
         updateCartBadges();
       }
+    }
+  }catch(e){}
+}
+
+function saveFormData(){
+  try{
+    const sfx=isDesktop()?'D':'M';
+    const nume=document.getElementById('numeInput'+sfx)?.value||'';
+    const notite=document.getElementById('notiteInput'+sfx)?.value||'';
+    sessionStorage.setItem('yl_form',JSON.stringify({nume,notite}));
+  }catch(e){}
+}
+
+function loadFormData(){
+  try{
+    const saved=sessionStorage.getItem('yl_form');
+    if(saved){
+      const data=JSON.parse(saved);
+      ['D','M'].forEach(sfx=>{
+        const numeEl=document.getElementById('numeInput'+sfx);
+        const notiteEl=document.getElementById('notiteInput'+sfx);
+        if(numeEl&&data.nume)numeEl.value=data.nume;
+        if(notiteEl&&data.notite)notiteEl.value=data.notite;
+      });
     }
   }catch(e){}
 }
@@ -887,12 +939,14 @@ function renderCart(){
   const disc=cart.reduce((s,i)=>s+ronItem(i)*i.qty*(i.disc/100),0);
   const total=sub-disc,eur=cart.reduce((s,i)=>s+(i.isCustom?0:i.eur)*i.qty*(1-i.disc/100),0);
   const pct=cart.reduce((s,i)=>s+(i.pct||0)*i.qty,0),cnt=cart.reduce((s,i)=>s+i.qty,0);
+  const totalCuTransport=total+(transport||0);
   let rows=`<div class="t-row"><span class="lbl">Subtotal</span><span class="val">${fmt(sub)} RON</span></div>`;
   if(disc>0)rows+=`<div class="t-row"><span class="lbl">Reduceri</span><span class="val saved">−${fmt(disc)} RON</span></div>`;
   rows+=`<div class="t-row"><span class="lbl">Total Euro</span><span class="val">${eur.toFixed(2)} €</span></div>`;
   rows+=`<div class="t-row"><span class="lbl">Puncte ER</span><span class="val">${Math.round(pct)} pct</span></div>`;
   rows+=`<div class="t-row"><span class="lbl">Produse</span><span class="val">${cnt}</span></div>`;
-  rows+=`<div class="t-row big"><span class="lbl">Total de plată</span><span class="val">${fmt(total)} RON</span></div>`;
+  if(transport>0)rows+=`<div class="t-row"><span class="lbl">🚚 Transport</span><span class="val">${fmt(transport)} RON</span></div>`;
+  rows+=`<div class="t-row big"><span class="lbl">Total de plată</span><span class="val">${fmt(totalCuTransport)} RON</span></div>`;
 
   ['D','M'].forEach(s=>{
     const ciEl=document.getElementById('cartItems'+s);
@@ -1016,7 +1070,8 @@ async function sendOffer(){
   showLoading('Se trimite oferta');
   const sub=cart.reduce((s,i)=>s+ronItem(i)*i.qty,0);
   const disc=cart.reduce((s,i)=>s+ronItem(i)*i.qty*(i.disc/100),0);
-  const total=(sub-disc).toFixed(2);
+  const totalFaraTrans=sub-disc;
+  const total=(totalFaraTrans+(transport||0)).toFixed(2);
   const totalEur=cart.reduce((s,i)=>s+(i.isCustom?0:i.eur)*i.qty*(1-i.disc/100),0).toFixed(2);
   const guideCheckId=isDesktop()?'sendGuideCheck':'sendGuideCheckM';
   const guideCheck=document.getElementById(guideCheckId);
@@ -1026,7 +1081,7 @@ async function sendOffer(){
         numeClient,email,cart,total,totalEur,curs:cursActive,includeGuide:guideCheck?guideCheck.checked:false,
         ghiduri,cartGuideSelected:cart.map(i=>i.guideSelected!==false),
         telefonContact:currentUser.telefon||'',emailContact:currentUser.emailContact||'',
-        notite:notite||''})});
+        notite:notite||'',transport:transport||0})});
     const data=await res.json();
     if(data.status==='ok'){
       hideLoading();
@@ -1036,6 +1091,9 @@ async function sendOffer(){
       document.getElementById('notiteInput'+sfx).value='';
       offersLoaded=false;allContacts=[];
       localStorage.removeItem('yl_cart');
+      sessionStorage.removeItem('yl_form');
+      transport=0;
+      ['transportD','transportM'].forEach(id=>{const el=document.getElementById(id);if(el)el.value='';});
     }else throw new Error(data.message);
   }catch(e){hideLoading();msgEl.className='msg-err';msgEl.textContent='⚠️ Eroare: '+e.message;msgEl.style.display='block';}
   btn.disabled=false;btn.textContent='Trimite';
