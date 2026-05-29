@@ -751,7 +751,7 @@ function finishLoad(){
   document.getElementById('mainLayout').style.display='';
   updateCursDisplay();
   populateRapidSelects();
-  renderCart();
+  loadCart();
   if(isDesktop()){doSearch('','D');}else{doSearch('','M');}
 }
 
@@ -830,15 +830,33 @@ function addToCart(name){
   doSearch(document.getElementById(isDesktop()?'searchInputD':'searchInputM').value,isDesktop()?'D':'M');
   showToast('✓ Adăugat în coș');
 }
-function removeFromCart(idx){cart.splice(idx,1);renderCart();updateCartBadges();doSearch(document.getElementById(isDesktop()?'searchInputD':'searchInputM').value,isDesktop()?'D':'M');}
-function changeQty(idx,d){cart[idx].qty=Math.max(1,cart[idx].qty+d);renderCart();}
-function updateDisc(idx,val){cart[idx].disc=Math.min(100,Math.max(0,parseFloat(val)||0));renderCart();}
-function resetCart(){cart=[];renderCart();updateCartBadges();doSearch(document.getElementById(isDesktop()?'searchInputD':'searchInputM').value,isDesktop()?'D':'M');}
+function removeFromCart(idx){cart.splice(idx,1);renderCart();updateCartBadges();saveCart();doSearch(document.getElementById(isDesktop()?'searchInputD':'searchInputM').value,isDesktop()?'D':'M');}
+function changeQty(idx,d){cart[idx].qty=Math.max(1,cart[idx].qty+d);renderCart();saveCart();}
+function updateDisc(idx,val){cart[idx].disc=Math.min(100,Math.max(0,parseFloat(val)||0));renderCart();saveCart();}
+function resetCart(){cart=[];renderCart();updateCartBadges();saveCart();doSearch(document.getElementById(isDesktop()?'searchInputD':'searchInputM').value,isDesktop()?'D':'M');}
 function updateCartBadges(){
   const n=cart.reduce((s,i)=>s+i.qty,0);
   document.getElementById('cartBadge').textContent=n;
   const bd=document.getElementById('cartBadgeD');
   if(bd)bd.textContent=n;
+}
+
+function saveCart(){
+  try{localStorage.setItem('yl_cart',JSON.stringify(cart));}catch(e){}
+}
+
+function loadCart(){
+  try{
+    const saved=localStorage.getItem('yl_cart');
+    if(saved){
+      const parsed=JSON.parse(saved);
+      if(Array.isArray(parsed)&&parsed.length>0){
+        cart=parsed;
+        renderCart();
+        updateCartBadges();
+      }
+    }
+  }catch(e){}
 }
 
 function renderCart(){
@@ -971,6 +989,7 @@ function addCustomProduct() {
   cart.push(customProduct);
   renderCart();
   updateCartBadges();
+  saveCart();
 
   // Reset form
   const sfx2 = isDesktop() ? '' : 'M';
@@ -1016,6 +1035,7 @@ async function sendOffer(){
       document.getElementById('numeInput'+sfx).value='';
       document.getElementById('notiteInput'+sfx).value='';
       offersLoaded=false;allContacts=[];
+      localStorage.removeItem('yl_cart');
     }else throw new Error(data.message);
   }catch(e){hideLoading();msgEl.className='msg-err';msgEl.textContent='⚠️ Eroare: '+e.message;msgEl.style.display='block';}
   btn.disabled=false;btn.textContent='Trimite';
