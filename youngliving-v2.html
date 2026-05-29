@@ -1084,8 +1084,7 @@ function sendWhatsApp(){
     const disc = item.disc>0 ? ` (-${item.disc}%)` : '';
     const qty = item.qty>1 ? ` x${item.qty}` : '';
     return `• ${item.name.replace(' ✨','')}${qty}${disc} — *${fmt(pret)} RON*`;
-  }).join('
-');
+  }).join('\n');
 
   const sub=cart.reduce((s,i)=>s+ronItem(i)*i.qty,0);
   const disc=cart.reduce((s,i)=>s+ronItem(i)*i.qty*(i.disc/100),0);
